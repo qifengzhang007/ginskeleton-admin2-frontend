@@ -4,6 +4,7 @@ body, * {
     margin: 0;
     box-sizing: border-box;
     font-family: system-ui;
+    overflow: hidden;
 }
 
 .el-menu {
@@ -13,36 +14,40 @@ body, * {
 .el-sub-menu {
     border-top: 1px solid #404141;
 }
+
 .el-sub-menu:last-child {
     border-bottom: 1px solid #404141;
 }
 
-.el-menu-item-group__title{
+.el-menu-item-group__title {
     height: 0 !important;
     display: none !important;
 }
 
 /*菜单组的样式*/
-.el-sub-menu__title{
+.el-sub-menu__title {
     font-size: 13px;
-    height: 40px  !important;
+    height: 40px !important;
     line-height: 40px !important;
     vertical-align: middle !important;
     color: #f3f6fb !important;
 }
+
 /*菜单item的样式*/
-.el-menu-item{
+.el-menu-item {
     font-size: 12px;
     height: 34px !important;
     line-height: 34px !important;
     vertical-align: middle !important;
     background-color: #292a2d;
 }
+
 .el-sub-menu [class^="el-icon-"] {
     vertical-align: -1px !important;
 }
+
 /*菜单选中样式*/
-li .is-active{
+li .is-active {
     background-color: #2d8cf0 !important;
     color: white;
 }

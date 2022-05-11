@@ -1,13 +1,11 @@
 <template>
-  <div class="header">
-    <div class="left">
-   <span class="collaspe">
-      <el-icon ><fold/></el-icon>
-   </span>
-
-      首页 / 系统设置 / 用户管理
+  <div class="header-banner">
+    <div class="header-banner-left">
+      <span class="collaspe">       <el-icon><fold/></el-icon>    </span>
+      <span class="menu-nav">首页 / 系统设置 / 用户管理</span>
     </div>
-    <div class="right">管理员</div>
+
+    <div class="header-banner-right">管理员</div>
 
   </div>
 
@@ -37,30 +35,34 @@ export default {
   margin-right: 6px;
 }
 
-.header {
+.header-banner {
   height: 64px;
   line-height: 64px;
   vertical-align: middle;
   border-bottom: #E8E8E8FF 1px solid;
 }
 
-.header > div {
+.header-banner > div {
   color: #323337;
 }
 
-.left {
+.header-banner-left {
   display: inline-block;
   float: left;
   width: 80%;
   padding-left: 4px;
 }
 
-.right {
+.menu-nav {
+  display: inline-block;
+}
+
+.header-banner-right {
   display: inline-block;
   float: right;
   width: 18%;
   text-align: right;
-  padding-right: 10px;
+  padding-right: 5px;
 }
 
 </style>

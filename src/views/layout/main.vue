@@ -87,7 +87,7 @@ export default {
   float: right;
   top: 0;
   display: inline-block;
-  width: calc(100vw - 255px);
+  width: calc(100% - 255px);
   min-height: 100vh;
 }
 
@@ -96,6 +96,6 @@ export default {
   padding: 4px 4px;
   overflow-y: auto;
   height: calc(100vh - 64px - 42px - 2px);
-  background-color: #f5f7f9;
+  background-color: white;
 }
 </style>
