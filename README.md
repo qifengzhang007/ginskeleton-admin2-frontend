@@ -1,38 +1,32 @@
-# vue3-admin
+### GinSkeleton-Admin2 (前端部分)
+> 基于 vue3.x + vite2.x + javascript + elementPlus  构建的全新的后台管理系统
 
-#### 介绍
-vue3-admin 纯净版
-相关技术栈：vue3.x+vite2.x+javascript+elementPlus
+### [在线演示地址: GinSkeleton-Admin](http://139.196.101.31:20202/)
 
-#### 软件架构
-软件架构说明
+> 1.在线演示系统相对本地全功能版本，收缩了数据的修改、删除权限.
+![预览图](https://www.ginskeleton.com/images/home_page1.png)
+
+### 1.业务开发指南
+
+[点击查看详情](./docs/dev_guide.md)
+
+### 2.环境安装
+
+[点击查看详情](./docs/deploy.md)
+
+### 3.常用开发模块
+- 3.1 前端项目绝大部分界面功能组件都可以通过阅读 [Iview](http://v1.iviewui.com) 官方网站获取开发指导.
+- 3.2 这里我们列举的是我们基于 Iview 二次封装的组件,以应对项目中比较复杂的场景。
+
+| 序号  | 组件名          | 进入详情                               | 备注  |
+|-----|--------------|------------------------------------|-----|
+| 1   | 通用子表组件       | [点击查看详情](./docs/childrenTable.md)  |     |
+| 2   | 前端表单参数验证常用语法 | [点击查看详情](./docs/form_validator.md) |     |
+
+### 4.关于项目更新
+- 	4.1 本项目自带的基础功能模块代码我们已经创建了独立的文件夹存放,凡是官方更新基础功能代码，可直接覆盖即可.
+- 	4.2 开发者自己的业务代码请另行创建目录编写业务代码,避免和自带代码混淆.
 
 
-#### 安装教程
+### 5.更新日志
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
-
-#### 使用说明
-
-1.  xxxx
-2.  xxxx
-3.  xxxx
-
-#### 参与贡献
-
-1.  Fork 本仓库
-2.  新建 Feat_xxx 分支
-3.  提交代码
-4.  新建 Pull Request
-
-
-#### 特技
-
-1.  使用 Readme\_XXX.md 来支持不同的语言，例如 Readme\_en.md, Readme\_zh.md
-2.  Gitee 官方博客 [blog.gitee.com](https://blog.gitee.com)
-3.  你可以 [https://gitee.com/explore](https://gitee.com/explore) 这个地址来了解 Gitee 上的优秀开源项目
-4.  [GVP](https://gitee.com/gvp) 全称是 Gitee 最有价值开源项目，是综合评定出的优秀开源项目
-5.  Gitee 官方提供的使用手册 [https://gitee.com/help](https://gitee.com/help)
-6.  Gitee 封面人物是一档用来展示 Gitee 会员风采的栏目 [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)
