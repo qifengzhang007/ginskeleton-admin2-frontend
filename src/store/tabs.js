@@ -57,8 +57,10 @@ export const useTabStore = defineStore({
             if (!curTabIsActive) {
                 return
             }
-            if (this.tabs.list.length > 0) {
+            if (this.tabs.list.length > 0 && this.tabs.list.length === tabIndex) {
                 this.tabs.list[tabIndex - 1].isActive = true
+            } else if (this.tabs.list.length > 1) {
+                this.tabs.list[tabIndex].isActive = true
             }
         },
 
