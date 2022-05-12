@@ -1,16 +1,11 @@
 <template>
   <div id="layout-tab">
-    <el-tag
-        v-for="item in items"
-        :key="item.label"
-        :type="item.type"
-        :class="{'mx-1':true,'tab-btn':true}"
-        size="large"
-        effect="plain"
-        :hit="false"
-        closable
+    <el-tag v-for="item in tabsInfo.tabs.list" :key="item.label" :type="item.type" :relaMenuId="item.relaMenuId"
+            :class="{'mx-1':true,'tab-btn':true}" size="large" effect="plain" :hit="false" closable
+            @close="tabsInfo.remove(item.relaMenuId,item.isActive)"
+            @click="tabsInfo.add(item.label,item.relaMenuId)"
     >
-      <span class="circle" v-if="item.label==='组织机构'"> </span>
+      <span :class="{circle:true, circleActive:item.isActive}"> </span>
       <span class="tab-title">  {{ item.label }}</span>
     </el-tag>
 
@@ -20,11 +15,14 @@
 
 <script>
 import {ref} from 'vue'
+import {useTabStore} from "@/store/tabs";
 
 export default {
   name: "Tabs",
   components: {},
   setup() {
+    const tabsInfo = useTabStore();
+
 
     const items = [
       {type: 'info', label: 'Tag - helloworld 1'},
@@ -50,7 +48,7 @@ export default {
 
 
     return {
-      items
+      tabsInfo
     }
   }
 }
@@ -87,9 +85,13 @@ export default {
   height: 12px;
   width: 12px;
   border-radius: 6px;
-  background-color: #409eff;
+  background-color: #e1e1e1;
   display: inline-block;
   vertical-align: middle;
+}
+
+.circleActive {
+  background-color: #409eff;
 }
 
 .tab-title {

@@ -1,27 +1,35 @@
 import {defineStore} from 'pinia'
+import {menuList} from '@/api/system-setting/menu'
+
 
 export const useMenuStore = defineStore({
     id: 'useMenuStore', state: () => {
         return {
             menu: {
-                collapseStatus: false,
+                collapseStatus: 2014,
                 currentMenu: {
-                    index: 0,
                     name: 'home',
                     path: '/',
-                    navPathName:'',
+                    navPathName: '',
+                    icon: 'grid',
                 },
-                list: [],
+                list: []
             }
         }
     },
-    getters: {
+    // 通过函数形式定义属性
+    getters: {},
+    // 定义函数
+    actions: {
+        /*
+        根据userId 查询属于该用户的菜单
+        @userId 用户id
+        */
         getMenuList(userId) {
-            //根据userId 查询属于该用户的菜单
+            this.menu.list = menuList(userId)
             return this.menu.list
         },
-    },
-    actions: {
+
         setCurrentSelectedMenuStatus(objParam) {
             this.menu.currentMenu.index = objParam.id
             this.menu.currentMenu.name = objParam.name

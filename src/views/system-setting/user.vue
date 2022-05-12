@@ -1,6 +1,8 @@
 <template>
 
   <div>
+    <el-input v-model="abc" placeholder="abc"  clearable  />
+
     users 用户管理:{{userInfo.user.Info.user_name}}, 年龄：{{userInfo.user.Info.age}}
 
     <br/>
@@ -34,6 +36,7 @@ export default {
     let userInfo=useUserStore()
     let  {user,test_params}=storeToRefs(userInfo)
 
+    let abc=ref('')
 
     list(tempParams).then(res => {
       console.log("请求后端接口返回值：",res.data)
@@ -49,6 +52,7 @@ export default {
     return {
       user,test_params,
       userInfo,
+      abc,
       // tempParams,
 
       btn_test

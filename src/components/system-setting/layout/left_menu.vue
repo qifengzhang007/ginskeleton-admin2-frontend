@@ -17,58 +17,59 @@
           :default-active='menuInfo.menu.currentMenu.path'
           class="el-menu-vertical-demo"
       >
+        <el-menu-item index="20">
+          <el-icon>     <grid/>  </el-icon>
+          <span>首页</span>
+        </el-menu-item>
 
-        <el-sub-menu index="0">
+        <el-sub-menu :index="item.path" v-for="(item,index)  in menuList">
           <template #title>
-            <span class="menu-one-title">首页</span>
-          </template>
-        </el-sub-menu>
-
-        <el-sub-menu index="1">
-          <template #title>
-            <span>系统配置</span>
+            <span>{{item.title}}</span>
           </template>
           <el-menu-item-group>
-            <el-menu-item index="/system-setting/sys_menu"><i class="el-icon-picture"/>系统菜单</el-menu-item>
-            <el-menu-item index="/system-setting/organization"><i class="el-icon-star-on"/>组织结构</el-menu-item>
-            <el-menu-item index="/system-setting/post_members"><i class="el-icon-star-on"/>岗位成员</el-menu-item>
-            <el-menu-item index="/system-setting/user"><i class="el-icon-star-on"/>用户管理</el-menu-item>
-            <el-menu-item index="/system-setting/button"><i class="el-icon-star-on"/>按钮设置</el-menu-item>
-            <el-menu-item index="/system-setting/auth_dispath"><i class="el-icon-star-on"/>权限分配</el-menu-item>
-            <el-menu-item index="/system-setting/auth_analysis"><i class="el-icon-star-on"/>权限分析</el-menu-item>
-
+              <el-menu-item :index="item.path+'/'+itemL2.path"  v-for="(itemL2,index2)  in item.children" >
+                  <el-icon>     <grid/>  </el-icon>
+                  {{itemL2.title}}
+              </el-menu-item>
           </el-menu-item-group>
         </el-sub-menu>
 
-        <el-sub-menu index="2">
-          <template #title>
-            <span>基础数据</span>
-          </template>
-          <el-menu-item-group>
-            <el-menu-item index="/dictionary/province_city"><i class="el-icon-menu"/>省份城市</el-menu-item>
-          </el-menu-item-group>
-        </el-sub-menu>
 
       </el-menu>
-
-
     </el-aside>
   </div>
 </template>
 
 <script>
 import {useMenuStore} from '@/store/menu'
-import {storeToRefs} from 'pinia'
+import {Avatar, Grid, Menu} from '@element-plus/icons-vue'
+import {reactive, toRefs} from "vue";
+
 
 export default {
   name: "LeftMenu",
-  components: {},
+  components: {
+    Menu, Avatar, Grid
+  },
   setup() {
     const menuInfo = useMenuStore()     // 实例化
-   // let {user} = storeToRefs(menu)   // 根据实际情况进行对象成员的解构
-console.log(menuInfo)
+    let  menuList=menuInfo.getMenuList()
 
+    const sateData={
+      abc:1024,
+      def:1024,
+    }
+
+
+    // let {user} = storeToRefs(menu)   // 根据实际情况进行对象成员的解构
+    console.log(menuInfo)
+
+    // 本页面需要导出清单：
     return {
+      //1.数据（变量结构之后导出
+      ...toRefs(sateData),
+      menuList,
+      //2.函数列表
       menuInfo
     }
   }

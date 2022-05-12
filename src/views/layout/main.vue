@@ -12,7 +12,9 @@
         <HeaderBanner/>
         <Tabs/>
         <div id="layout-content">
-          <router-view/>
+          <keep-alive>
+            <router-view/>
+          </keep-alive>
         </div>
       </div>
     </div>
@@ -30,6 +32,7 @@ import Tabs from '@/components/system-setting/layout/tabs.vue'
 import LeftMenu from '@/components/system-setting/layout/left_menu.vue'
 import {useRouter} from 'vue-router'
 import {useUserStore} from "@/store/user";
+import {useTabStore} from "@/store/tabs";
 
 export default {
   name: "Main",
@@ -39,9 +42,9 @@ export default {
     LeftMenu
   },
   setup() {
-
     const userInfo = useUserStore()     // 实例化
     // let {user} = storeToRefs(user_info)   // 根据实际情况进行对象成员的解构
+    const tabsInfo = useTabStore()
 
     const router = useRouter()
     router.beforeEach((to, from, next) => {
@@ -56,6 +59,7 @@ export default {
           // 如果没有，则跳至登录页面
           next({name: 'login'})
         } else {
+          tabsInfo.add(to.name, to.meta.id)
           next()
         }
       }
