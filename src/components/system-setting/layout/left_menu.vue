@@ -14,7 +14,7 @@
           active-text-color="#fefefe"
           :unique-opened="false"
           :collapse-transition="false"
-          :default-active='menuInfo.menu.currentMenu.path'
+          :default-active='menuStore.menu.currentMenu.path'
           class="el-menu-vertical-demo"
       >
         <el-menu-item index="20">
@@ -27,7 +27,7 @@
             <span>{{item.title}}</span>
           </template>
           <el-menu-item-group>
-              <el-menu-item :index="item.path+'/'+itemL2.path"  v-for="(itemL2,index2)  in item.children" >
+              <el-menu-item :index="item.path+'/'+itemL2.path"  v-for="(itemL2,index2)  in item.children"   @open="">
                   <el-icon>     <grid/>  </el-icon>
                   {{itemL2.title}}
               </el-menu-item>
@@ -52,8 +52,8 @@ export default {
     Menu, Avatar, Grid
   },
   setup() {
-    const menuInfo = useMenuStore()     // 实例化
-    let  menuList=menuInfo.getMenuList()
+    const menuStore = useMenuStore()     // 实例化
+    let  menuList=menuStore.getMenuList()
 
     const sateData={
       abc:1024,
@@ -62,7 +62,7 @@ export default {
 
 
     // let {user} = storeToRefs(menu)   // 根据实际情况进行对象成员的解构
-    console.log(menuInfo)
+    console.log(menuStore)
 
     // 本页面需要导出清单：
     return {
@@ -70,7 +70,7 @@ export default {
       ...toRefs(sateData),
       menuList,
       //2.函数列表
-      menuInfo
+      menuStore
     }
   }
 }

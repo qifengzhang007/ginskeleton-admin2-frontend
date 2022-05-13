@@ -1,9 +1,9 @@
 <template>
   <div id="layout-tab">
-    <el-tag v-for="item in tabsInfo.tabs.list" :key="item.label" :type="item.type" :relaMenuId="item.relaMenuId"
+    <el-tag v-for="item in tabsStore.tabs.list" :key="item.label" :type="item.type" :relaMenuId="item.relaMenuId" :relaMenuPath="item.path"
             :class="{'mx-1':true,'tab-btn':true}" size="large" effect="plain" :hit="false" closable
-            @close="tabsInfo.remove(item.relaMenuId,item.isActive)"
-            @click="tabsInfo.add(item.label,item.relaMenuId)"
+            @close="tabsStore.remove(item.relaMenuId,item.isActive)"
+            @click="activeTab(item.label,item.relaMenuId,item.path,'tab')"
     >
       <span :class="{circle:true, circleActive:item.isActive}"> </span>
       <span class="tab-title">  {{ item.label }}</span>
@@ -14,41 +14,24 @@
 </template>
 
 <script>
-import {ref} from 'vue'
 import {useTabStore} from "@/store/tabs";
+import {useRouter} from 'vue-router'
+import {useRouteStore} from "@/store/route";
 
 export default {
   name: "Tabs",
   components: {},
   setup() {
-    const tabsInfo = useTabStore();
+    const tabsStore = useTabStore();
+    // const router = useRouter();
+    // const routerStore = useRouteStore()
 
-
-    const items = [
-      {type: 'info', label: 'Tag - helloworld 1'},
-      {type: 'info', label: 'Tag helloworld 2'},
-      {type: 'info', label: 'Tag helloworld 3'},
-      {type: 'info', label: '岗位成员'},
-      {type: 'info', label: '组织机构'},
-    ]
-    let tabIndex = 2
-    const editableTabsValue = ref('2')
-    let editableTabs = ref([
-      {
-        title: 'Tab 1',
-        name: '1',
-        content: 'Tab 1 content',
-      },
-      {
-        title: 'Tab 2',
-        name: '2',
-        content: 'Tab 2 content',
-      },
-    ])
-
-
+    const activeTab = (menuName, relaMenuId, menuPath,actionFrom) => {
+      tabsStore.add(menuName, relaMenuId, menuPath,actionFrom)
+    }
     return {
-      tabsInfo
+      tabsStore,
+      activeTab
     }
   }
 }

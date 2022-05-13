@@ -1,7 +1,7 @@
 <template>
   <div id="layout-main">
 
-    <div v-if="userInfo.user.token.isValid">
+    <div v-if="userStore.user.token.isValid">
       <!--    左侧菜单区域-->
       <div id="layout-left">
         <LeftMenu/>
@@ -33,6 +33,7 @@ import LeftMenu from '@/components/system-setting/layout/left_menu.vue'
 import {useRouter} from 'vue-router'
 import {useUserStore} from "@/store/user";
 import {useTabStore} from "@/store/tabs";
+import {useRouteStore} from "@/store/route";
 
 export default {
   name: "Main",
@@ -42,24 +43,28 @@ export default {
     LeftMenu
   },
   setup() {
-    const userInfo = useUserStore()     // 实例化
+    const userStore = useUserStore()     // 实例化
     // let {user} = storeToRefs(user_info)   // 根据实际情况进行对象成员的解构
-    const tabsInfo = useTabStore()
+    const tabsStore = useTabStore()
 
     const router = useRouter()
+    let routerStore = useRouteStore()
+    routerStore.setRoute(router)
+
+
     router.beforeEach((to, from, next) => {
       if (to.name === 'login') {
         // 如果是登录路由，则不需要判断，直接跳转到登陆页面
-        userInfo.destroyUserInfo()
+        userStore.destroyUserInfo()
         next()
       } else {
         // 如果是业务路由，当token无效时，跳转到登录页面
-        if (!userInfo.user.token.isValid) {
-          userInfo.destroyUserInfo()
+        if (!userStore.user.token.isValid) {
+          userStore.destroyUserInfo()
           // 如果没有，则跳至登录页面
           next({name: 'login'})
         } else {
-          tabsInfo.add(to.name, to.meta.id)
+          tabsStore.add(to.meta.title, to.meta.id, to.path)
           next()
         }
       }
@@ -67,7 +72,7 @@ export default {
     })
 
     return {
-      userInfo
+      userStore
     }
   }
 }

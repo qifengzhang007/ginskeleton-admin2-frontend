@@ -26,11 +26,14 @@ export const useMenuStore = defineStore({
         @userId 用户id
         */
         getMenuList(userId) {
-            this.menu.list = menuList(userId)
-            return this.menu.list
+            return this.menu.list.length > 0 ? this.menu.list : this.menu.list = menuList(userId)
         },
 
-        setCurrentSelectedMenuStatus(objParam) {
+        /*
+        根据userId 查询属于该用户的菜单
+        @userId 用户id
+        */
+        openSubMenu(index) {
             this.menu.currentMenu.index = objParam.id
             this.menu.currentMenu.name = objParam.name
         }

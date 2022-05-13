@@ -31,9 +31,7 @@ export const useUserStore = defineStore(
                 this.user.token.val = token
             },
             destroyUserInfo() {
-                console.log('destroyUserInfo---11111', this.user)
                 this.user = common_func.objInit(this.user)
-                console.log('destroyUserInfo---22222', this.user)
             }
         }
     }
