@@ -20,7 +20,10 @@ const router = createRouter({
         {
             path: '/login',
             name: 'login',
-            component: () => import(/* webpackChunkName: "login" */   '@/views/system-setting/login.vue'),
+            components: {
+                //  default: ()=>import(/* webpackChunkName: "default" */   '@/views/system-setting/login.vue'),
+                login: () => import(/* webpackChunkName: "login" */   '@/views/system-setting/login.vue'),
+            },
             meta: {
                 icon: "grid",
                 id: 2,

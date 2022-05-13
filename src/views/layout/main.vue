@@ -12,14 +12,26 @@
         <HeaderBanner/>
         <Tabs/>
         <div id="layout-content">
-          <keep-alive>
-            <router-view/>
-          </keep-alive>
+          <router-view v-slot="{ Component, route }">
+            <transition :name="route.meta.transition || 'fade'" mode="out-in">
+              <keep-alive>
+                <component
+                    :is="Component"
+                    :key="route.meta.usePathKey ? route.path : undefined"
+                />
+              </keep-alive>
+            </transition>
+          </router-view>
         </div>
       </div>
+
     </div>
-    <div v-else>
-      <router-view/>
+    <div v-else class="test-style">
+      <router-view v-slot="{ Component }" name="login">
+        <transition name="router-fade" mode="out-in">
+          <component :is="Component"/>
+        </transition>
+      </router-view>
     </div>
 
   </div>
