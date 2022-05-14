@@ -47,7 +47,7 @@ import {useTabStore} from "@/store/tabs";
 
 
 export default {
-  name: 'TabsContainer',
+  name: 'Tabs',
   components: {
     ArrowLeft,
     ArrowRight,
@@ -149,9 +149,6 @@ export default {
 .scroll-tab {
   position: relative;
   display: inline-flex;
-  justify-content: space-between;
-  align-items: center;
-  height: 100%;
   transition: all 0.2s;
   margin-top: -4px;
 }
@@ -164,7 +161,7 @@ export default {
   width: 130px;
   line-height: 30px;
   height: 30px;
-  margin: 4px;
+  margin: 0 4px;
   list-style: none;
   background-color: white;
   cursor: default;

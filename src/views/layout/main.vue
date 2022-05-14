@@ -10,7 +10,7 @@
       <!--    右侧区域：banner + tabs + content 区域 -->
       <div id="layout-right">
         <HeaderBanner/>
-        <TabsContainer/>
+        <Tabs/>
         <div id="layout-content">
           <router-view v-slot="{ Component, route }">
             <transition :name="route.meta.transition || 'fade'" mode="out-in">
@@ -40,8 +40,7 @@
 
 <script>
 import HeaderBanner from '@/components/system-setting/layout/header_banner.vue'
-// import Tabs from '@/components/system-setting/layout/tabs.vue'
-import TabsContainer from '@/components/system-setting/layout/tabs_container.vue'
+import Tabs from '@/components/system-setting/layout/tabs.vue'
 import LeftMenu from '@/components/system-setting/layout/left_menu.vue'
 import {useRouter} from 'vue-router'
 import {useUserStore} from "@/store/user";
@@ -52,8 +51,7 @@ export default {
   name: "Main",
   components: {
     HeaderBanner,
-    // Tabs,
-    TabsContainer,
+    Tabs,
     LeftMenu,
   },
   setup() {
@@ -119,6 +117,5 @@ export default {
   padding: 4px 4px;
   overflow-y: auto;
   height: calc(100vh - 64px - 42px - 2px);
-  background-color: white;
 }
 </style>
