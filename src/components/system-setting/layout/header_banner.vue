@@ -2,7 +2,7 @@
   <div class="header-banner">
     <div class="header-banner-left">
       <span class="collaspe">       <el-icon><fold/></el-icon>    </span>
-      <span class="menu-nav">首页 / 系统设置 / 用户管理</span>
+      <span class="menu-nav">首页 > 系统设置 > 用户管理</span>
     </div>
 
     <div class="header-banner-right">管理员</div>

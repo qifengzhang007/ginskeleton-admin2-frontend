@@ -7,17 +7,19 @@ export const useTabStore = defineStore({
     state: () => {
         return {
             tabs: {
-                // list 数组的基本结构
+                // list 数组的空白数据结构
                 item: {
                     name: '',   // 菜单的 name 字段
                     isActive: false,
                     relaMenuId: -1,  // tab 对应的菜单 id, 该值是唯一的
+                    icon:'',
                     path: ''  // tab 对应的路由路径
                 },
                 curMenuItem: {
                     name: '',
                     isActive: true,
                     relaMenuId: -1,
+                    icon:'',
                     path: '',
                 },
                 curPath: '',
@@ -35,7 +37,7 @@ export const useTabStore = defineStore({
         /* 点击菜单时， 添加 tab 导航按钮
         @item tab单条数据
         */
-        add(menuName, menuId, menuPath, actionFrom = 'menu') {
+        add(menuName, menuId, menuIcon,menuPath, actionFrom = 'menu') {
             if (this.tabs.curMenuItem.path === menuPath) return
             //
             // this.tabs.curMenuItem.relaMenuId = menuId
@@ -45,6 +47,7 @@ export const useTabStore = defineStore({
             tepItem.name = menuName
             tepItem.isActive = true
             tepItem.relaMenuId = menuId
+            tepItem.icon = menuIcon
             tepItem.path = menuPath
 
             this.tabs.curMenuItem = Object.assign({}, tepItem)

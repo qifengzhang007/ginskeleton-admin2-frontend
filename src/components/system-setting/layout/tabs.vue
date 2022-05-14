@@ -7,10 +7,12 @@
       </el-icon>
 
       <ul ref="scrollBody" class="scroll-tab" :style="{left: tagBodyLeft+'px'}">
-        <li class="scroll-tabs" v-for="(item,index) in tabStore.tabs.list" :key="index" :relaMenuId="item.relaMenuId" :relaMenuPath="item.path"
-            @click.stop="activeTab(item.name,item.relaMenuId,item.path,'tab')"
+        <li class="scroll-tabs" v-for="(item,index) in tabStore.tabs.list" :key="index"
+            @click.stop="activeTab(item.name,item.relaMenuId,item.icon,item.path,'tab')"
         >
-          <span :class="{circle:true, circleActive:item.isActive}"> </span>
+          <el-icon :size="14" :class="{tabIconActive:item.isActive}">
+            <component :is="item.icon"/>
+          </el-icon>
           <span class="tab-title">{{ item.name }}</span>
           <span class="close-icon" @click.stop="tabStore.remove(item.relaMenuId,item.isActive)">x</span>
         </li>
@@ -89,8 +91,8 @@ export default {
     }
 
     // tab 激活(添加)事件
-    const activeTab = (menuName, relaMenuId, menuPath, actionFrom) => {
-      tabStore.add(menuName, relaMenuId, menuPath, actionFrom)
+    const activeTab = (menuName, relaMenuId, menuIcon, menuPath, actionFrom) => {
+      tabStore.add(menuName, relaMenuId, menuIcon, menuPath, actionFrom)
     }
 
     return {
@@ -165,6 +167,7 @@ export default {
   list-style: none;
   background-color: white;
   cursor: default;
+  padding-left: 4px;
 }
 
 li.scroll-tabs:hover {
@@ -208,19 +211,8 @@ li.scroll-tabs:last-child {
   border-bottom: 1px solid #dadada;
 }
 
-.circle {
-  float: left;
-  height: 12px;
-  width: 12px;
-  border-radius: 6px;
-  background-color: #e1e1e1;
-  display: inline-block;
-  margin-left: 4px;
-  margin-right: 4px;
-}
-
-.circleActive {
-  background-color: #409eff;
+.tabIconActive {
+  color: #409eff;
 }
 
 .tab-title {

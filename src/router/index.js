@@ -12,7 +12,7 @@ const router = createRouter({
             name: 'home',
             component: () => import(/* webpackChunkName: "home" */  '@/views/system-setting/home.vue'),
             meta: {
-                icon: "grid",
+                icon: "menu",
                 id: 1,
                 title: "首页"
             }
@@ -25,7 +25,7 @@ const router = createRouter({
                 login: () => import(/* webpackChunkName: "login" */   '@/views/system-setting/login.vue'),
             },
             meta: {
-                icon: "grid",
+                icon: "menu",
                 id: 2,
                 title: "登录"
             }
@@ -35,7 +35,7 @@ const router = createRouter({
             name: 'layout',
             component: () => import(/* webpackChunkName: "login" */   '@/views/layout/main.vue'),
             meta: {
-                icon: "grid",
+                icon: "menu",
                 id: 3,
                 title: "布局"
             }
@@ -45,7 +45,7 @@ const router = createRouter({
             name: 'sys_menu',
             component: () => import(/* webpackChunkName: "sys_menu" */  '@/views/system-setting/sys_menu.vue'),
             meta: {
-                icon: "grid",
+                icon: "menu",
                 id: 4,
                 title: "系统菜单"
             }
@@ -55,7 +55,7 @@ const router = createRouter({
         //     name: 'organization',
         //     component: () => import(/* webpackChunkName: "organization" */  '@/views/system-setting/organization.vue'),
         //     meta: {
-        //         icon: "grid",
+        //         icon: "menu",
         //         id: 5,
         //         title: "组织机构"
         //     }
@@ -65,7 +65,7 @@ const router = createRouter({
             name: 'organization',
             component: () => import(/* webpackChunkName: "organization" */  '@/views/system-setting/organization.vue'),
             meta: {
-                icon: "grid",
+                icon: "menu",
                 id: 6,
                 title: "组织机构"
             }
@@ -75,7 +75,7 @@ const router = createRouter({
             name: 'post_members',
             component: () => import(/* webpackChunkName: "post_members" */  '@/views/system-setting/post_members.vue'),
             meta: {
-                icon: "grid",
+                icon: "menu",
                 id: 7,
                 title: '岗位成员'
             }
@@ -85,7 +85,7 @@ const router = createRouter({
             name: 'user',
             component: () => import(/* webpackChunkName: "users" */  '@/views/system-setting/user.vue'),
             meta: {
-                icon: "grid",
+                icon: "avatar",
                 id: 8,
                 title: '用户'
             }
@@ -95,7 +95,7 @@ const router = createRouter({
             name: 'button',
             component: () => import(/* webpackChunkName: "button" */  '@/views/system-setting/button.vue'),
             meta: {
-                icon: "grid",
+                icon: "menu",
                 id: 9,
                 title: '按钮'
             }
@@ -105,7 +105,7 @@ const router = createRouter({
             name: 'auth_dispath',
             component: () => import(/* webpackChunkName: "auth_dispath" */  '@/views/system-setting/auth_dispath.vue'),
             meta: {
-                icon: "grid",
+                icon: "setting",
                 id: 10,
                 title: '权限分配'
             }
@@ -115,7 +115,7 @@ const router = createRouter({
             name: 'auth_analysis',
             component: () => import(/* webpackChunkName: "auth_analysis" */  '@/views/system-setting/auth_analysis.vue'),
             meta: {
-                icon: "grid",
+                icon: "Histogram",
                 id: 11,
                 title: '权限分析'
             }
@@ -126,7 +126,7 @@ const router = createRouter({
             name: 'province_city',
             component: () => import(/* webpackChunkName: "province_city" */  '@/views/dictionary/province_city.vue'),
             meta: {
-                icon: "grid",
+                icon: "menu",
                 id: 12,
                 title: '省市区'
             }

@@ -76,7 +76,7 @@ export default {
           // 如果没有，则跳至登录页面
           next({name: 'login'})
         } else {
-          tabsStore.add(to.meta.title, to.meta.id, to.path)
+          tabsStore.add(to.meta.title, to.meta.id, to.meta.icon,to.path)
           next()
         }
       }

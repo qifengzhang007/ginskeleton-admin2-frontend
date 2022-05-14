@@ -8,6 +8,8 @@ declare module '@vue/runtime-core' {
     Carouse: typeof import('./components/system-setting/login-form/carouse.vue')['default']
     Copy_right: typeof import('./components/system-setting/login-form/copy_right.vue')['default']
     ElAside: typeof import('element-plus/es')['ElAside']
+    ElBreadcrumb: typeof import('element-plus/es')['ElBreadcrumb']
+    ElBreadcrumbItem: typeof import('element-plus/es')['ElBreadcrumbItem']
     ElButton: typeof import('element-plus/es')['ElButton']
     ElDropdown: typeof import('element-plus/es')['ElDropdown']
     ElDropdownItem: typeof import('element-plus/es')['ElDropdownItem']
