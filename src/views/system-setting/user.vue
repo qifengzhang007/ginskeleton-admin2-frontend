@@ -1,47 +1,39 @@
 <template>
-
   <div>
-    <el-input v-model="abc" placeholder="abc"  clearable  />
+    <el-input v-model="abc" placeholder="abc" clearable/>
+    users 用户管理:{{ userInfo.user.Info.user_name }}, 年龄：{{ userInfo.user.Info.age }}
+    <el-button type="primary" @click="userInfo.user.Info.age++">Default</el-button>
 
-    users 用户管理:{{userInfo.user.Info.user_name}}, 年龄：{{userInfo.user.Info.age}}
-
-    <br/>
-    <br/>
-    <br/>
-    <el-button  type="primary"  @click="userInfo.user.Info.age++">Default</el-button>
   </div>
-
 </template>
 
 <script>
-import {list, show_button, view_button_list} from '@/api/system-setting/user'
-import {useUserStore}  from  '@/store/user'
-import {storeToRefs}  from  'pinia'
- import {ref,reactive}  from  'vue'
+import {list} from '@/api/system-setting/user'
+import {useUserStore} from '@/store/user'
+import {storeToRefs} from 'pinia'
+import {reactive, ref} from 'vue'
 
 
 export default {
   name: "User",
-  components:{
-
-  },
+  components: {},
   setup() {
 
-    let tempParams=reactive({
+    let tempParams = reactive({
       user_name: '',
       page: 1,
       limit: 20,
-      age:10
+      age: 10
     })
-    let userInfo=useUserStore()
-    let  {user,test_params}=storeToRefs(userInfo)
+    let userInfo = useUserStore()
+    let {user, test_params} = storeToRefs(userInfo)
 
-    let abc=ref('')
+    let abc = ref('')
 
     list(tempParams).then(res => {
-      console.log("请求后端接口返回值：",res.data)
+      console.log("请求后端接口返回值：", res.data)
     }).catch(res => {
-      console.log("后端接口响应异常：",res)
+      console.log("后端接口响应异常：", res)
     })
 
     const btn_test = () => {
@@ -50,7 +42,7 @@ export default {
     }
 
     return {
-      user,test_params,
+      user, test_params,
       userInfo,
       abc,
       // tempParams,

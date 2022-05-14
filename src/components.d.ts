@@ -9,10 +9,9 @@ declare module '@vue/runtime-core' {
     Copy_right: typeof import('./components/system-setting/login-form/copy_right.vue')['default']
     ElAside: typeof import('element-plus/es')['ElAside']
     ElButton: typeof import('element-plus/es')['ElButton']
-    ElCarousel: typeof import('element-plus/es')['ElCarousel']
-    ElCarouselItem: typeof import('element-plus/es')['ElCarouselItem']
-    ElForm: typeof import('element-plus/es')['ElForm']
-    ElFormItem: typeof import('element-plus/es')['ElFormItem']
+    ElDropdown: typeof import('element-plus/es')['ElDropdown']
+    ElDropdownItem: typeof import('element-plus/es')['ElDropdownItem']
+    ElDropdownMenu: typeof import('element-plus/es')['ElDropdownMenu']
     ElIcon: typeof import('element-plus/es')['ElIcon']
     ElInput: typeof import('element-plus/es')['ElInput']
     ElMenu: typeof import('element-plus/es')['ElMenu']
@@ -25,7 +24,9 @@ declare module '@vue/runtime-core' {
     Left_menu: typeof import('./components/system-setting/layout/left_menu.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    Scroll_bar: typeof import('./components/system-setting/layout/scroll_bar.vue')['default']
     Tabs: typeof import('./components/system-setting/layout/tabs.vue')['default']
+    Tabs_container: typeof import('./components/system-setting/layout/tabs_container.vue')['default']
     Title: typeof import('./components/system-setting/login-form/title.vue')['default']
   }
 }

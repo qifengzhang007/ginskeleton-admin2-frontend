@@ -9,11 +9,16 @@ export const useTabStore = defineStore({
             tabs: {
                 // list 数组的基本结构
                 item: {
-                    type: 'info',
-                    label: '',   // 相当于菜单的 name 字段
+                    name: '',   // 菜单的 name 字段
                     isActive: false,
                     relaMenuId: -1,  // tab 对应的菜单 id, 该值是唯一的
                     path: ''  // tab 对应的路由路径
+                },
+                curMenuItem: {
+                    name: '',
+                    isActive: true,
+                    relaMenuId: -1,
+                    path: '',
                 },
                 curPath: '',
                 list: [],
@@ -31,14 +36,19 @@ export const useTabStore = defineStore({
         @item tab单条数据
         */
         add(menuName, menuId, menuPath, actionFrom = 'menu') {
-            this.tabs.curPath = menuPath
-
+            if (this.tabs.curMenuItem.path === menuPath) return
+            //
+            // this.tabs.curMenuItem.relaMenuId = menuId
+            // this.tabs.curMenuItem.path = menuPath
+            // tepItem 变量用于后面的数组方法：push，不能直接使用this.tabs.curMenuItem ，否则永远只会添加成功最一条
             const tepItem = Object.assign({}, this.tabs.item)
-            tepItem.label = menuName
+            tepItem.name = menuName
             tepItem.isActive = true
             tepItem.relaMenuId = menuId
             tepItem.path = menuPath
-            console.log("tab切换时的参数：", tepItem)
+
+            this.tabs.curMenuItem = Object.assign({}, tepItem)
+
             const exists = this.tabs.list.some(item => {
                 return item.relaMenuId === menuId
             })
@@ -47,8 +57,8 @@ export const useTabStore = defineStore({
                 this.tabs.list.push(tepItem)
                 // 如果菜单对应的tab存在，则激活
             }
-            this.activeTab(menuId)
             this.syncChangeRouter(menuPath, actionFrom)
+            this.activeTab(menuId)
         },
 
         /* 删除 tab 导航按钮
@@ -74,8 +84,9 @@ export const useTabStore = defineStore({
                 this.tabs.list[nextTabIndex].isActive = true
             }
             if (this.tabs.list.length > 0) {
-                this.tabs.curPath = this.tabs.list[nextTabIndex].path
-                this.syncChangeRouter(this.tabs.curPath, 'tab')
+                this.tabs.curMenuItem.relaMenuId = nextTabIndex
+                this.tabs.curMenuItem.path = this.tabs.list[nextTabIndex].path
+                this.syncChangeRouter(this.tabs.curMenuItem.path, 'tab')
             }
 
         },
@@ -109,11 +120,19 @@ export const useTabStore = defineStore({
         },
 
         /*
-        tab切换时设置当前的路由path
-        @path  路由路径
+           关闭非选中的其它tab页签
          */
-        setCurrentRoutePath(path) {
-            this.tabs.curPath = path
+        closeOtherTabs() {
+            this.tabs.list[0] = this.tabs.curMenuItem
+            this.tabs.list.splice(1, this.tabs.list.length - 1)
+        },
+        /*
+            关闭所有tab页签
+        */
+        closeAllTabs() {
+            this.tabs.list = []
+            const routerStore = useRouteStore()
+            routerStore.getRoute.push('/')
         }
     }
 
