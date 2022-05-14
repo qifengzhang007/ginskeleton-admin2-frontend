@@ -237,7 +237,7 @@ li.scroll-tabs:last-child {
   text-align: right;
   width: 26px;
   padding-right: 6px;
-  font-size: 20px;
+  font-size: 18px;
   position: relative;
   top: -2px;
   font-family: "微软雅黑 Light", serif;
