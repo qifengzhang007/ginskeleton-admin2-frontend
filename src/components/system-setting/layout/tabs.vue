@@ -45,7 +45,7 @@
 <script>
 import {ref} from 'vue'
 import {ArrowLeft, ArrowRight, CircleClose} from '@element-plus/icons-vue'
-import {useTabStore} from "@/store/tabs";
+import {useTabStore} from "@/store/system-setting/tabs";
 
 
 export default {

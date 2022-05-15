@@ -2,7 +2,8 @@ import {defineStore} from 'pinia'
 
 
 export const useRouteStore = defineStore({
-    id: 'useRouteStore', state: () => {
+    id: 'useRouteStore',
+    state: () => {
         return {
             route: {}
         }

@@ -43,9 +43,9 @@ import HeaderBanner from '@/components/system-setting/layout/header_banner.vue'
 import Tabs from '@/components/system-setting/layout/tabs.vue'
 import LeftMenu from '@/components/system-setting/layout/left_menu.vue'
 import {useRouter} from 'vue-router'
-import {useUserStore} from "@/store/user";
-import {useTabStore} from "@/store/tabs";
-import {useRouteStore} from "@/store/route";
+import {useUserStore} from "@/store/system-setting/user";
+import {useTabStore} from "@/store/system-setting/tabs";
+import {useRouteStore} from "@/store/system-setting/route";
 
 export default {
   name: "Main",

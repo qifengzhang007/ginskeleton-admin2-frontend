@@ -40,12 +40,12 @@
 import {get, getImg} from "@/api/system-setting/captcha"
 import config from '@/config/index'
 import {reactive, ref, toRefs} from "vue";
-import { Key,Grid,Avatar } from '@element-plus/icons-vue'
+// import { Key,Grid,Avatar } from '@element-plus/icons-vue'
 
 export default {
   name: 'Form',
   components:{
-Key,Grid,Avatar
+// Key,Grid,Avatar
   },
   setup() {
 const loginForm=ref(null)

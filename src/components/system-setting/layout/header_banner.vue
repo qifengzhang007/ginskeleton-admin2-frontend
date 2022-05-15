@@ -1,8 +1,13 @@
 <template>
   <div class="header-banner">
     <div class="header-banner-left">
-      <span class="collaspe">       <el-icon><fold/></el-icon>    </span>
-      <span class="menu-nav">首页 > 系统设置 > 用户管理</span>
+      <span class="collapse">       <el-icon><Fold/></el-icon>    </span>
+      <span class="menu-nav">
+        <el-breadcrumb separator-icon="ArrowRight">
+    <el-breadcrumb-item :to="{ path: '/' }">  <el-icon :size="16" style="vertical-align: middle">    <HomeFilled />    </el-icon> <span style="vertical-align: middle;color: #505050">首页</span></el-breadcrumb-item>
+    <el-breadcrumb-item v-for="item  in menuStore.getMenuNavPathList(tabsStore.tabs.curMenuItem.relaMenuId)">{{ item.title }}</el-breadcrumb-item>
+  </el-breadcrumb>
+      </span>
     </div>
 
     <div class="header-banner-right">管理员</div>
@@ -12,15 +17,32 @@
 </template>
 
 <script>
-import {Fold, Key} from '@element-plus/icons-vue'
+import {useHeaderBannerStore} from '@/store/system-setting/header_banner'
+import {useMenuStore} from '@/store/system-setting/menu'
+import {useTabStore} from '@/store/system-setting/tabs'
+import {reactive, ref, toRefs} from 'vue'
+
 
 export default {
   name: "HeaderBanner",
-  components: {
-    Key, Fold
-  },
+  components: {},
   setup() {
-    return {}
+
+    // const stateData = reactive({
+    //
+    // })
+
+    const menuStore = useMenuStore()
+    const headerBannerStore = useHeaderBannerStore()
+    const tabsStore = useTabStore()
+
+    return {
+      // ...toRefs(stateData),
+      // headerBannerStore,
+      tabsStore,
+      menuStore,
+
+    }
 
   }
 
@@ -28,7 +50,7 @@ export default {
 </script>
 
 <style scoped>
-.collaspe {
+.collapse {
   display: inline-block;
   width: 80px;
   text-align: center;
@@ -47,7 +69,8 @@ export default {
 }
 
 .header-banner-left {
-  display: inline-block;
+  display: flex;
+  align-items: center;
   float: left;
   width: 80%;
   padding-left: 4px;
@@ -55,6 +78,7 @@ export default {
 
 .menu-nav {
   display: inline-block;
+  font-size: 18px;
 }
 
 .header-banner-right {

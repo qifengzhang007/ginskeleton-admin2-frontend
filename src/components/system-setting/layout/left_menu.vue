@@ -12,25 +12,29 @@
           text-color="#d3d3d4"
           :router="true"
           active-text-color="#fefefe"
-          :unique-opened="false"
+          :unique-opened="true"
           :collapse-transition="false"
-          :default-active='menuStore.menu.currentMenu.path'
+          :default-active='menuStore.menu.currentMenu.defaultPath'
           class="el-menu-vertical-demo"
       >
         <el-menu-item index="20">
-          <el-icon>     <grid/>  </el-icon>
+          <el-icon>
+            <grid/>
+          </el-icon>
           <span>首页</span>
         </el-menu-item>
 
         <el-sub-menu :index="item.path" v-for="(item,index)  in menuList">
           <template #title>
-            <span>{{item.title}}</span>
+            <span>{{ item.title }}</span>
           </template>
           <el-menu-item-group>
-              <el-menu-item :index="item.path+'/'+itemL2.path"  v-for="(itemL2,index2)  in item.children"   @open="">
-                  <el-icon>     <grid/>  </el-icon>
-                  {{itemL2.title}}
-              </el-menu-item>
+            <el-menu-item :index="item.path+'/'+itemL2.path" v-for="(itemL2,index2)  in item.children" :menuName="itemL2.title">
+              <el-icon>
+                <Grid/>
+              </el-icon>
+              {{ itemL2.title }}
+            </el-menu-item>
           </el-menu-item-group>
         </el-sub-menu>
 
@@ -41,28 +45,23 @@
 </template>
 
 <script>
-import {useMenuStore} from '@/store/menu'
-import {Avatar, Grid, Menu} from '@element-plus/icons-vue'
-import {reactive, toRefs} from "vue";
-
+import {useMenuStore} from '@/store/system-setting/menu'
+import {useHeaderBannerStore} from '@/store/system-setting/header_banner'
+import {toRefs} from "vue";
 
 export default {
   name: "LeftMenu",
   components: {
-    Menu, Avatar, Grid
+
   },
   setup() {
     const menuStore = useMenuStore()     // 实例化
-    let  menuList=menuStore.getMenuList()
+    let menuList = menuStore.getMenuList()
+    const headerBannerStore = useHeaderBannerStore()
 
-    const sateData={
-      abc:1024,
-      def:1024,
+    const sateData = {
+      key: '',
     }
-
-
-    // let {user} = storeToRefs(menu)   // 根据实际情况进行对象成员的解构
-    console.log(menuStore)
 
     // 本页面需要导出清单：
     return {
@@ -70,7 +69,8 @@ export default {
       ...toRefs(sateData),
       menuList,
       //2.函数列表
-      menuStore
+      menuStore,
+      headerBannerStore
     }
   }
 }
