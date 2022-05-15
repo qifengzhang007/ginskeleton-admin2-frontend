@@ -4,12 +4,22 @@
     users 用户管理:{{ userInfo.user.Info.user_name }}, 年龄：{{ userInfo.user.Info.age }}
     <el-button type="primary" @click="userInfo.user.Info.age++">Default</el-button>
 
+    <div>
+
+
+      <el-icon  :size="80">
+        <component  is="Menu" />
+        <component is="Delete" />
+        <component is="avatar" />
+        <component is="grid" />
+      </el-icon>
+    </div>
   </div>
 </template>
 
 <script>
 import {list} from '@/api/system-setting/user'
-import {useUserStore} from '@/store/user'
+import {useUserStore} from '@/store/system-setting/user'
 import {storeToRefs} from 'pinia'
 import {reactive, ref} from 'vue'
 
