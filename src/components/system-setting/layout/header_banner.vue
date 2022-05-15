@@ -4,7 +4,7 @@
       <span class="collapse">       <el-icon><Fold/></el-icon>    </span>
       <span class="menu-nav">
         <el-breadcrumb separator-icon="ArrowRight">
-    <el-breadcrumb-item :to="{ path: '/' }">  <el-icon :size="16" style="vertical-align: middle">    <HomeFilled />    </el-icon> <span style="vertical-align: middle;color: #505050">首页</span></el-breadcrumb-item>
+    <el-breadcrumb-item :to="{ path: '/' }">  <el-icon :size="16" style="vertical-align: middle">    <HomeFilled />    </el-icon> <span style="vertical-align: middle;color: #858585">首页</span></el-breadcrumb-item>
     <el-breadcrumb-item v-for="item  in menuStore.getMenuNavPathList(tabsStore.tabs.curMenuItem.relaMenuId)">{{ item.title }}</el-breadcrumb-item>
   </el-breadcrumb>
       </span>

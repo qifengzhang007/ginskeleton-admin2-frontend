@@ -15,6 +15,7 @@
           </el-icon>
           <span :class="{tabTitle:true,tabIconTxtActive:item.isActive}">{{ item.name }}</span>
           <span class="close-icon" @click.stop="tabStore.remove(item.relaMenuId,item.isActive)">x</span>
+<!--          <span v-if="item.path!=='/home'"  class="close-icon" @click.stop="tabStore.remove(item.relaMenuId,item.isActive)">x</span>-->
         </li>
       </ul>
 
