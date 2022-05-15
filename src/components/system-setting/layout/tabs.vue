@@ -10,10 +10,10 @@
         <li class="scroll-tabs" v-for="(item,index) in tabStore.tabs.list" :key="index"
             @click.stop="activeTab(item.name,item.relaMenuId,item.icon,item.path,'tab')"
         >
-          <el-icon :size="14" :class="{tabIconActive:item.isActive}">
+          <el-icon :size="14" :class="{tabIconTxtActive:item.isActive}">
             <component :is="item.icon"/>
           </el-icon>
-          <span class="tab-title">{{ item.name }}</span>
+          <span :class="{tabTitle:true,tabIconTxtActive:item.isActive}">{{ item.name }}</span>
           <span class="close-icon" @click.stop="tabStore.remove(item.relaMenuId,item.isActive)">x</span>
         </li>
       </ul>
@@ -211,11 +211,11 @@ li.scroll-tabs:last-child {
   border-bottom: 1px solid #dadada;
 }
 
-.tabIconActive {
-  color: #409eff;
+.tabIconTxtActive {
+  color: #2d8cf0;
 }
 
-.tab-title {
+.tabTitle {
   display: flex;
   align-items: center;
   justify-content: center;
