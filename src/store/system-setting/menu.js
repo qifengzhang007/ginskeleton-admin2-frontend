@@ -82,7 +82,6 @@ export const useMenuStore = defineStore({
         @menuNavPathName 菜单导航路径名称
         */
         getMenuNavPathList(menuId) {
-            console.log("getMenuNavPathList 中 menuId 参数：", menuId)
             this.setMenuNavPathList(menuId)
             return this.menu.menuNavPathList.get(menuId)
         },
