@@ -10,8 +10,8 @@ export const useMenuStore = defineStore({
                 // 当前菜单,该值为默认值
                 currentMenu: {
                     id: '',  // 最新打开的菜单id
-                    defaultPath: '/',  // 默认打开的路由
                 },
+                // 后台返回的菜单列表原始数据
                 list: [],
                 menuNavPathList: new Map(),
                 menuNavPathListArray: [],

@@ -14,12 +14,12 @@
           active-text-color="#fefefe"
           :unique-opened="true"
           :collapse-transition="false"
-          :default-active='menuStore.menu.currentMenu.defaultPath'
+          default-active='/'
           class="el-menu-vertical-demo"
       >
         <el-menu-item index="20">
           <el-icon>
-            <grid/>
+            <Grid/>
           </el-icon>
           <span>首页</span>
         </el-menu-item>

@@ -18,29 +18,6 @@ const router = createRouter({
             }
         },
         {
-            path: '/login',
-            name: 'login',
-            components: {
-                //  default: ()=>import(/* webpackChunkName: "default" */   '@/views/system-setting/login.vue'),
-                login: () => import(/* webpackChunkName: "login" */   '@/views/system-setting/login.vue'),
-            },
-            meta: {
-                icon: "menu",
-                id: 2,
-                title: "登录"
-            }
-        },
-        // {
-        //     path: '/layout',
-        //     name: 'layout',
-        //     component: () => import(/* webpackChunkName: "login" */   '@/views/layout/main.vue'),
-        //     meta: {
-        //         icon: "menu",
-        //         id: 3,
-        //         title: "布局"
-        //     }
-        // },
-        {
             path: '/system-setting/system_menu',
             name: 'sys_menu',
             component: () => import(/* webpackChunkName: "sys_menu" */  '@/views/system-setting/sys_menu.vue'),
@@ -120,17 +97,7 @@ const router = createRouter({
                 id: 42,
                 title: '省市区'
             }
-        },
-        {
-            path: '/:pathMatch(.*)*',
-            name: 'blank_page',
-            component: () => import(/* webpackChunkName: "blank_page" */  '@/views/system-setting/blank_page.vue'),
-            meta: {
-                icon: "",
-                id: 0,
-                title: ''
-            }
-        },
+        }
 
     ]
 })
