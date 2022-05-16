@@ -11,10 +11,9 @@
     </div>
 
     <div class="header-banner-right">
-      <el-icon :size="24">
-        <FullScreen/>
-      </el-icon>
-      <el-avatar shape="circle" :size="50" src="http://139.196.101.31:20201/storage/uploaded/2021_03/0cab2657f435a6424d5716ec8ce6c847.png"/>
+
+      <img :src="getFullScreenRelaIconPath()" alt="" @click="browserScreenFullEvent()" >&nbsp;&nbsp;&nbsp;&nbsp;
+      <el-avatar shape="square" fit="fit" style="background-color: white" :size="40" src="http://139.196.101.31:20201/storage/uploaded/2021_03/0cab2657f435a6424d5716ec8ce6c847.png"/>
 
       <el-dropdown size="small" @command="handleCommand">
     <span class="el-dropdown-link">
@@ -40,16 +39,20 @@
 import {useMenuStore} from '@/store/system-setting/menu'
 import {useTabStore} from '@/store/system-setting/tabs'
 import {useRouteStore} from '@/store/system-setting/route'
-
+import screenfull from 'screenfull'
+import {reactive, toRefs} from 'vue'
 
 export default {
   name: "HeaderBanner",
   components: {},
   setup() {
 
-    // const stateData = reactive({
-    //
-    // })
+    const stateData = reactive({
+      fullScreen: {
+        Status: 0,
+      }
+
+    })
 
     const menuStore = useMenuStore()
     const tabsStore = useTabStore()
@@ -60,7 +63,6 @@ export default {
     const handleCommand = (command) => {
       switch (command) {
         case 'loginOut':
-          console.log('退出登陆')
           routerStore.getRoute.push('/login')
           break
         case 'edit':
@@ -69,13 +71,23 @@ export default {
       }
     }
 
+    const browserScreenFullEvent = () => {
+      if (!screenfull.isEnabled) return
+      stateData.fullScreen.Status === 0 ? stateData.fullScreen.Status = 1 : stateData.fullScreen.Status = 0
+      stateData.fullScreen.Status ? screenfull.toggle() : screenfull.exit()
+    }
+    const getFullScreenRelaIconPath = () => {
+     return new URL(`../../../assets/images/full-icon-${stateData.fullScreen.Status}.png`, import.meta.url).href
+    }
 
     return {
-      // ...toRefs(stateData),
+      ...toRefs(stateData),
       // headerBannerStore,
       tabsStore,
       menuStore,
-      handleCommand
+      handleCommand,
+      browserScreenFullEvent,
+      getFullScreenRelaIconPath
     }
 
   }
