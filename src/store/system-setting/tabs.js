@@ -43,7 +43,7 @@ export const useTabStore = defineStore({
         @actionFrom 调用tab-add方法事件来源
         */
         add(menuName, menuId, menuIcon, menuPath, actionFrom = 'menu') {
-            if (this.tabs.curMenuItem.path === menuPath) return
+            if (this.tabs.curMenuItem.path === menuPath || menuName==='') return
 
             // tepItem 变量用于后面的数组方法：push，不能直接使用this.tabs.curMenuItem ，否则永远只会添加成功最一条
             const tepItem = Object.assign({}, this.tabs.item)
@@ -88,17 +88,13 @@ export const useTabStore = defineStore({
             } else if (this.tabs.list.length > 1) {
                 nextTabIndex = tabIndex
                 this.tabs.list[nextTabIndex].isActive = true
-            } else if (this.tabs.list.length === 1) {
-                nextTabIndex = 0
-                this.tabs.list[nextTabIndex].isActive = true
             }
             if (this.tabs.list.length > 0) {
                 this.tabs.curMenuItem.relaMenuId = this.tabs.list[nextTabIndex].relaMenuId
                 this.tabs.curMenuItem.path = this.tabs.list[nextTabIndex].path
                 this.syncChangeRouter(this.tabs.curMenuItem.path, 'tab')
-                console.log("remove函数 - nextTabIndex：", this.tabs.curMenuItem.relaMenuId)
             } else {
-                this.syncChangeRouter('/', 'tab')
+                this.syncChangeRouter('/blank_page', 'tab')
             }
         },
 
@@ -142,8 +138,7 @@ export const useTabStore = defineStore({
         */
         closeAllTabs() {
             this.tabs.list = []
-            const routerStore = useRouteStore()
-            routerStore.getRoute.push('/')
+            this.syncChangeRouter('/blank_page', 'tab')
         }
     }
 

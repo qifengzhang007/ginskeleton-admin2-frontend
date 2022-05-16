@@ -120,7 +120,17 @@ const router = createRouter({
                 id: 42,
                 title: '省市区'
             }
-        }
+        },
+        {
+            path: '/:pathMatch(.*)*',
+            name: 'blank_page',
+            component: () => import(/* webpackChunkName: "blank_page" */  '@/views/system-setting/blank_page.vue'),
+            meta: {
+                icon: "",
+                id: 0,
+                title: ''
+            }
+        },
 
     ]
 })
