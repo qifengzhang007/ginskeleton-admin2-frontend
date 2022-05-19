@@ -26,7 +26,7 @@
       </div>
 
     </div>
-    <div v-else class="test-style">
+    <div v-else>
       <router-view v-slot="{ Component }" name="login">
         <transition name="router-fade" mode="out-in">
           <component :is="Component"/>
@@ -46,6 +46,8 @@ import {useRouter} from 'vue-router'
 import {useUserStore} from "@/store/system-setting/user";
 import {useTabStore} from "@/store/system-setting/tabs";
 import {useRouteStore} from "@/store/system-setting/route";
+import {useReloadStore} from "@/store/system-setting/reload";
+import config from '@/config/index';
 
 export default {
   name: "Main",
@@ -56,32 +58,44 @@ export default {
   },
   setup() {
     const userStore = useUserStore()     // 实例化
-    // let {user} = storeToRefs(user_info)   // 根据实际情况进行对象成员的解构
+    const reloadStore = useReloadStore()     // 实例化
+    // let {user} = storeToRefs(user.info)   // 根据实际情况进行对象成员的解构
     const tabsStore = useTabStore()
 
     const router = useRouter()
     let routerStore = useRouteStore()
     routerStore.setRoute(router)
 
-
-    router.beforeEach((to, from, next) => {
-      if (to.name === 'login') {
-        // 如果是登录路由，则不需要判断，直接跳转到登陆页面
-        userStore.destroyUserInfo()
-        next()
-      } else {
-        // 如果是业务路由，当token无效时，跳转到登录页面
-        if (!userStore.user.token.isValid) {
+    const routerGuard = () => {
+      router.beforeEach((to, from, next) => {
+        if (to.name === config.defaultRoute.notLoginDefaultRouterName) {
+          // 如果是登录路由，则不需要判断，直接跳转到登陆页面
           userStore.destroyUserInfo()
-          // 如果没有，则跳至登录页面
-          next({name: 'login'})
-        } else {
-          tabsStore.add(to.meta.title, to.meta.id, to.meta.icon,to.path)
           next()
+        } else {
+          // 如果是业务路由，当token无效时，跳转到登录页面
+          if (!userStore.user.token.isValid) {
+            userStore.destroyUserInfo()
+            // 如果没有，则跳至登录页面
+            next({name: config.defaultRoute.notLoginDefaultRouterName})
+          } else {
+            tabsStore.add(to.meta.title, to.meta.id, to.meta.icon, to.path)
+            next()
+          }
         }
-      }
+      })
+    }
 
-    })
+    if (userStore.user.token.isValid) {
+      reloadStore.reloadRouterMenu(userStore.user.info.id).then(res => {
+        routerGuard()
+      }).catch(err => {
+        console.log(err)
+      })
+    } else {
+      routerGuard()
+    }
+
 
     return {
       userStore

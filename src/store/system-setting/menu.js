@@ -1,5 +1,4 @@
 import {defineStore} from 'pinia'
-import {menuList} from '@/api/system-setting/menu'
 
 
 export const useMenuStore = defineStore({
@@ -11,8 +10,7 @@ export const useMenuStore = defineStore({
                 currentMenu: {
                     id: '',  // 最新打开的菜单id
                 },
-                // 后台返回的菜单列表原始数据
-                list: [],
+                list: [],  // 后台返回的菜单列表原始数据
                 menuNavPathList: new Map(),
                 menuNavPathListArray: [],
                 tmpPath: ''
@@ -20,15 +18,23 @@ export const useMenuStore = defineStore({
         }
     },
     // 通过函数形式定义属性
-    getters: {},
-    // 定义函数
-    actions: {
+    getters: {
         /*
         根据userId 查询属于该用户的菜单
         @userId 用户id
         */
-        getMenuList(userId) {
-            return this.menu.list.length > 0 ? this.menu.list : this.menu.list = menuList(userId)
+        getMenuList() {
+            return this.menu.list
+        },
+    },
+    // 定义函数
+    actions: {
+        /*
+        * 设置（初始化）菜单列表
+        @menuList 后台返回的菜单列表
+        */
+        initMenuList(menuList) {
+            this.menu.list = menuList
         },
 
         /*

@@ -12,11 +12,11 @@ import Title from '_c/system-setting/login-form/title.vue'
 import Carouse from '_c/system-setting/login-form/carouse.vue'
 import Form from '_c/system-setting/login-form/form.vue'
 import CopyRight from '_c/system-setting/login-form/copy_right.vue'
-import common_func from '@/libs/common_func'
+import commonFunc from '@/libs/common_func'
 import {reactive, ref, toRefs} from "vue"
 
 export default {
-  name: 'Loign',
+  name: 'Login',
   components: {
     Title,
     Carouse,
@@ -25,14 +25,14 @@ export default {
   },
   setup() {
     const loginForm = ref(null)
-    const state = reactive({
-      browseWidth: common_func.GetBrowserWidth() + 'px',
+    const stateData = reactive({
+      browseWidth: commonFunc.GetBrowserWidth() + 'px',
 
     })
     const handleSubmit = () => {
     }
     return {
-      ...toRefs(state),
+      ...toRefs(stateData),
       loginForm,
       handleSubmit
     }

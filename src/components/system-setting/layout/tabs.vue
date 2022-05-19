@@ -15,7 +15,6 @@
           </el-icon>
           <span :class="{tabTitle:true,tabIconTxtActive:item.isActive}">{{ item.name }}</span>
           <span class="close-icon" @click.stop="tabStore.remove(item.relaMenuId,item.isActive)">x</span>
-<!--          <span v-if="item.path!=='/home'"  class="close-icon" @click.stop="tabStore.remove(item.relaMenuId,item.isActive)">x</span>-->
         </li>
       </ul>
 
@@ -125,7 +124,8 @@ export default {
 
 #layout-tab-left {
   float: left;
-  display: inline-block;
+  display: flex;
+  align-items: center;
 }
 
 #layout-tab-right {
@@ -153,7 +153,6 @@ export default {
   position: relative;
   display: inline-flex;
   transition: all 0.2s;
-  margin-top: -4px;
 }
 
 /* tab页签（list）样式 */

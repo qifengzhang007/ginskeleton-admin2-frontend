@@ -24,7 +24,7 @@
           <span>首页</span>
         </el-menu-item>
 
-        <el-sub-menu :index="item.path" v-for="(item,index)  in menuList">
+        <el-sub-menu :index="item.path" v-for="(item,index)  in menuStore.menu.list">
           <template #title>
             <span>{{ item.title }}</span>
           </template>
@@ -51,23 +51,18 @@ import {toRefs} from "vue";
 
 export default {
   name: "LeftMenu",
-  components: {
-
-  },
+  components: {},
   setup() {
     const menuStore = useMenuStore()     // 实例化
-    let menuList = menuStore.getMenuList()
     const headerBannerStore = useHeaderBannerStore()
 
     const sateData = {
       key: '',
     }
 
-    // 本页面需要导出清单：
     return {
       //1.数据（变量结构之后导出
       ...toRefs(sateData),
-      menuList,
       //2.函数列表
       menuStore,
       headerBannerStore

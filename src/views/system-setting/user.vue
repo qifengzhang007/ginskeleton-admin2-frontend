@@ -1,8 +1,8 @@
 <template>
   <div>
     <el-input v-model="abc" placeholder="abc" clearable/>
-    users 用户管理:{{ userInfo.user.Info.user_name }}, 年龄：{{ userInfo.user.Info.age }}
-    <el-button type="primary" @click="userInfo.user.Info.age++">Default</el-button>
+    users 用户管理:{{ userInfo.user.info.user_name }}, 年龄：{{ userInfo.user.info.age }}
+    <el-button type="primary" @click="userInfo.user.info.age++">Default</el-button>
 
     <div>
 

@@ -1,20 +1,32 @@
 import {defineStore} from 'pinia'
 import common_func from '@/libs/common_func'
+import {clearCookie, clearLocalStorageAll, removeToken} from '@/libs/util'
 
 export const useUserStore = defineStore(
     {
         id: 'useUserStore',
+        persist: {
+            enabled: true,
+            strategies: [
+                {
+                    storage: localStorage,
+                    paths: ['user']
+                }
+            ]
+        },
         state: () => {
             return {
                 user: {
-                    Info: {
-                        user_name: '张三丰',
-                        id: 1,
-                        sex: 1,
-                        age: 18,
+                    info: {
+                        id: 0,
+                        user_name: '',
+                        real_name: '',
+                        avatar: '',
+                        login_times: 0,
+                        phone: '',
                     },
                     token: {
-                        isValid: true,
+                        isValid: false,
                         val: "",
                     }
                 },
@@ -22,15 +34,37 @@ export const useUserStore = defineStore(
         },
         getters: {
             getUserInfo() {
-                return this.user.Info
+                return this.user.info
             },
         },
         actions: {
-            setUserToken(token) {
-                this.user.token.isValid = true
+            /*
+            登陆成功初始化一下用户最基本信息
+             */
+            setUserBaseInfo(userId, token) {
+                this.user.info.id = userId
                 this.user.token.val = token
+                this.user.token.isValid = true
+            },
+
+            /**
+             * 设置用户的完整信息
+             * @param userInfo
+             */
+            setUserInfo(userInfo) {
+                this.user.info.id = userInfo.id
+                this.user.info.user_name = userInfo.user_name
+                this.user.info.real_name = userInfo.real_name
+                this.user.info.avatar = userInfo.avatar
+                this.user.info.phone = userInfo.phone
+                this.user.info.login_times = userInfo.login_times
+                this.user.token.isValid = true
+                this.user.token.val = userInfo.token
             },
             destroyUserInfo() {
+                clearCookie()
+                removeToken()
+                clearLocalStorageAll()
                 this.user = common_func.objInit(this.user)
             }
         }
