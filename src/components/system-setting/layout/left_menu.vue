@@ -29,7 +29,7 @@
             <span>{{ item.title }}</span>
           </template>
           <el-menu-item-group>
-            <el-menu-item :index="item.path+'/'+itemL2.path" v-for="(itemL2,index2)  in item.children" :menuName="itemL2.title">
+            <el-menu-item :index="'/'+item.path+'/'+itemL2.path" v-for="(itemL2,index2)  in item.children" :menuName="itemL2.title">
               <el-icon>
                 <Grid/>
               </el-icon>

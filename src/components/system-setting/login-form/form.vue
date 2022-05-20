@@ -110,10 +110,10 @@ export default {
           login(stateData.form).then(res => {
             if (res.status === 200 && res.data.code === 200) {
               // 先初始化用户的id和token
-              userStore.setUserBaseInfo(res.data.data.userId, res.data.data.token)
+              userStore.setUserBaseInfo(res.data.data.id, res.data.data.token)
               setToken(res.data.data.token)
               const reloadStore = useReloadStore()     // 实例化
-              reloadStore.reloadRouterMenu(res.data.data.userId).then(res => {
+              reloadStore.reloadRouterMenu(res.data.data.id).then(res => {
                 routerStore.getRoute.push(config.defaultRoute.loginDefaultRouterName)
               }).catch(err => {
                 console.log(err)
