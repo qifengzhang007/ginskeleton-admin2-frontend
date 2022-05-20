@@ -17,28 +17,32 @@
           default-active='/'
           class="el-menu-vertical-demo"
       >
-        <!--
-        <el-menu-item index="20">
-          <el-icon>
-            <Grid/>
-          </el-icon>
-          <span>首页</span>
-        </el-menu-item>
-      -->
-        <el-sub-menu :index="item.path" v-for="(item,index)  in menuStore.menu.list">
-          <template #title>
-            <span>{{ item.title }}</span>
+        <template :index="item.path" v-for="(item,index)  in menuStore.menu.list" :key="index">
+          <template v-if="item.has_sub_node">
+            <el-sub-menu :index="'/'+item.path">
+              <template #title>
+                <el-icon>    <component :is="item.icon"/></el-icon>
+                <span>{{ item.title }}</span>
+              </template>
+              <el-menu-item-group>
+                <el-menu-item :index="'/'+item.path+'/'+itemL2.path" v-for="(itemL2,index2)  in item.children" :menuName="itemL2.title">
+                  <el-icon>
+                    <el-icon>    <component :is="itemL2.icon"/></el-icon>
+                  </el-icon>
+                  {{ itemL2.title }}
+                </el-menu-item>
+              </el-menu-item-group>
+            </el-sub-menu>
           </template>
-          <el-menu-item-group>
-            <el-menu-item :index="'/'+item.path+'/'+itemL2.path" v-for="(itemL2,index2)  in item.children" :menuName="itemL2.title">
+          <template v-else>
+            <el-menu-item :index="'/'+item.path" :key="index">
               <el-icon>
-                <Grid/>
+                <component :is="item.icon"/>
               </el-icon>
-              {{ itemL2.title }}
+              <span>{{ item.title }}</span>
             </el-menu-item>
-          </el-menu-item-group>
-        </el-sub-menu>
-
+          </template>
+        </template>
 
       </el-menu>
     </el-aside>
