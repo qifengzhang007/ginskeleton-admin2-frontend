@@ -17,13 +17,14 @@
           default-active='/'
           class="el-menu-vertical-demo"
       >
+        <!--
         <el-menu-item index="20">
           <el-icon>
             <Grid/>
           </el-icon>
           <span>首页</span>
         </el-menu-item>
-
+      -->
         <el-sub-menu :index="item.path" v-for="(item,index)  in menuStore.menu.list">
           <template #title>
             <span>{{ item.title }}</span>

@@ -53,7 +53,7 @@ export const useMenuStore = defineStore({
                 if (item.id === id) {
                     this.tmpPath = item.path;
                     this.menu.menuNavPathListArray.push(Object.assign({}, item))
-                    return
+                    return this.menu.menuNavPathListArray
                 } else {
                     this.tmpPath = ''
                 }
@@ -81,7 +81,7 @@ export const useMenuStore = defineStore({
             }
             this.setMenuNavPathListArrayEmpty()
             const result = this.getMenuNavPathListRecursive(menuId)
-            if(result){
+            if (result) {
                 this.menu.menuNavPathList.set(menuId, result.reverse())
             }
 
