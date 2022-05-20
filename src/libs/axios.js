@@ -44,10 +44,11 @@ class HttpRequest {
                 case 0:
                     removeToken()
                     clearLocalStorageAll()
-                    window.localStorage.setItem("NetWorkStatus", "Bad")
                     ElMessage(config.errorSetting.serverNotStartTips)
-                    alert("错误：" + config.errorSetting.serverNotStartTips)
-                    window.location.href = '/' + config.defaultRoute.notLoginDefaultRouterName
+                    alert("错误：" + config.errorSetting.serverNotStartTips + window.location.href)
+                    if (!window.location.href.endsWith("login")) {
+                        window.location.href = '/' + config.defaultRoute.notLoginDefaultRouterName
+                    }
                     break
                 case 401:
                     removeToken()

@@ -17,14 +17,15 @@ export default {
     /**
      * @description api请求基础路径
      */
+
     baseUrl: {
         // npm run dev 有效
-        dev_captcha: 'http://127.0.0.1:20201',
-        dev: 'http://127.0.0.1:20201/admin',
+        dev_server_ip: 'http://127.0.0.1:20201',
+        dev_api_pre: 'http://127.0.0.1:20201/admin',
 
         // npm run build 有效
-        pro_captcha: 'http://139.196.101.31:20201',
-        pro: 'http://139.196.101.31:20201/admin'
+        pro_server_ip: 'http://139.196.101.31:20201',
+        pro_api_pre: 'http://139.196.101.31:20201/admin'
     },
 
     /**

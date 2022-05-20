@@ -1,11 +1,9 @@
 import HttpRequest from '@/libs/axios'
-import config from '@/config/index'
+import {getApiUrlPre, getServerIp} from '@/libs/util'
 import Qs from 'qs'
 
-const baseUrl = process.env.NODE_ENV === 'development' ? config.baseUrl.dev : config.baseUrl.pro
-const captchaUrl = process.env.NODE_ENV === 'development' ? config.baseUrl.dev_captcha : config.baseUrl.pro_captcha
-const httpClient = new HttpRequest(baseUrl)
-const captchaClient = new HttpRequest(captchaUrl)
+const httpClient = new HttpRequest(getApiUrlPre())
+const captchaClient = new HttpRequest(getServerIp())
 
 export default {
   name: "axios",
@@ -39,7 +37,6 @@ export default {
     })
   },
 
-  // 更多请求方式请自行封装即可
   //验证码
   captchaGet(request_uri, params) {
     return captchaClient.request({
@@ -57,4 +54,6 @@ export default {
       responseType: 'arraybuffer'
     })
   },
+  // 更多请求方式请自行封装即可
+
 }

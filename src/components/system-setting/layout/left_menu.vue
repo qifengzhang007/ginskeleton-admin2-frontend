@@ -47,7 +47,7 @@
 <script>
 import {useMenuStore} from '@/store/system-setting/menu'
 import {useHeaderBannerStore} from '@/store/system-setting/header_banner'
-import {toRefs} from "vue";
+import {reactive, toRefs} from "vue";
 
 export default {
   name: "LeftMenu",
@@ -56,9 +56,9 @@ export default {
     const menuStore = useMenuStore()     // 实例化
     const headerBannerStore = useHeaderBannerStore()
 
-    const sateData = {
+    const sateData = reactive({
       key: '',
-    }
+    })
 
     return {
       //1.数据（变量结构之后导出

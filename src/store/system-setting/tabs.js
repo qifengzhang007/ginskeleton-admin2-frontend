@@ -1,6 +1,8 @@
 import {defineStore} from 'pinia'
 import {useRouteStore} from "@/store/system-setting/route";
 import {useMenuStore} from "@/store/system-setting/menu";
+import commonFunc from '@/libs/common_func'
+
 //点击 菜单时 与 tabs 实现联动
 
 export const useTabStore = defineStore({
@@ -19,7 +21,7 @@ export const useTabStore = defineStore({
                 curMenuItem: {
                     name: '',
                     isActive: true,
-                    relaMenuId: -1,
+                    relaMenuId: 0,
                     icon: '',
                     path: '',
                 },
@@ -139,7 +141,15 @@ export const useTabStore = defineStore({
         closeAllTabs() {
             this.tabs.list = []
             this.syncChangeRouter('/blank_page', 'tab')
+        },
+
+        /*
+       退出时， 销毁本对象
+         */
+        destroy(){
+            commonFunc.objInit(this.tabs)
         }
+
     }
 
 

@@ -9,27 +9,13 @@
 
 
 <script>
-import {list, show_button, view_button_list} from '@/api/system-setting/user'
-
 export default {
   name: 'Home',
+  components: {},
   setup() {
 
-    let tempParams={
-      user_name: '',
-      page: 1,
-      limit: 20
-    }
 
-    list(tempParams).then(res => {
-     console.log("请求后端接口返回值：",res.data)
-    }).catch(res => {
-      console.log("后端接口响应异常：",res)
-    })
-
-    return {
-
-    }
+    return {}
   }
 }
 
@@ -39,7 +25,7 @@ export default {
 .index_style {
   text-align: center;
   color: #5c6b77;
-  margin-top:15%;
-  font-size:14px;
+  margin-top: 15%;
+  font-size: 14px;
 }
 </style>

@@ -1,6 +1,8 @@
 import {defineStore} from 'pinia'
-import common_func from '@/libs/common_func'
+import commonFunc from '@/libs/common_func'
 import {clearCookie, clearLocalStorageAll, removeToken} from '@/libs/util'
+import {useTabStore} from '@/store/system-setting/tabs'
+
 
 export const useUserStore = defineStore(
     {
@@ -61,11 +63,16 @@ export const useUserStore = defineStore(
                 this.user.token.isValid = true
                 this.user.token.val = userInfo.token
             },
+
+            /*
+            退出登陆时需要销毁的对象，可以全部集群在这里调用去销毁
+             */
             destroyUserInfo() {
                 clearCookie()
                 removeToken()
                 clearLocalStorageAll()
-                this.user = common_func.objInit(this.user)
+                commonFunc.objInit(this.user)
+                useTabStore().destroy()
             }
         }
     }

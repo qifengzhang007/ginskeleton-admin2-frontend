@@ -1,4 +1,3 @@
-import config from '@/config'
 import {ElMessage} from 'element-plus'
 
 /*
@@ -100,13 +99,6 @@ export default {
             return true
         },
         // 获取后端public路径
-    },
-
-    GetPublicPath() {
-        return process.env.NODE_ENV === 'development' ? config.baseUrl.dev_captcha : config.baseUrl.pro_captcha
-    },
-    GetAdminPath() {
-        return process.env.NODE_ENV === 'development' ? config.baseUrl.dev : config.baseUrl.pro
     },
     // 获取数组中字段的拼接值
     GetArrayColumnConcatVals() {

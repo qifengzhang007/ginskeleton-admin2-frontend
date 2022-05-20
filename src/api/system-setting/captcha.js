@@ -1,18 +1,21 @@
 import axios from '@/libs/api_request'
 
 // 获取验证码ID和图片地址
-export const get = () => {
-  return axios.captchaGet('/captcha/')
+export const getCaptchaInfo = () => {
+    return axios.captchaGet('/captcha/')
 }
 
-
-// 获取验证码ID和图片地址
-export const getImg = (img) => {
-  return axios.captchaImgGet(img)
+export const getCaptchaServerPre = () => {
+    return axios.captchaGet('/captcha/')
 }
 
-// 验证
-export const check = (url) => {
-  return axios.captchaGet(url)
+//根据 获取验证码ID获取图片地址
+export const getCaptchaImg = (img) => {
+    return axios.captchaImgGet(img)
+}
+
+// 校验验证码
+export const checkCaptcha = (url) => {
+    return axios.captchaGet(url)
 }
 
