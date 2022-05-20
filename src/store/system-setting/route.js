@@ -10,31 +10,11 @@ export const useRouteStore = defineStore({
             // 全局路由列表，从后端接口转换而来
             routeList: [],
             routeViews: {},
-            // 前端所必须的几个默认路由
-            defaultRouteList: [
-                {
-                    path: '/login',
-                    name: 'login',
-                    components: {
-                        login: () => import(/* webpackChunkName: "login" */   '@/views/system-setting/login.vue'),
-                    },
-                    meta: {
-                        icon: "menu",
-                        id: -1,
-                        title: "登录入口"
-                    }
-                },
-                {
-                    path: '/:pathMatch(.*)*',
-                    name: 'blank_page',
-                    component: () => import(/* webpackChunkName: "blank_page" */  '@/views/system-setting/blank_page.vue'),
-                    meta: {
-                        icon: "",
-                        id: -2,
-                        title: ''
-                    }
-                }
-            ]
+            //定义首页默认打开的页面（默认就是后台返回的第一个页面）
+            homeRouter: {
+                path: '/',
+                redirect: {name: ''}
+            },
         }
     },
     // 通过函数形式定义属性
@@ -105,7 +85,13 @@ export const useRouteStore = defineStore({
          */
         initRouteList(menuList) {
             this.routeViews = import.meta.glob("@/views/*/*.vue")
-            return this.routeList = this.menuListConvertRouteList(menuList)
+            this.routeList = this.menuListConvertRouteList(menuList)
+            // 初始化默认打开的第一页面
+            if (this.routeList.length > 0) {
+                this.homeRouter.redirect.name = this.routeList[0].name
+                this.routeList.unshift(this.homeRouter)
+            }
+            return this.routeList
         }
     }
 })
