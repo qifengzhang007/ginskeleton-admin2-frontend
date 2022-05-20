@@ -89,7 +89,6 @@ export const useRouteStore = defineStore({
             // 初始化默认打开的第一页面
             if (this.routeList.length > 0) {
                 this.homeRouter.redirect.name = this.routeList[0].name
-                this.routeList.unshift(this.homeRouter)
             }
             return this.routeList
         }

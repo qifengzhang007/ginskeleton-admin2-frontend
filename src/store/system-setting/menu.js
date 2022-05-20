@@ -74,12 +74,17 @@ export const useMenuStore = defineStore({
         @menuNavPathName 菜单导航路径名称
          */
         setMenuNavPathList(menuId) {
+            if (menuId <= 0) return
             this.menu.currentMenu.id = menuId
             if (this.menu.menuNavPathList.get(menuId)) {
                 return
             }
             this.setMenuNavPathListArrayEmpty()
-            this.menu.menuNavPathList.set(menuId, this.getMenuNavPathListRecursive(menuId).reverse())
+            const result = this.getMenuNavPathListRecursive(menuId)
+            if(result){
+                this.menu.menuNavPathList.set(menuId, result.reverse())
+            }
+
         },
 
         /*
