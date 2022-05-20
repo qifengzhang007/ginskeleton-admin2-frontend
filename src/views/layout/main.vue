@@ -59,7 +59,6 @@ export default {
   setup() {
     const userStore = useUserStore()     // 实例化
     const reloadStore = useReloadStore()     // 实例化
-    // let {user} = storeToRefs(user.info)   // 根据实际情况进行对象成员的解构
     const tabsStore = useTabStore()
 
     const router = useRouter()
@@ -90,7 +89,7 @@ export default {
       reloadStore.reloadRouterMenu(userStore.user.info.id).then(res => {
         routerGuard()
       }).catch(err => {
-        console.log(err)
+        console.log("src/views/layout/main.vue出错：",err)
       })
     } else {
       routerGuard()
