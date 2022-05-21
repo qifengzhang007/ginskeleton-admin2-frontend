@@ -38,6 +38,9 @@
       <el-form-item>
         <el-button type="primary" style="width: calc(100%)" @click="submitForm(loginFormRef)">登录</el-button>
       </el-form-item>
+      <el-form-item>
+        <div id="loginErrTips"> {{ loginErr }}</div>
+      </el-form-item>
     </el-form>
 
   </div>
@@ -52,7 +55,6 @@ import {useRouteStore} from "@/store/system-setting/route";
 import {useUserStore} from "@/store/system-setting/user";
 import {getServerIp, setToken} from '@/libs/util'
 import {useReloadStore} from "@/store/system-setting/reload";
-import {ElMessage} from 'element-plus'
 
 export default {
   name: 'Form',
@@ -86,7 +88,8 @@ export default {
         captcha_value: [
           {type: 'string', required: 'true', len: 4, message: '验证码不能为空', trigger: 'blur'}
         ]
-      }
+      },
+      loginErr: ""
     });
 
     //  获取验证码
@@ -119,17 +122,21 @@ export default {
               })
             }
           }).catch(errResponse => {
-            ElMessage({
-              type: "error",
-              message: '登录失败：' + errResponse.response.data.msg
-            })
-            console.log("登陆失败", errResponse)
-            // alert('登录失败：' + errResponse.response.data.msg)
+            if (errResponse.response.status === 0) {
+              stateData.loginErr = '网络错误' + errResponse.message
+            } else {
+              stateData.loginErr = '登录失败：' + errResponse.response.data.msg
+            }
+            setTimeout(() => {
+              stateData.loginErr = ""
+            }, 5000)
             getCaptcha()
           })
         } else {
-          // alert('最基本的参数校验失败')
-          ElMessage.error("参数校验失败")
+          stateData.loginErr = '账号、密码、验证码 校验失败'
+          setTimeout(() => {
+            stateData.loginErr = ""
+          }, 5000)
         }
       })
 
@@ -156,5 +163,9 @@ export default {
   vertical-align: middle;
   background: #F9F9F9;
   border-radius: 6px;
+}
+
+#loginErrTips {
+  color: #f13a3a;
 }
 </style>
