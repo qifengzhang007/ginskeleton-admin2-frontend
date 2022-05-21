@@ -4,7 +4,7 @@
       <div class="left-logo">
         <div>
           <img src="@/assets/images/logo.png" alt="logo">
-          <span>后台管理系统</span>
+          <span>{{config.cmsTitle}}</span>
         </div>
       </div>
       <el-menu
@@ -79,6 +79,7 @@
 import {useMenuStore} from '@/store/system-setting/menu'
 import {useHeaderBannerStore} from '@/store/system-setting/header_banner'
 import {reactive, toRefs} from "vue";
+import config  from "@/config/index";
 
 export default {
   name: "LeftMenu",
@@ -94,6 +95,7 @@ export default {
     return {
       //1.数据（变量结构之后导出
       ...toRefs(sateData),
+      config,
       //2.函数列表
       menuStore,
       headerBannerStore
