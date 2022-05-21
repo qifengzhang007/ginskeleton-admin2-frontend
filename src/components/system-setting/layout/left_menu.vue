@@ -19,7 +19,7 @@
       >
         <template v-for="(item,index)  in menuStore.menu.list">
           <template v-if="item.has_sub_node">
-            <el-sub-menu :index="'/'+item.path" class="menu-level1" >
+            <el-sub-menu :index="'/'+item.path" class="menu-level1">
               <template #title>
                 <el-icon>
                   <component :is="item.icon"/>
@@ -28,17 +28,17 @@
               </template>
               <template v-for="(itemL2,index2)  in item.children">
                 <template v-if="itemL2.has_sub_node">
-                  <el-sub-menu :index="'/'+item.path+'/'+itemL2.path" class="menu-level2" >
+                  <el-sub-menu :index="'/'+item.path+'/'+itemL2.path" class="menu-level2">
                     <template #title>
                       <el-icon>
-                        <component :is="itemL2.icon"/>
+                        <component v-if="itemL2.icon.length>=2" :is="itemL2.icon"/>
                       </el-icon>
                       <span>{{ itemL2.title }}</span>
                     </template>
-                    <el-menu-item :index="'/'+item.path+'/'+itemL2.path+'/'+itemL3.path" v-for="itemL3  in itemL2.children"  class="menu-level3">
+                    <el-menu-item :index="'/'+item.path+'/'+itemL2.path+'/'+itemL3.path" v-for="itemL3  in itemL2.children" class="menu-level3">
                       <template #title>
                         <el-icon>
-                          <component :is="itemL3.icon"/>
+                          <component v-if="itemL3.icon.length>=2" :is="itemL3.icon"/>
                         </el-icon>
                         <span>     {{ itemL3.title }} </span>
                       </template>
@@ -49,7 +49,7 @@
                   <el-menu-item :index="'/'+item.path+'/'+itemL2.path" :menuName="itemL2.title" class="menu-level2">
                     <template #title>
                       <el-icon>
-                        <component :is="itemL2.icon"/>
+                        <component v-if="itemL2.icon.length>=2" :is="itemL2.icon"/>
                       </el-icon>
                       <span>     {{ itemL2.title }} </span>
                     </template>
@@ -63,7 +63,7 @@
           <template v-else>
             <el-menu-item :index="'/'+item.path" :key="index" class="menu-level1">
               <el-icon>
-                <component :is="item.icon"/>
+                <component v-if="item.icon.length>=2" :is="item.icon"/>
               </el-icon>
               <span>{{ item.title }}</span>
             </el-menu-item>

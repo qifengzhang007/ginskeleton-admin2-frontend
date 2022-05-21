@@ -11,7 +11,7 @@
             @click.stop="activeTab(item.name,item.relaMenuId,item.icon,item.path,'tab')"
         >
           <el-icon :size="14" :class="{tabIconTxtActive:item.isActive}">
-            <component :is="item.icon"/>
+            <component v-if="item.icon.length>=2" :is="item.icon"/>
           </el-icon>
           <span :class="{tabTitle:true,tabIconTxtActive:item.isActive}">{{ item.name }}</span>
           <span class="close-icon" @click.stop="tabStore.remove(item.relaMenuId,item.isActive)">x</span>
