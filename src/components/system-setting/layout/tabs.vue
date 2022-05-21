@@ -12,6 +12,7 @@
         >
           <el-icon :size="14" :class="{tabIconTxtActive:item.isActive}">
             <component v-if="item.icon.length>=2" :is="item.icon"/>
+            <span :class="{circle:true,circleLight:item.isActive}" v-else> </span>
           </el-icon>
           <span :class="{tabTitle:true,tabIconTxtActive:item.isActive}">{{ item.name }}</span>
           <span class="close-icon" @click.stop="tabStore.remove(item.relaMenuId,item.isActive)">x</span>
@@ -238,6 +239,19 @@ li.scroll-tabs:last-child {
 
 span.close-icon:hover {
   color: #409eff;
+}
+
+.circle {
+  height: 12px;
+  width: 12px;
+  border-radius: 6px;
+  background-color: #c7c8c9;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.circleLight {
+  background-color: #409eff !important;
 }
 
 </style>
