@@ -45,7 +45,7 @@ export const useTabStore = defineStore({
         @actionFrom 调用tab-add方法事件来源
         */
         add(menuName, menuId, menuIcon, menuPath, actionFrom = 'menu') {
-            if (this.tabs.curMenuItem.path === menuPath || menuName==='') return
+            if (this.tabs.curMenuItem.path === menuPath || menuName === '') return
 
             // tepItem 变量用于后面的数组方法：push，不能直接使用this.tabs.curMenuItem ，否则永远只会添加成功最一条
             const tepItem = Object.assign({}, this.tabs.item)
@@ -132,6 +132,7 @@ export const useTabStore = defineStore({
            关闭非选中的其它tab页签
          */
         closeOtherTabs() {
+            if (this.tabs.list.length === 0) return
             this.tabs.list[0] = this.tabs.curMenuItem
             this.tabs.list.splice(1, this.tabs.list.length - 1)
         },
@@ -146,7 +147,7 @@ export const useTabStore = defineStore({
         /*
        退出时， 销毁本对象
          */
-        destroy(){
+        destroy() {
             commonFunc.objInit(this.tabs)
         }
 
