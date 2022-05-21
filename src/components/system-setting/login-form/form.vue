@@ -1,6 +1,6 @@
 <template>
   <div id="login-form">
-    <el-form ref="loginForm" :model="form" :rules="rules">
+    <el-form ref="loginFormRef" :model="form" :rules="rules">
 
       <el-form-item prop="user_name">
         <el-input v-model="form.user_name" placeholder="请输入用户名">
@@ -36,7 +36,7 @@
       </el-form-item>
 
       <el-form-item>
-        <el-button type="primary" style="width: calc(100%)" @click="handleSubmit">登录</el-button>
+        <el-button type="primary" style="width: calc(100%)" @click="submitForm(loginFormRef)">登录</el-button>
       </el-form-item>
     </el-form>
 
@@ -61,7 +61,7 @@ export default {
     let routerStore = useRouteStore()
     let userStore = useUserStore()
 
-    const loginForm = ref(null)
+    const loginFormRef = ref(null)
     const stateData = reactive({
       captcha: {
         captchaId: "",
@@ -78,13 +78,13 @@ export default {
       },
       rules: {
         username: [
-          {required: 'true', message: '账户不能为空', trigger: 'blur'}
+          {type: 'string', required: 'true', message: '账户不能为空', trigger: 'blur'}
         ],
         pass: [
-          {required: 'true', message: '密码不能为空', trigger: 'blur'}
+          {type: 'string', required: 'true', message: '密码不能为空', trigger: 'blur'}
         ],
         captcha_value: [
-          {required: 'true', message: '验证码不能为空', trigger: 'blur'}
+          {type: 'string', required: 'true', len: 4, message: '验证码不能为空', trigger: 'blur'}
         ]
       }
     });
@@ -103,12 +103,8 @@ export default {
     }
 
     // 登陆参数、验证码参数一起提交
-    const handleSubmit = () => {
-      if (stateData.form.captcha_value.length < 4) {
-        ElMessage.error("请输入正确的验证码")
-        return
-      }
-      loginForm.value.validate((valid) => {
+    const submitForm = (formRef) => {
+      formRef.validate((valid) => {
         if (valid) {
           login(stateData.form).then(res => {
             if (res.status === 200 && res.data.code === 200) {
@@ -141,9 +137,9 @@ export default {
     getCaptcha()
     return {
       ...toRefs(stateData),
-      loginForm,
+      loginFormRef,
       getCaptcha,
-      handleSubmit
+      submitForm
     }
   }
 }
