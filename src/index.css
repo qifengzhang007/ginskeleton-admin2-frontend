@@ -52,8 +52,9 @@ li.el-menu-item.menu-level1 {
     vertical-align: -1px !important;
 }
 
+/*二级子菜单的背景样式*/
 li.el-sub-menu.menu-level2 div {
-    background-color: #252629 !important;
+    background-color: #202124 !important;
 }
 
 /*菜单选中样式*/
