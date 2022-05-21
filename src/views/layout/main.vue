@@ -89,7 +89,7 @@ export default {
       reloadStore.reloadRouterMenu(userStore.user.info.id).then(res => {
         routerGuard()
       }).catch(err => {
-        console.log("src/views/layout/main.vue出错：",err)
+        console.log("src/views/layout/main.vue出错：", err)
       })
     } else {
       routerGuard()
