@@ -1,6 +1,5 @@
 <template>
     <el-carousel  arrow="never"  height="520px" :interval=3000 >
-<!--      <el-carousel-item  v-for="index  in 3" >    <div class="carouse_item_common carouse_item{{index}}"><img src="@/assets/images/bg{{index}}.png" alt="图片丢失"/></div> </el-carousel-item>-->
       <el-carousel-item>    <div class="carouse_item_common carouse_item1"><img src="@/assets/images/bg1.png" alt="图片丢失"/></div> </el-carousel-item>
       <el-carousel-item>    <div class="carouse_item_common carouse_item2"><img src="@/assets/images/bg2.png" alt="图片丢失"/></div> </el-carousel-item>
       <el-carousel-item>    <div class="carouse_item_common carouse_item3"><img src="@/assets/images/bg3.png" alt="图片丢失"/></div> </el-carousel-item>

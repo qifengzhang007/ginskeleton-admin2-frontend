@@ -12,8 +12,8 @@
 
     <div class="header-banner-right">
 
-      <img :src="getFullScreenRelaIconPath()" alt="" @click="browserScreenFullEvent()" >&nbsp;&nbsp;&nbsp;&nbsp;
-      <el-avatar shape="square" fit="fit" style="background-color: white" :size="40" src="http://139.196.101.31:20201/storage/uploaded/2021_03/0cab2657f435a6424d5716ec8ce6c847.png"/>
+      <img :src="getFullScreenRelaIconPath()" alt="" @click="browserScreenFullEvent()">&nbsp;&nbsp;&nbsp;&nbsp;
+      <el-avatar shape="square" fit="fit" style="background-color: white" :size="40" :src="userStore.user.info.fullAvatarUrl"/>
 
       <el-dropdown size="small" @command="handleCommand">
     <span class="el-dropdown-link">
@@ -39,6 +39,7 @@
 import {useMenuStore} from '@/store/system-setting/menu'
 import {useTabStore} from '@/store/system-setting/tabs'
 import {useRouteStore} from '@/store/system-setting/route'
+import {useUserStore} from '@/store/system-setting/user'
 import screenfull from 'screenfull'
 import {reactive, toRefs} from 'vue'
 
@@ -57,6 +58,7 @@ export default {
     const menuStore = useMenuStore()
     const tabsStore = useTabStore()
     const routerStore = useRouteStore()
+    const userStore = useUserStore()
     // const headerBannerStore = useHeaderBannerStore()
 
 
@@ -77,7 +79,7 @@ export default {
       stateData.fullScreen.Status ? screenfull.toggle() : screenfull.exit()
     }
     const getFullScreenRelaIconPath = () => {
-     return new URL(`../../../assets/images/full-icon-${stateData.fullScreen.Status}.png`, import.meta.url).href
+      return new URL(`../../../assets/images/full-icon-${stateData.fullScreen.Status}.png`, import.meta.url).href
     }
 
     return {
@@ -85,6 +87,7 @@ export default {
       // headerBannerStore,
       tabsStore,
       menuStore,
+      userStore,
       handleCommand,
       browserScreenFullEvent,
       getFullScreenRelaIconPath
@@ -137,7 +140,8 @@ export default {
   align-items: center;
   justify-content: flex-end;
 }
-#arrow-down:hover{
+
+#arrow-down:hover {
   color: #409eff;
 }
 
