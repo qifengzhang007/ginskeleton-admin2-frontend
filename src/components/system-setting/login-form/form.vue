@@ -52,7 +52,7 @@ import {useRouteStore} from "@/store/system-setting/route";
 import {useUserStore} from "@/store/system-setting/user";
 import {getServerIp, setToken} from '@/libs/util'
 import {useReloadStore} from "@/store/system-setting/reload";
-
+import {ElMessage} from 'element-plus'
 
 export default {
   name: 'Form',
@@ -82,6 +82,9 @@ export default {
         ],
         pass: [
           {required: 'true', message: '密码不能为空', trigger: 'blur'}
+        ],
+        captcha_value: [
+          {required: 'true', message: '验证码不能为空', trigger: 'blur'}
         ]
       }
     });
@@ -101,8 +104,8 @@ export default {
 
     // 登陆参数、验证码参数一起提交
     const handleSubmit = () => {
-      if (stateData.form.captcha_value === '') {
-        alert('请输入验证码')
+      if (stateData.form.captcha_value.length < 4) {
+        ElMessage.error("请输入正确的验证码")
         return
       }
       loginForm.value.validate((valid) => {
@@ -120,12 +123,17 @@ export default {
               })
             }
           }).catch(errResponse => {
+            ElMessage({
+              type: "error",
+              message: '登录失败：' + errResponse.response.data.msg
+            })
             console.log("登陆失败", errResponse)
-            alert('登录失败：' + errResponse.response.data.msg)
+            // alert('登录失败：' + errResponse.response.data.msg)
             getCaptcha()
           })
         } else {
-          alert('最基本的参数校验失败')
+          // alert('最基本的参数校验失败')
+          ElMessage.error("参数校验失败")
         }
       })
 

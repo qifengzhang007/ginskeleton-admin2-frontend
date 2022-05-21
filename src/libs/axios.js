@@ -45,7 +45,7 @@ class HttpRequest {
                     removeToken()
                     clearLocalStorageAll()
                     ElMessage(config.errorSetting.serverNotStartTips)
-                    alert("错误：" + config.errorSetting.serverNotStartTips + window.location.href)
+                    alert("错误：" + config.errorSetting.serverNotStartTips)
                     if (!window.location.href.endsWith("login")) {
                         window.location.href = '/' + config.defaultRoute.notLoginDefaultRouterName
                     }
