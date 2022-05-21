@@ -18,7 +18,7 @@
       <el-dropdown size="small" @command="handleCommand">
     <span class="el-dropdown-link">
       <el-icon class="el-icon--right">
-        <arrow-down/>
+        <arrow-down id="arrow-down"/>
       </el-icon>
     </span>
         <template #dropdown>
@@ -136,6 +136,9 @@ export default {
   vertical-align: middle;
   align-items: center;
   justify-content: flex-end;
+}
+#arrow-down:hover{
+  color: #409eff;
 }
 
 </style>
