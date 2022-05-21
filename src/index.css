@@ -11,20 +11,16 @@ body, * {
     border-right: none !important;
 }
 
-.el-sub-menu {
+/*各个子菜单之间的分割线颜色*/
+.el-sub-menu:not(.menu-level2) {
     border-top: 1px solid #404141;
 }
-
-.el-sub-menu:last-child {
+.el-sub-menu:last-child:not(.menu-level2) {
     border-bottom: 1px solid #404141;
 }
 
-.el-menu-item-group__title {
-    height: 0 !important;
-    display: none !important;
-}
 
-/*菜单组的样式*/
+/*菜单标题的样式*/
 .el-sub-menu__title {
     font-size: 13px;
     height: 40px !important;
@@ -33,8 +29,8 @@ body, * {
     color: #f3f6fb !important;
 }
 
-/*菜单item的样式*/
-.el-menu-item {
+/*菜单item的样式：最底层可被点击打开的菜单样式*/
+li.el-menu-item:not(.menu-level1) {
     font-size: 12px;
     height: 34px !important;
     line-height: 34px !important;
@@ -42,8 +38,22 @@ body, * {
     background-color: #292a2d;
 }
 
+/*菜单item的样式: 当只有一级菜单时在最外层的样式*/
+li.el-menu-item.menu-level1 {
+    font-size: 13px;
+    height: 40px !important;
+    line-height: 40px !important;
+    vertical-align: middle !important;
+    background-color: #1d1e23;
+    border-top: solid 1px #404141;
+}
+
 .el-sub-menu [class^="el-icon-"] {
     vertical-align: -1px !important;
+}
+
+li.el-sub-menu.menu-level2 div {
+    background-color: #252629 !important;
 }
 
 /*菜单选中样式*/
