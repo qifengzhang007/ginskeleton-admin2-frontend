@@ -33,7 +33,7 @@
                       <el-icon>
                         <component :is="itemL2.icon"/>
                       </el-icon>
-                      <span>{{ itemL2.title }}L2</span>
+                      <span>{{ itemL2.title }}</span>
                     </template>
                     <el-menu-item :index="'/'+item.path+'/'+itemL2.path+'/'+itemL3.path" v-for="itemL3  in itemL2.children"  class="menu-level3">
                       <template #title>
