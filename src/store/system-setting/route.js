@@ -50,38 +50,7 @@ export const useRouteStore = defineStore({
         },
 
         /*
-          后端返回的菜单列表，转换成前端需要的路由列表
-          无限极递归可能性能不是很好
-         */
-        // menuListConvertRouteList0(menuList, fName = '', fPath = '', routers = []) {
-        //     let tmpName = '', tmpPath = ''
-        //     tmpName += fName + '_'
-        //     tmpPath += fPath + '/'
-        //     for (let i = 0; i < menuList.length; i++) {
-        //         if (menuList[i].children.length > 0) {
-        //             this.menuListConvertRouteList0(menuList[i].children, menuList[i].name, menuList[i].path, routers)
-        //         } else {
-        //             const temp = {
-        //                 name: tmpName + menuList[i].name,
-        //                 path: tmpPath.charAt(0) !== "/" ? "/" + tmpPath + menuList[i].path : tmpPath + menuList[i].path,
-        //                 component: this.routeViews[`../../${menuList[i].component.endsWith('.vue') ? menuList[i].component : menuList[i].component + ".vue"}`],
-        //                 meta: {
-        //                     icon: menuList[i].icon,
-        //                     title: menuList[i].title,
-        //                     id: menuList[i].id
-        //                 },
-        //             }
-        //             if (menuList[i].children.length === 0) {
-        //                 routers.push(temp)
-        //             } else {
-        //                 return
-        //             }
-        //         }
-        //     }
-        //     return routers
-        // },
-        /*
-        * description 最大支持到三级菜单即可，对于后台系统足够，提升性能，避免上一个函数采用递归无穷遍历可能带来性能问题。
+        * description 最大支持到三级菜单即可，对于后台系统足够满足需求，性能也好，避免采用递归无穷遍历可能带来性能问题。
         * */
         menuListConvertRouteList(menuList) {
             let routes = []
