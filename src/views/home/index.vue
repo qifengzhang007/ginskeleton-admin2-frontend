@@ -28,4 +28,7 @@ export default {
   margin-top: 15%;
   font-size: 14px;
 }
+a{
+  color: #409eff;
+}
 </style>
