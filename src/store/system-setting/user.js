@@ -2,7 +2,7 @@ import {defineStore} from 'pinia'
 import commonFunc from '@/libs/common_func'
 import {clearCookie, clearLocalStorageAll, removeToken} from '@/libs/util'
 import {useTabStore} from '@/store/system-setting/tabs'
-
+import config from '@/config/index'
 
 export const useUserStore = defineStore(
     {
@@ -11,6 +11,7 @@ export const useUserStore = defineStore(
             enabled: true,
             strategies: [
                 {
+                    key: config.dataStore.keyPre + 'useUserStore',
                     storage: localStorage,
                     paths: ['user']
                 }

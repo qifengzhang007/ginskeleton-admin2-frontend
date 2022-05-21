@@ -5,36 +5,33 @@ import config from '@/config/index'
 这里主要封装一些框架使用的基础功能函数
  */
 
-const TOKEN_KEY = 'GinSkeletonUserToken'
 
 /*
 设置用户token
  */
 export const setToken = (token) => {
-    let seconds = 3600 * 8;  // cookie 默认8小时有效期
-    let expires = new Date(new Date() * 1 + seconds * 1000);
-    Cookies.set(TOKEN_KEY, token, {expires: expires})
+    Cookies.set(config.dataStore.keyPre+config.dataStore.userTokenKey, token)
 }
 
 /*
 删除用户token
  */
 export const removeToken = () => {
-    return Cookies.remove(TOKEN_KEY)
+    return Cookies.remove(config.dataStore.keyPre+config.dataStore.userTokenKey)
 }
 
 /*
 清除所有 localStorage
  */
 export const clearLocalStorageAll = () => {
-    localStorage.clear();
+    window.localStorage.clear()
 }
 
 /*
 获取token
  */
 export const getToken = () => {
-    const token = Cookies.get(TOKEN_KEY)
+    const token = Cookies.get(config.dataStore.keyPre+config.dataStore.userTokenKey)
     if (token) return token
     else return false
 }

@@ -1,4 +1,5 @@
 export default {
+
     /**
      * @description 配置显示在浏览器标签的title
      */
@@ -9,15 +10,10 @@ export default {
         user_name: 'admin',
         pass: 'ginskeleton'
     },
-    /**
-     * @description token在Cookie中存储的天数，默认1天
-     */
-    cookieExpires: 1,
 
     /**
      * @description api请求基础路径
      */
-
     baseUrl: {
         // npm run dev 有效
         dev_server_ip: 'http://127.0.0.1:20201',
@@ -29,13 +25,22 @@ export default {
     },
 
     /**
+     * @description 本地数据存储相关的设置
+     */
+    dataStore:{
+        // 存储cookie、localStorage 时，key 的前缀，
+        keyPre:"K1_",    // 基于本套框架开发多个系统时，强烈建议不同的系统设置不同的前缀.
+        userTokenKey:"UserToken"   // 用户登录后token存储在cookie的键
+    },
+
+    //  ============== 后面设置基本上无需改动 ======
+    /**
      * @description 出错设置
      */
     errorSetting: {
         serverNotStartTips: '网络错误 - 可能是服务端未启动，请联系管理员',
         noAuthTips: '该接口没有权限访问，请联系管理员分配权限.',
     },
-
     /**
      * @description 默认路由设置
      */
