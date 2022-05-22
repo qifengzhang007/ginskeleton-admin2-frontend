@@ -1,6 +1,7 @@
 import axios from 'axios'
 import {clearLocalStorageAll, getToken, removeToken} from '@/libs/util'
 import config from '@/config/index'
+import router from '@/router/index'
 import {ElMessage} from 'element-plus'
 
 class HttpRequest {
@@ -47,14 +48,14 @@ class HttpRequest {
                     ElMessage(config.errorSetting.serverNotStartTips)
                     alert("错误：" + config.errorSetting.serverNotStartTips)
                     if (!window.location.href.endsWith("login")) {
-                        window.location.href = '/' + config.defaultRoute.notLoginDefaultRouterName
+                        router.push({name:config.defaultRoute.notLoginDefaultRouterName})
                     }
                     break
                 case 401:
                     removeToken()
                     clearLocalStorageAll()
                     setTimeout(() => {
-                        window.location.href = '/' + config.defaultRoute.notLoginDefaultRouterName
+                        router.push({name:config.defaultRoute.notLoginDefaultRouterName})
                     }, 1000);
                     break
                 case 405:

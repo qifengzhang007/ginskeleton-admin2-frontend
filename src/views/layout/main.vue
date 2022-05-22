@@ -88,8 +88,13 @@ export default {
     if (userStore.user.token.isValid) {
       reloadStore.reloadRouterMenu(userStore.user.info.id).then(res => {
         routerGuard()
-      }).catch(err => {
-        console.log("src/views/layout/main.vue出错：", err)
+        router.push({path: window.location.href.substring((window.location.href.match(/^http(s)?:\/\/.+?\//ig)[0]).length - 1)})
+      }).catch(errResponse => {
+        if (errResponse.response.status === 401) {
+          router.push({name: config.defaultRoute.notLoginDefaultRouterName})
+        } else {
+          console.log("src/views/layout/main.vue异常捕获：", errResponse)
+        }
       })
     } else {
       routerGuard()

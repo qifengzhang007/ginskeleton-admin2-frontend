@@ -92,6 +92,13 @@ export default {
       loginErr: ""
     });
 
+    // 延时5秒将错误提示信息消除
+    const clearErrTipsMsg = (delaySecond = 5) => {
+      setTimeout(() => {
+        stateData.loginErr = ""
+      }, delaySecond * 1000)
+    }
+
     //  获取验证码
     const getCaptcha = () => {
       getCaptchaInfo().then(res => {
@@ -102,7 +109,14 @@ export default {
           stateData.captcha.captchaRefreshUrl = getServerIp() + res.data.data.refresh
           stateData.form.captcha_id = stateData.captcha.captchaId
         }
+      }).catch(errResponse => {
+        if (errResponse.response.status === 0) {
+          stateData.loginErr = '网络错误, 获取验证码失败！'
+        } else {
+          stateData.loginErr = '获取验证码出错：' + errResponse.response.data.msg
+        }
       })
+      clearErrTipsMsg()
     }
 
     // 登陆参数、验证码参数一起提交
@@ -127,16 +141,12 @@ export default {
             } else {
               stateData.loginErr = '登录失败：' + errResponse.response.data.msg
             }
-            setTimeout(() => {
-              stateData.loginErr = ""
-            }, 5000)
+            clearErrTipsMsg()
             getCaptcha()
           })
         } else {
           stateData.loginErr = '账号、密码、验证码 校验失败'
-          setTimeout(() => {
-            stateData.loginErr = ""
-          }, 5000)
+          clearErrTipsMsg()
         }
       })
 

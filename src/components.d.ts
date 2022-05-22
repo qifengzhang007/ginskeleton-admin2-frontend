@@ -23,7 +23,6 @@ declare module '@vue/runtime-core' {
     ElInput: typeof import('element-plus/es')['ElInput']
     ElMenu: typeof import('element-plus/es')['ElMenu']
     ElMenuItem: typeof import('element-plus/es')['ElMenuItem']
-    ElMenuItemGroup: typeof import('element-plus/es')['ElMenuItemGroup']
     ElSubMenu: typeof import('element-plus/es')['ElSubMenu']
     Form: typeof import('./components/system-setting/login-form/form.vue')['default']
     Header_banner: typeof import('./components/system-setting/layout/header_banner.vue')['default']
