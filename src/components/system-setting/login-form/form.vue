@@ -1,7 +1,6 @@
 <template>
   <div id="login-form">
-    <el-form ref="loginFormRef" :model="form" :rules="rules">
-
+    <el-form ref="loginFormRef" :model="form" :rules="rules" @keydown.enter.native="submitForm(loginFormRef)">
       <el-form-item prop="user_name">
         <el-input v-model="form.user_name" placeholder="请输入用户名">
           <template #prefix>
