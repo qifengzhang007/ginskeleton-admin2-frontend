@@ -13,6 +13,12 @@ export default {
     GetBrowserHeight() {
         return document.body.clientHeight
     },
+    BodyHeight(){
+        return (document.body.clientHeight - 110) + 'px'
+    },
+    TableHeight(){
+        return (document.body.clientHeight - 185) + 'px'
+    },
     SelectStatus: [
         {value: 1, label: '启用'},
         {value: 0, label: '禁用'}
@@ -21,12 +27,12 @@ export default {
         0: '禁用',
         1: '启用'
     },
-    CurdWay: {
-        create: '新增',
-        edit: '修改',
-        destroy: '删除'
-
+    CurdActionName: {
+        insert: '新增数据',
+        update: '修改数据',
+        delete: '删除数据'
     },
+    PageSizeOptions:[5,20,50,100,200,500],
     // 处理异步加载时树形数据格式
     DelNullChildren(data, firstIsSelected) {
         if (data && data.length > 0) {
@@ -101,6 +107,8 @@ export default {
         // 获取后端public路径
     },
     // 获取数组中字段的拼接值
+    // 示例： 参数一：  数组，参数二，数组中的键1，参数三，数组中的键2  ...  依次类推
+    // 获取的结果是一个对象，需要通过  obj.键1 、obj.键2  ... 一次类推获取处理后的值
     GetArrayColumnConcatVals() {
         let res = {}
         if (arguments.length >= 2) {

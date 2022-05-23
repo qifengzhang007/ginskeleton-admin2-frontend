@@ -222,7 +222,7 @@ li.scroll-tabs:last-child {
   justify-content: center;
   width: 90px;
   text-align: center;
-  font-size: 13px;
+  /*font-size: 13px;*/
 }
 
 .close-icon {

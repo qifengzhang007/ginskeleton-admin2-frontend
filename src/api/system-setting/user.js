@@ -26,7 +26,7 @@ export const edit = (data) => {
 }
 
 // 删除
-export const destory = (id) => {
+export const destroy = (id) => {
   return axios.post('/users/destroy', {id: id})
 }
 

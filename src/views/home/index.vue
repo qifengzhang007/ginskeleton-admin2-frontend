@@ -26,7 +26,7 @@ export default {
   text-align: center;
   color: #5c6b77;
   margin-top: 15%;
-  font-size: 14px;
+  font-size: 14px !important;
 }
 a{
   color: #409eff;

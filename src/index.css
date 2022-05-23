@@ -4,6 +4,7 @@ body, * {
     margin: 0;
     box-sizing: border-box;
     overflow: hidden;
+    font-size: 12px;
     font-family: 'Microsoft YaHei', system-ui, sans-serif;
 }
 
@@ -22,7 +23,7 @@ body, * {
 
 /*菜单标题的样式*/
 .el-sub-menu__title {
-    font-size: 13px;
+    font-size: 13px !important;
     height: 40px !important;
     line-height: 40px !important;
     vertical-align: middle !important;
@@ -40,7 +41,7 @@ li.el-menu-item:not(.menu-level1) {
 
 /*菜单item的样式: 当只有一级菜单时在最外层的样式*/
 li.el-menu-item.menu-level1 {
-    font-size: 13px;
+    font-size: 13px !important;;
     height: 40px !important;
     line-height: 40px !important;
     vertical-align: middle !important;
@@ -63,6 +64,14 @@ li .is-active {
     color: white;
 }
 
+/*所有的table表头统一加一个淡淡的灰色背景*/
+table.el-table__header>thead>tr>th.el-table__cell{
+    background-color:#f8f8f9 !important;
+}
+
+span.el-dialog__title{
+    font-size: 14px;
+}
 a {
     text-decoration: none;
 }

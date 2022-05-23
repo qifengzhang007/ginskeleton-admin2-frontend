@@ -7,13 +7,18 @@ declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     Carouse: typeof import('./components/system-setting/login-form/carouse.vue')['default']
     Copy_right: typeof import('./components/system-setting/login-form/copy_right.vue')['default']
+    Create_edit: typeof import('./components/system-setting/user/create_edit.vue')['default']
+    Destroy: typeof import('./components/system-setting/user/destroy.vue')['default']
     ElAside: typeof import('element-plus/es')['ElAside']
     ElAvatar: typeof import('element-plus/es')['ElAvatar']
     ElBreadcrumb: typeof import('element-plus/es')['ElBreadcrumb']
     ElBreadcrumbItem: typeof import('element-plus/es')['ElBreadcrumbItem']
     ElButton: typeof import('element-plus/es')['ElButton']
+    ElButtonGroup: typeof import('element-plus/es')['ElButtonGroup']
     ElCarousel: typeof import('element-plus/es')['ElCarousel']
     ElCarouselItem: typeof import('element-plus/es')['ElCarouselItem']
+    ElConfigProvider: typeof import('element-plus/es')['ElConfigProvider']
+    ElDialog: typeof import('element-plus/es')['ElDialog']
     ElDropdown: typeof import('element-plus/es')['ElDropdown']
     ElDropdownItem: typeof import('element-plus/es')['ElDropdownItem']
     ElDropdownMenu: typeof import('element-plus/es')['ElDropdownMenu']
@@ -23,7 +28,10 @@ declare module '@vue/runtime-core' {
     ElInput: typeof import('element-plus/es')['ElInput']
     ElMenu: typeof import('element-plus/es')['ElMenu']
     ElMenuItem: typeof import('element-plus/es')['ElMenuItem']
+    ElPagination: typeof import('element-plus/es')['ElPagination']
     ElSubMenu: typeof import('element-plus/es')['ElSubMenu']
+    ElTable: typeof import('element-plus/es')['ElTable']
+    ElTableColumn: typeof import('element-plus/es')['ElTableColumn']
     Form: typeof import('./components/system-setting/login-form/form.vue')['default']
     Header_banner: typeof import('./components/system-setting/layout/header_banner.vue')['default']
     Left_menu: typeof import('./components/system-setting/layout/left_menu.vue')['default']
@@ -31,6 +39,7 @@ declare module '@vue/runtime-core' {
     RouterView: typeof import('vue-router')['RouterView']
     Tabs: typeof import('./components/system-setting/layout/tabs.vue')['default']
     Title: typeof import('./components/system-setting/login-form/title.vue')['default']
+    User: typeof import('./components/system-setting/user/index.vue')['default']
   }
 }
 

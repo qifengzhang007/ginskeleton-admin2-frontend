@@ -133,7 +133,7 @@ export default {
 #layout-content {
   display: block;
   padding: 4px 4px;
-  overflow-y: auto;
+  overflow:hidden;
   height: calc(100vh - 64px - 42px - 2px);
 }
 </style>
