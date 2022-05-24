@@ -16,6 +16,7 @@ body, * {
 .el-sub-menu:not(.menu-level2) {
     border-top: 1px solid #404141;
 }
+
 .el-sub-menu:last-child:not(.menu-level2) {
     border-bottom: 1px solid #404141;
 }
@@ -65,13 +66,18 @@ li .is-active {
 }
 
 /*所有的table表头统一加一个淡淡的灰色背景*/
-table.el-table__header>thead>tr>th.el-table__cell{
-    background-color:#f8f8f9 !important;
+table.el-table__header > thead > tr > th.el-table__cell {
+    background-color: #f8f8f9 !important;
 }
 
-span.el-dialog__title{
+span.el-dialog__title {
     font-size: 14px;
 }
+
+.el-message {
+    left: 90%
+}
+
 a {
     text-decoration: none;
 }

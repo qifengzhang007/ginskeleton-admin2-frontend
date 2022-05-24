@@ -1,5 +1,3 @@
-import {ElMessage} from 'element-plus'
-
 /*
 这里主要封装一些业务使用的公共函数
  */
@@ -13,10 +11,10 @@ export default {
     GetBrowserHeight() {
         return document.body.clientHeight
     },
-    BodyHeight(){
+    BodyHeight() {
         return (document.body.clientHeight - 110) + 'px'
     },
-    TableHeight(){
+    TableHeight() {
         return (document.body.clientHeight - 185) + 'px'
     },
     SelectStatus: [
@@ -28,11 +26,11 @@ export default {
         1: '启用'
     },
     CurdActionName: {
-        insert: '新增数据',
-        update: '修改数据',
-        delete: '删除数据'
+        insert: '新增',
+        update: '修改',
+        delete: '删除'
     },
-    PageSizeOptions:[5,20,50,100,200,500],
+    PageSizeOptions: [5, 20, 50, 100, 200, 500],
     // 处理异步加载时树形数据格式
     DelNullChildren(data, firstIsSelected) {
         if (data && data.length > 0) {
@@ -55,55 +53,77 @@ export default {
     // CURD 相关的公共函数
     Curd: {
         // 参数列表：
-        // 1.vue对象
-        // 2.检查的条件，为真即可进行下一步，否则给出提示，返回  false
-        CreateCheck(obj_vue, condition) {
+        // 1.开发者传递一个bool类型的条件，不满足该条件就会进行提示
+        CreateCheck(condition) {
             if (!condition) {
-                ElMessage.warning("请选中父级节点，才允许新增")
+                ElMessage({
+                    message: '请选中父级节点，才允许新增！',
+                    type: 'error',
+                    grouping: true
+                })
                 return false
             }
             return true
         },
         // 修改数据钱的检查
         // 参数列表参见 CreateCheck 函数
-        EditCheck(obj_vue, condition) {
+        EditCheck(condition) {
             if (!condition) {
-                ElMessage.warning('请选中一条数据进行修改')
-                return false
-            }
-            return true
-        },
-        // 删除数据前的校验（适用于单条数据删除动作）
-        DestroyCheckForOneItem(obj_vue, condition) {
-            if (!condition) {
-                ElMessage.warning('请选中一条数据进行删除')
+                ElMessage({
+                    message: '请选中一条数据进行修改！',
+                    type: 'error',
+                    grouping: true,
+                })
                 return false
             }
             return true
         },
         // 删除数据前的校验（适用于多条数据删除动作）
-        DestroyCheckForMoreItem(obj_vue, condition) {
+        DestroyCheckForMoreItem(condition) {
             if (!condition) {
-                ElMessage.warning('请选中一条或者多条数据进行删除')
+                ElMessage({
+                    message: '请至少选中一条数据进行删除',
+                    type: 'error',
+                    grouping: true,
+                })
                 return false
             }
             return true
         },
-        SuccessTips(obj_vue, msg) {
-            ElMessage.success("成功")
+        // 删除数据前的校验（适用于单条数据删除动作）
+        DestroyCheckForOneItem(condition) {
+            if (!condition) {
+                ElMessage({
+                    message: '请选中一条数据进行删除',
+                    type: 'error',
+                })
+                return false
+            }
+            return true
         },
-        FailTips(obj_vue, msg) {
-            ElMessage.warning("失败")
+        SuccessTips(msg = '成功') {
+            ElMessage({
+                message: msg,
+                type: 'success',
+                grouping: true
+            })
+        },
+        FailTips(msg = '失败') {
+            ElMessage({
+                message: msg,
+                type: 'error',
+                grouping: true
+            })
         },
         // 公共对象
         // 参数列表参见 CreateCheck 函数
-        CommonComponentSelectedCheck(obj_vue, condition) {
-            if (!condition) {
-                ElMessage.warning("只允许选中一条数据进行引用")
-                return false
-            }
-            return true
-        },
+        // CommonComponentSelectedCheck(obj_vue, condition) {
+        //     if (!condition) {
+        //         ElMessage.warning("只允许选中一条数据进行引用")
+        //         return false
+        //     }
+        //     return true
+        // },
         // 获取后端public路径
     },
     // 获取数组中字段的拼接值

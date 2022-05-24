@@ -6,15 +6,15 @@
         用户名:
         <el-input v-model="tableList.searchKeyWords.user_name" placeholder="关键词" class="keyWordsInput"/>
         <el-button-group>
-          <el-button type="primary" @click="search" icon="Search">查询</el-button>
-          <el-button type="success" @click="search" icon="Plus">新增</el-button>
-          <el-button type="primary" @click="search" icon="Edit">修改</el-button>
-          <el-button type="danger" @click="handleDestroy('delete')" icon="Delete">批量删除</el-button>
+          <el-button type="primary" @click="fSearch" icon="Search">查询</el-button>
+          <el-button type="success" @click="fSearch" icon="Plus">新增</el-button>
+          <el-button type="primary" @click="fSearch" icon="Edit">修改</el-button>
+          <el-button type="danger" @click="fDelete" icon="Delete">批量删除</el-button>
         </el-button-group>
       </div>
 
-      <el-table border :style="tableList.style" :height="tableList.style.height" :highlight-current-row="true" :data="tableList.data" ref="tableRef" @row-click="tableRowClick">
-        <el-table-column type="selection" width="50" align="center"/>
+      <el-table border :style="tableList.style" :height="tableList.style.height" :data="tableList.data" ref="tableRef" @row-click="tableRowClick">
+        <el-table-column type="selection" width="50" align="center" id="t500"/>
         <el-table-column prop="id" label="id" width="100" sortable fixed/>
         <!--    ↓↓↓↓   业务字段  ↓↓↓↓   -->
 
@@ -40,7 +40,7 @@
     </div>
 
     <!--    导入的其他组件-->
-    <Destroy :destroy="destroy" @destroy_callback="search"/>
+    <DeleteDataDialog :propDelete="propDelete" @fDeleteCallback="fDeleteCallback"/>
 
   </div>
 </template>
@@ -48,17 +48,16 @@
 <script>
 import commonFunc from '@/libs/common_func'
 import {reactive, toRefs, watch} from 'vue'
-import {list} from '@/api/system-setting/user'
+import {destroy, list} from '@/api/system-setting/user'
 import {ElConfigProvider} from 'element-plus'
 import chCn from 'element-plus/lib/locale/lang/zh-cn'
 import {Delete, Edit, Plus, Search} from '@element-plus/icons-vue'
-import Destroy from './destroy.vue'
-
+import DeleteDataDialog from '@/components/common/delete_data_dialog.vue'
 
 export default {
   name: "UserIndex",
   components: {
-    Destroy,
+    DeleteDataDialog,
     ElConfigProvider,
     Search, Edit, Delete, Plus
   },
@@ -98,18 +97,21 @@ export default {
 
         }
       },
-
-      destroy: {
+      // 删除数据时，传递给子组件的属性变量，数据格式如下：
+      propDelete: {
         actionName: '',
         isShow: false,
         ids: '',
         delCounts: 0,
+        // ↓↓↓  请求接口后服务端返回的 code 和 msg
+        serverResCode: 0,
+        serverResMsg: '',
       }
 
     })
 
     // 查询相关======================
-    const search = () => {
+    const fSearch = () => {
       list(stateData.tableList.searchKeyWords).then(res => {
         stateData.tableList.data = res.data.data.data
         stateData.tableList.total = res.data.data.count
@@ -120,46 +122,55 @@ export default {
     }
     // 分页组件改变事件,通过监听绑定的变量实现，elementPlus 官方提示，不要使用相关事件，后续版本会移出事件模式
     watch(() => stateData.tableList.searchKeyWords.page, (newPage, oldPage) => {
-      search()
+      fSearch()
     }, {immediate: true})
 
     watch(() => stateData.tableList.searchKeyWords.limit, (newLimit, oldLimit) => {
-      search()
+      fSearch()
     }, {immediate: true})
 
 // 查询相关==========================
 
 
-    // 删除相关
-    const handleDestroy = (action) => {
+    // 删除之前收集请求参数、弹出对话框
+    const fDelete = () => {
       const selectedArray = stateData.tableRef.getSelectionRows()
       const resObj = commonFunc.GetArrayColumnConcatVals(selectedArray, 'id')
       if (resObj.id.length >= 1) {
-        stateData.destroy.actionName = commonFunc.CurdActionName[action]
-        stateData.destroy.isShow = true
-        stateData.destroy.ids = resObj.id.toString()
-        stateData.destroy.delCounts = resObj.id.length
+        stateData.propDelete.actionName = commonFunc.CurdActionName['delete']
+        stateData.propDelete.isShow = true
+        stateData.propDelete.ids = resObj.id.toString()
+        stateData.propDelete.delCounts = resObj.id.length
       } else {
-        console.log("请至少选中一条进行删除")
+        commonFunc.Curd.DestroyCheckForMoreItem(resObj.id.length >= 1)
       }
-
     }
-
+    //请求接口删除数据
+    const fDeleteCallback = () => {
+      destroy(stateData.propDelete.ids).then(res => {
+        stateData.propDelete.serverResCode = res.data.code
+        stateData.propDelete.serverResMsg = res.data.msg
+        fSearch()
+        
+      }).catch(errResponse => {
+        stateData.propDelete.serverResCode = errResponse.response.status
+        stateData.propDelete.serverResMsg = errResponse.response.data.msg
+      })
+    }
 
     const tableRowClick = (row, column, event) => {
       stateData.tableRef.toggleRowSelection(row, undefined)
     }
     // 默认初始化动作
-    search()
+    fSearch()
 
     // 导出变量、函数
     return {
       ...toRefs(stateData),
 
-      search,
-      handleDestroy,
-
-
+      fSearch,
+      fDelete,
+      fDeleteCallback,
       tableRowClick,
       locale: chCn
     }
@@ -177,10 +188,6 @@ export default {
   display: flex;
   align-items: center;
   padding: 2px 0 6px 2px;
-}
-
-.btnGroup {
-  padding: 0 10px;
 }
 
 .paging-area {
