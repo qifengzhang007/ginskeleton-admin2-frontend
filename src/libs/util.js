@@ -7,17 +7,28 @@ import config from '@/config/index'
 
 
 /*
-设置用户token
+设置 token
  */
 export const setToken = (token) => {
-    Cookies.set(config.dataStore.keyPre+config.dataStore.userTokenKey, token)
+    let seconds = 3600 * (config.dataStore.tokenStoreToCookieExpiration);  // cookie 默认8小时有效期
+    let exp = new Date(new Date() * 1 + seconds * 1000);
+    Cookies.set(config.dataStore.keyPre + config.dataStore.userTokenKey, token, {expires: exp})
 }
 
 /*
-删除用户token
+获取 token
+ */
+export const getToken = () => {
+    const token = Cookies.get(config.dataStore.keyPre + config.dataStore.userTokenKey)
+    if (token) return token
+    else return false
+}
+
+/*
+删除 token
  */
 export const removeToken = () => {
-    return Cookies.remove(config.dataStore.keyPre+config.dataStore.userTokenKey)
+    return Cookies.remove(config.dataStore.keyPre + config.dataStore.userTokenKey)
 }
 
 /*
@@ -27,14 +38,6 @@ export const clearLocalStorageAll = () => {
     window.localStorage.clear()
 }
 
-/*
-获取token
- */
-export const getToken = () => {
-    const token = Cookies.get(config.dataStore.keyPre+config.dataStore.userTokenKey)
-    if (token) return token
-    else return false
-}
 
 /*
 清除所有cookies
@@ -50,9 +53,6 @@ export const clearCookie = () => {
     }
 }
 
-// export const hasChild = (item) => {
-//     return item.children && item.children.length !== 0
-// }
 
 /*
 获取环境名称：dev=开发环境；pro=生产环境

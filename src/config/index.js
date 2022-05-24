@@ -27,10 +27,11 @@ export default {
     /**
      * @description 本地数据存储相关的设置
      */
-    dataStore:{
+    dataStore: {
         // 存储cookie、localStorage 时，key 的前缀，
-        keyPre:"K1_",    // 基于本套框架开发多个系统时，强烈建议不同的系统设置不同的前缀.
-        userTokenKey:"UserToken"   // 用户登录后token存储在cookie的键
+        keyPre: "K1_",    // 建议不同的项目使用项目编号作为前缀
+        userTokenKey: "UserToken",   // 用户登录后token存储在cookie的键
+        tokenStoreToCookieExpiration: 8,  //  token存储到cookie的默认有效期（单位：小时）
     },
 
     //  ============== 后面设置基本上无需改动 ======

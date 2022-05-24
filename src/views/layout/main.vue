@@ -48,6 +48,7 @@ import {useTabStore} from "@/store/system-setting/tabs";
 import {useRouteStore} from "@/store/system-setting/route";
 import {useReloadStore} from "@/store/system-setting/reload";
 import config from '@/config/index';
+import {getToken} from '@/libs/util';
 
 export default {
   name: "Main",
@@ -73,7 +74,7 @@ export default {
           next()
         } else {
           // 如果是业务路由，当token无效时，跳转到登录页面
-          if (!userStore.user.token.isValid) {
+          if (!getToken() || !userStore.user.token.isValid) {
             userStore.destroyUserInfo()
             // 如果没有，则跳至登录页面
             next({name: config.defaultRoute.notLoginDefaultRouterName})
@@ -85,7 +86,7 @@ export default {
       })
     }
 
-    if (userStore.user.token.isValid) {
+    if (getToken() && userStore.user.token.isValid) {
       reloadStore.reloadRouterMenu(userStore.user.info.id).then(res => {
         routerGuard()
         router.push({path: window.location.href.substring((window.location.href.match(/^http(s)?:\/\/.+?\//ig)[0]).length - 1)})
@@ -133,7 +134,7 @@ export default {
 #layout-content {
   display: block;
   padding: 4px 4px;
-  overflow:hidden;
+  overflow: hidden;
   height: calc(100vh - 64px - 42px - 2px);
 }
 </style>
