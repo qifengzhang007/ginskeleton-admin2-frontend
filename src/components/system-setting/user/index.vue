@@ -5,11 +5,11 @@
       <div class="toolBanner">
         用户名:
         <el-input v-model="tableList.searchKeyWords.user_name" placeholder="关键词" class="keyWordsInput"/>
-        <el-button-group>
-          <el-button type="primary" @click="fSearch" icon="Search">查询</el-button>
-          <el-button type="success" @click="fCreateEdit('insert')" icon="Plus">新增</el-button>
-          <el-button type="primary" @click="fCreateEdit('update')" icon="Edit">修改</el-button>
-          <el-button type="danger" @click="fDelete" icon="curdDelete">批量删除</el-button>
+        <el-button-group v-if="tableList.buttonGroupIsShow">
+          <el-button type="primary" @click="fSearch" icon="Search" v-if="tableList.buttonList.select">查询</el-button>
+          <el-button type="success" @click="fCreateEdit('insert')" icon="Plus" v-if="tableList.buttonList.insert">新增</el-button>
+          <el-button type="primary" @click="fCreateEdit('update')" icon="Edit" v-if="tableList.buttonList.update">修改</el-button>
+          <el-button type="danger" @click="fDelete" icon="curdDelete" v-if="tableList.buttonList.delete">批量删除</el-button>
         </el-button-group>
       </div>
 
@@ -32,7 +32,7 @@
       </el-table>
     </div>
     <div class="paging-area">
-      <Paging   :propPage="tableList"  @fPageCallback="fPageCallback" />
+      <Paging :propPage="tableList" @fPageCallback="fPageCallback"/>
 
     </div>
 
@@ -46,11 +46,13 @@
 
 <script>
 import commonFunc from '@/libs/common_func'
+import {useRouter} from 'vue-router'
 import {reactive, toRefs} from 'vue'
 import {destroy, list} from '@/api/system-setting/user'
+import {show_button, view_button_list} from '@/api/system-setting/auth'
 import DeleteDataDialog from '@/components/common/delete_data_dialog.vue'
 import CreateEdit from './create_edit.vue'
-import Paging  from '@/components/common/paging.vue'
+import Paging from '@/components/common/paging.vue'
 
 
 export default {
@@ -59,18 +61,11 @@ export default {
     CreateEdit,
     DeleteDataDialog,
     Paging,
-    //    ElConfigProvider,
   },
   setup() {
-    // 页面元素鉴权
-    // const auth_button= (buttonList) =>{
-    //   for (let key in stateData.tableList.buttonList) {
-    //     stateData.tableList.buttonList[key] = buttonList.some((value, index) => {
-    //       return value.en_name === stateData.tableList.buttonList[key];
-    //     })
-    //   }
-    //   return stateData.tableList.buttonList
-    // }
+    const router = useRouter()
+    // console.log(router.currentRoute.value.meta)  // 获取结果示例： {icon:"Grid",  id: 6  ,  title: "用户管理"  }
+
     const stateData = reactive({
       bodyHeight: commonFunc.BodyHeight(),
       tableRef: {},
@@ -83,6 +78,8 @@ export default {
         },
         total: 0, // 数据总条数
         data: [],
+        buttonGroupIsShow: false,
+        // 本页面可展示的按钮列表全部先定义
         buttonList: {
           insert: 'insert',
           delete: 'delete',
@@ -97,7 +94,7 @@ export default {
       // 新增、修改时，传递给子组件的属性变量，
       curdCreateEdit: {
         isShow: false,
-        drawerTitle:'',
+        drawerTitle: '',
         curdFormData: {
           action: '',
           id: 0,
@@ -120,8 +117,18 @@ export default {
         serverResCode: 0,
         serverResMsg: '',
       }
-
     })
+
+    //界面元素鉴权后显示
+    const btnElementAuth = () => {
+      view_button_list(router.currentRoute.value.meta.id).then(res => {
+        show_button(res.data.data, stateData.tableList.buttonList)
+        stateData.tableList.buttonGroupIsShow = true
+        this.search()
+      }).catch(res => {
+      })
+    }
+    btnElementAuth()
 
     // 查询相关======================
     const fSearch = () => {
@@ -133,8 +140,8 @@ export default {
         stateData.tableList.total = 0
       })
     }
-  // 分页组件回调函数
-    const fPageCallback=()=>{
+    // 分页组件回调函数
+    const fPageCallback = () => {
       fSearch()
     }
 
@@ -162,7 +169,7 @@ export default {
           break;
       }
       stateData.curdCreateEdit.curdFormData.action = action
-      stateData.curdCreateEdit.drawerTitle=commonFunc.CurdActionName[action]
+      stateData.curdCreateEdit.drawerTitle = commonFunc.CurdActionName[action]
       stateData.curdCreateEdit.isShow = true
     }
     const fCreateEditCallback = () => {
@@ -199,8 +206,6 @@ export default {
     const tableRowClick = (row, column, event) => {
       stateData.tableRef.toggleRowSelection(row, undefined)
     }
-    // 默认初始化动作
-    fSearch()
 
     // 导出变量、函数
     return {
