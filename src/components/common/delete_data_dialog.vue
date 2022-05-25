@@ -1,5 +1,5 @@
 <template>
-  <el-dialog v-model="propDelete.isShow" :title="propDelete.actionName" width="30%" draggable top="35vh" @close="fClose">
+  <el-dialog v-model="propDelete.isShow" :title="propDelete.actionName" width="25%" draggable top="35vh" @close="fClose">
     <template #header>
       <div>
         <el-icon>

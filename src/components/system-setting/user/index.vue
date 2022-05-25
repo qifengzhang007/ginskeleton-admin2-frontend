@@ -7,9 +7,9 @@
         <el-input v-model="tableList.searchKeyWords.user_name" placeholder="关键词" class="keyWordsInput"/>
         <el-button-group>
           <el-button type="primary" @click="fSearch" icon="Search">查询</el-button>
-          <el-button type="success" @click="fSearch" icon="Plus">新增</el-button>
-          <el-button type="primary" @click="fSearch" icon="Edit">修改</el-button>
-          <el-button type="danger" @click="fDelete" icon="Delete">批量删除</el-button>
+          <el-button type="success" @click="fCreateEdit('insert')" icon="Plus">新增</el-button>
+          <el-button type="primary" @click="fCreateEdit('update')" icon="Edit">修改</el-button>
+          <el-button type="danger" @click="fDelete" icon="curdDelete">批量删除</el-button>
         </el-button-group>
       </div>
 
@@ -32,34 +32,34 @@
       </el-table>
     </div>
     <div class="paging-area">
-      <ElConfigProvider :locale="locale">
-        <el-pagination small="small" layout="total,prev, pager, next,sizes" :default-page-size="20" prev-text="上一页" next-text="下一页" background
-                       :total="tableList.total" v-model:current-page="tableList.searchKeyWords.page" v-model:page-size="tableList.searchKeyWords.limit" :page-sizes="tableList.pageOptions"
-        />
-      </ElConfigProvider>
+      <Paging   :propPage="tableList"  @fPageCallback="fPageCallback" />
+
     </div>
 
-    <!--    导入的其他组件-->
-    <DeleteDataDialog :propDelete="propDelete" @fDeleteCallback="fDeleteCallback"/>
+    <!--    新增、修改组件： 需要两个必传参数：1.属性变量、2.新增或者修改后的回调函数 -->
+    <CreateEdit :propCreateEdit="curdCreateEdit" @fCreateEditCallback="fCreateEditCallback"/>
+    <!--    删除组件 : 需要两个必传参数：1.属性变量、2.删除后的回调函数  -->
+    <DeleteDataDialog :propDelete="curdDelete" @fDeleteCallback="fDeleteCallback"/>
 
   </div>
 </template>
 
 <script>
 import commonFunc from '@/libs/common_func'
-import {reactive, toRefs, watch} from 'vue'
+import {reactive, toRefs} from 'vue'
 import {destroy, list} from '@/api/system-setting/user'
-import {ElConfigProvider} from 'element-plus'
-import chCn from 'element-plus/lib/locale/lang/zh-cn'
-import {Delete, Edit, Plus, Search} from '@element-plus/icons-vue'
 import DeleteDataDialog from '@/components/common/delete_data_dialog.vue'
+import CreateEdit from './create_edit.vue'
+import Paging  from '@/components/common/paging.vue'
+
 
 export default {
   name: "UserIndex",
   components: {
+    CreateEdit,
     DeleteDataDialog,
-    ElConfigProvider,
-    Search, Edit, Delete, Plus
+    Paging,
+    //    ElConfigProvider,
   },
   setup() {
     // 页面元素鉴权
@@ -81,24 +81,37 @@ export default {
           page: 1,
           limit: 20
         },
+        total: 0, // 数据总条数
+        data: [],
         buttonList: {
           insert: 'insert',
           delete: 'delete',
           update: 'update',
           select: 'select',
         },
-        total: 0,
-        data: [],
-        // 分页配置
-        pageOptions: commonFunc.PageSizeOptions,
         style: {
           width: '100%',
           height: commonFunc.TableHeight(),
-
+        }
+      },
+      // 新增、修改时，传递给子组件的属性变量，
+      curdCreateEdit: {
+        isShow: false,
+        drawerTitle:'',
+        curdFormData: {
+          action: '',
+          id: 0,
+          real_name: '',
+          user_name: '',
+          pass: '',
+          phone: '',
+          avatar: '',
+          status: 1,
+          remark: '',
         }
       },
       // 删除数据时，传递给子组件的属性变量，数据格式如下：
-      propDelete: {
+      curdDelete: {
         actionName: '',
         isShow: false,
         ids: '',
@@ -120,16 +133,41 @@ export default {
         stateData.tableList.total = 0
       })
     }
-    // 分页组件改变事件,通过监听绑定的变量实现，elementPlus 官方提示，不要使用相关事件，后续版本会移出事件模式
-    watch(() => stateData.tableList.searchKeyWords.page, (newPage, oldPage) => {
+  // 分页组件回调函数
+    const fPageCallback=()=>{
       fSearch()
-    }, {immediate: true})
+    }
 
-    watch(() => stateData.tableList.searchKeyWords.limit, (newLimit, oldLimit) => {
+// 新增、修改相关
+    const fCreateEdit = (action) => {
+      // 新增时初始化表单结构参数为默认值
+      commonFunc.objInit(stateData.curdCreateEdit.curdFormData)
+
+      switch (action) {
+        case 'insert':
+          stateData.curdCreateEdit.curdFormData.status = 1
+          delete stateData.curdCreateEdit.curdFormData['id']  // 去除新增无关的字段 id
+          break;
+        case 'update':
+          const selectedArray = stateData.tableRef.getSelectionRows()
+          if (selectedArray.length === 1) {
+            stateData.curdCreateEdit.curdFormData = Object.assign({}, selectedArray[0])
+            stateData.curdCreateEdit.curdFormData.pass = '####*****####'  // 密码掩码，该掩码表示不对密码做任何操作
+            delete stateData.curdCreateEdit.curdFormData['created_at']  // 去除更新无关的字段
+            delete stateData.curdCreateEdit.curdFormData['updated_at']
+          } else {
+            commonFunc.Curd.EditCheck(selectedArray.length === 1)
+            return
+          }
+          break;
+      }
+      stateData.curdCreateEdit.curdFormData.action = action
+      stateData.curdCreateEdit.drawerTitle=commonFunc.CurdActionName[action]
+      stateData.curdCreateEdit.isShow = true
+    }
+    const fCreateEditCallback = () => {
       fSearch()
-    }, {immediate: true})
-
-// 查询相关==========================
+    }
 
 
     // 删除之前收集请求参数、弹出对话框
@@ -137,24 +175,24 @@ export default {
       const selectedArray = stateData.tableRef.getSelectionRows()
       const resObj = commonFunc.GetArrayColumnConcatVals(selectedArray, 'id')
       if (resObj.id.length >= 1) {
-        stateData.propDelete.actionName = commonFunc.CurdActionName['delete']
-        stateData.propDelete.isShow = true
-        stateData.propDelete.ids = resObj.id.toString()
-        stateData.propDelete.delCounts = resObj.id.length
+        stateData.curdDelete.actionName = commonFunc.CurdActionName['delete']
+        stateData.curdDelete.isShow = true
+        stateData.curdDelete.ids = resObj.id.toString()
+        stateData.curdDelete.delCounts = resObj.id.length
       } else {
         commonFunc.Curd.DestroyCheckForMoreItem(resObj.id.length >= 1)
       }
     }
     //请求接口删除数据
     const fDeleteCallback = () => {
-      destroy(stateData.propDelete.ids).then(res => {
-        stateData.propDelete.serverResCode = res.data.code
-        stateData.propDelete.serverResMsg = res.data.msg
+      destroy(stateData.curdDelete.ids).then(res => {
+        stateData.curdDelete.serverResCode = res.data.code
+        stateData.curdDelete.serverResMsg = res.data.msg
         fSearch()
-        
+
       }).catch(errResponse => {
-        stateData.propDelete.serverResCode = errResponse.response.status
-        stateData.propDelete.serverResMsg = errResponse.response.data.msg
+        stateData.curdDelete.serverResCode = errResponse.response.status
+        stateData.curdDelete.serverResMsg = errResponse.response.data.msg
       })
     }
 
@@ -169,10 +207,14 @@ export default {
       ...toRefs(stateData),
 
       fSearch,
+      fPageCallback,
+      fCreateEdit,
+      fCreateEditCallback,
+
       fDelete,
       fDeleteCallback,
-      tableRowClick,
-      locale: chCn
+
+      tableRowClick
     }
   }
 }
@@ -202,10 +244,4 @@ export default {
   margin-right: 10px;
 }
 
-</style>
-
-<style>
-div.el-pagination {
-  display: inline-flex;
-}
 </style>

@@ -70,12 +70,53 @@ table.el-table__header > thead > tr > th.el-table__cell {
     background-color: #f8f8f9 !important;
 }
 
+/*对话框的标题全局统一修改为 14px */
 span.el-dialog__title {
     font-size: 14px;
 }
 
+/*消息提示样式统一规定在右侧展示*/
 .el-message {
     left: 90%
+}
+
+/*drawer 抽屉组件头高度统一减小*/
+header.el-drawer__header {
+    margin: 4px 20px;
+    display: flex;
+    vertical-align: middle;
+    padding: 4px 0 12px 0;
+    border-bottom: solid 1px #f1f1f1;
+}
+
+/*抽屉标题样式字体*/
+header.el-drawer__header * {
+    font-size: 13px;
+}
+
+/*抽屉内容区域*/
+div.el-drawer__body {
+    margin: 0 20px;
+    padding: 0;
+}
+
+div.el-drawer__body * {
+    font-size: 12px;
+}
+
+/*抽屉footer区域填充样式*/
+div.el-drawer__footer {
+    margin: 0 20px;
+    border-top: solid 1px #f1f1f1;
+    padding: 10px 0;
+}
+
+label.el-form-item__label:after {
+    content: ":";
+}
+
+div.el-select {
+    width: 100%;
 }
 
 a {
