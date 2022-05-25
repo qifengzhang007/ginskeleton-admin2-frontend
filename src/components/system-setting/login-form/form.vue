@@ -78,14 +78,14 @@ export default {
         captcha_value: ""
       },
       rules: {
-        username: [
-          {type: 'string', required: 'true', message: '账户不能为空', trigger: 'blur'}
+        user_name: [
+          {type: 'string', required: true, message: '账户不能为空', trigger: 'blur'}
         ],
         pass: [
-          {type: 'string', required: 'true', message: '密码不能为空', trigger: 'blur'}
+          {type: 'string', required: true, message: '密码不能为空', trigger: 'blur'}
         ],
         captcha_value: [
-          {type: 'string', required: 'true', len: 4, message: '验证码不能为空', trigger: 'blur'}
+          {type: 'string', required: true, len: 4, message: '验证码不能为空', trigger: 'blur'}
         ]
       },
       loginErr: ""

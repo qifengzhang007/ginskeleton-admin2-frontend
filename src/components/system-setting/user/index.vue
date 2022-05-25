@@ -13,7 +13,7 @@
         </el-button-group>
       </div>
 
-      <el-table border :style="tableList.style" :height="tableList.style.height" :data="tableList.data" ref="tableRef" @row-click="tableRowClick">
+      <el-table border :style="tableList.style" :height="tableList.style.height" :data="tableList.data" ref="tableRef" @row-click="fTableRowClick">
         <el-table-column type="selection" width="50" align="center" id="t500"/>
         <el-table-column prop="id" label="id" width="100" sortable fixed/>
         <!--    ↓↓↓↓   业务字段  ↓↓↓↓   -->
@@ -64,8 +64,6 @@ export default {
   },
   setup() {
     const router = useRouter()
-    // console.log(router.currentRoute.value.meta)  // 获取结果示例： {icon:"Grid",  id: 6  ,  title: "用户管理"  }
-
     const stateData = reactive({
       bodyHeight: commonFunc.BodyHeight(),
       tableRef: {},
@@ -207,7 +205,7 @@ export default {
     const fFormatter = (row, column) => {
       return commonFunc.StatusMap[row.status]
     }
-    const tableRowClick = (row, column, event) => {
+    const fTableRowClick = (row, column, event) => {
       stateData.tableRef.toggleRowSelection(row, undefined)
     }
 
@@ -219,12 +217,10 @@ export default {
       fPageCallback,
       fCreateEdit,
       fCreateEditCallback,
-
       fDelete,
       fDeleteCallback,
-
       fFormatter,
-      tableRowClick
+      fTableRowClick
     }
   }
 }

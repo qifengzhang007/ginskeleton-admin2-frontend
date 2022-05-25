@@ -10,16 +10,15 @@
     >
       <template #default>
 
-        <el-form :model="propCreateEdit.curdFormData" class="demo-form-inline" label-position="left" label-width="110px">
-
+        <el-form ref="formRef" :model="propCreateEdit.curdFormData" :rules="rules" label-position="left" label-width="110px">
           <el-row justify="space-between">
             <el-col :span="11">
-              <el-form-item label="用户名">
+              <el-form-item label="用户名" prop="user_name">
                 <el-input clearable v-model="propCreateEdit.curdFormData.user_name"/>
               </el-form-item>
             </el-col>
             <el-col :span="11">
-              <el-form-item label="姓名">
+              <el-form-item label="姓名" prop="real_name">
                 <el-input clearable v-model="propCreateEdit.curdFormData.real_name"/>
               </el-form-item>
             </el-col>
@@ -27,7 +26,7 @@
 
           <el-row justify="space-between">
             <el-col :span="11">
-              <el-form-item label="密码">
+              <el-form-item label="密码" prop="pass">
                 <el-input type="password" v-model="propCreateEdit.curdFormData.pass" placeholder="" show-password/>
               </el-form-item>
             </el-col>
@@ -99,7 +98,19 @@ export default {
     const {propCreateEdit} = toRefs(props)
 
     const stateData = reactive({
+      formRef: {},
       selectStatus: commonFunc.SelectStatus,
+      rules: {
+        user_name: [
+          {type: 'string', required: true, message: '账户不能为空', trigger: 'blur'}
+        ],
+        pass: [
+          {type: 'string', required: true, message: '密码不能为空', trigger: 'blur'}
+        ],
+        real_name: [
+          {type: 'string', required: true, message: '姓名不能为空', trigger: 'blur'}
+        ],
+      },
     })
 
 
@@ -113,36 +124,42 @@ export default {
       propCreateEdit.value.isShow = false
     }
     const fConfirm = () => {
-      switch (propCreateEdit.value.curdFormData.action) {
-        case 'insert':
-          create(propCreateEdit.value.curdFormData).then(res => {
-            if (res.data.code === 200) {
-              commonFunc.Curd.SuccessTips(res.data.msg)
-              // 刷新主界面数据
-              context.emit('fCreateEditCallback')
-            }
-          }).catch(errResponse => {
-            commonFunc.Curd.FailTips(errResponse.response.data.msg)
-          })
-          break;
-        case 'update':
-          edit(propCreateEdit.value.curdFormData).then(res => {
-            if (res.data.code === 200) {
-              commonFunc.Curd.SuccessTips(res.data.msg)
-              // 刷新主界面数据
-              context.emit('fCreateEditCallback')
-            }
-          }).catch(errResponse => {
-            commonFunc.Curd.FailTips(errResponse.response.data.msg)
-          })
-          break;
-      }
-
+      // 表单参数校验完成后提交
+      stateData.formRef.validate((valid, fields) => {
+        if (valid) {
+          switch (propCreateEdit.value.curdFormData.action) {
+            case 'insert':
+              create(propCreateEdit.value.curdFormData).then(res => {
+                if (res.data.code === 200) {
+                  commonFunc.Curd.SuccessTips(res.data.msg)
+                  // 刷新主界面数据
+                  context.emit('fCreateEditCallback')
+                }
+              }).catch(errResponse => {
+                commonFunc.Curd.FailTips(errResponse.response.data.msg)
+              })
+              break;
+            case 'update':
+              edit(propCreateEdit.value.curdFormData).then(res => {
+                if (res.data.code === 200) {
+                  commonFunc.Curd.SuccessTips(res.data.msg)
+                  // 刷新主界面数据
+                  context.emit('fCreateEditCallback')
+                }
+              }).catch(errResponse => {
+                commonFunc.Curd.FailTips(errResponse.response.data.msg)
+              })
+              break;
+          }
+        } else {
+          //  console.log("表单字段验证失败：", fields)
+        }
+      })
     }
 
     return {
-      propCreateEdit,
       ...toRefs(stateData),
+      propCreateEdit,
 
       fClose,
       fCancel,
