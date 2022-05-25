@@ -21,7 +21,7 @@
         <el-table-column prop="user_name" label="用户名" sortable show-overflow-tooltip/>
         <el-table-column prop="real_name" label="姓名" sortable show-overflow-tooltip/>
         <el-table-column prop="phone" label="联系方式" sortable show-overflow-tooltip/>
-        <el-table-column prop="status" label="状态" sortable show-overflow-tooltip/>
+        <el-table-column prop="status" label="状态" sortable show-overflow-tooltip :formatter="fFormatter"/>
         <el-table-column prop="login_times" label="登陆次数" sortable show-overflow-tooltip/>
         <el-table-column prop="last_login_ip" label="最近登陆ip" sortable show-overflow-tooltip/>
         <el-table-column prop="remark" label="备注" sortable show-overflow-tooltip/>
@@ -203,6 +203,10 @@ export default {
       })
     }
 
+    // 格式化 status 字段
+    const fFormatter = (row, column) => {
+      return commonFunc.StatusMap[row.status]
+    }
     const tableRowClick = (row, column, event) => {
       stateData.tableRef.toggleRowSelection(row, undefined)
     }
@@ -219,6 +223,7 @@ export default {
       fDelete,
       fDeleteCallback,
 
+      fFormatter,
       tableRowClick
     }
   }
