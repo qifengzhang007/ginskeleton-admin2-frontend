@@ -1,25 +1,19 @@
 <template>
-
-  <div>
-    <el-input  v-model="btn_name" placeholder="按钮--001"  clearable  />
-按钮管理
-  </div>
-
+  <ButtonIndex/>
 </template>
 
 <script>
-import {ref} from "vue";
-
+import ButtonIndex from '@/components/system-setting/button/index.vue'
 
 export default {
   name: "Button",
-  components:{},
+  components: {
+    ButtonIndex
+  },
   setup() {
-    const  btn_name= ref('Button')
 
-    return {
-      btn_name
-    }
+    return {}
+
   }
 }
 </script>

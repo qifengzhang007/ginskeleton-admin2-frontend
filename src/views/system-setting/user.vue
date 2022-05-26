@@ -1,7 +1,5 @@
 <template>
-  <div>
-    <UserIndex/>
-  </div>
+  <UserIndex/>
 </template>
 
 <script>

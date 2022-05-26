@@ -5,6 +5,7 @@ import '@vue/runtime-core'
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    Button: typeof import('./components/system-setting/button/index.vue')['default']
     Carouse: typeof import('./components/system-setting/login-form/carouse.vue')['default']
     Copy_right: typeof import('./components/system-setting/login-form/copy_right.vue')['default']
     Create_edit: typeof import('./components/system-setting/user/create_edit.vue')['default']
@@ -18,6 +19,7 @@ declare module '@vue/runtime-core' {
     ElCarousel: typeof import('element-plus/es')['ElCarousel']
     ElCarouselItem: typeof import('element-plus/es')['ElCarouselItem']
     ElCol: typeof import('element-plus/es')['ElCol']
+    ElColorPicker: typeof import('element-plus/es')['ElColorPicker']
     ElConfigProvider: typeof import('element-plus/es')['ElConfigProvider']
     ElDialog: typeof import('element-plus/es')['ElDialog']
     ElDrawer: typeof import('element-plus/es')['ElDrawer']

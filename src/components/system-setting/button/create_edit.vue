@@ -5,26 +5,27 @@
         <el-form ref="formRef" :model="propCreateEdit.curdFormData" :rules="rules" label-position="left" label-width="110px">
           <el-row justify="space-between">
             <el-col :span="11">
-              <el-form-item label="用户名" prop="user_name">
-                <el-input clearable v-model="propCreateEdit.curdFormData.user_name"/>
+              <el-form-item label="按钮名" prop="cn_name">
+                <el-input clearable v-model="propCreateEdit.curdFormData.cn_name"/>
               </el-form-item>
             </el-col>
             <el-col :span="11">
-              <el-form-item label="姓名" prop="real_name">
-                <el-input clearable v-model="propCreateEdit.curdFormData.real_name"/>
+              <el-form-item label="英文编码" prop="en_name">
+                <el-input clearable v-model="propCreateEdit.curdFormData.en_name"/>
               </el-form-item>
             </el-col>
           </el-row>
 
           <el-row justify="space-between">
             <el-col :span="11">
-              <el-form-item label="密码" prop="pass">
-                <el-input type="password" v-model="propCreateEdit.curdFormData.pass" placeholder="" show-password/>
+              <el-form-item label="按钮颜色">
+                <el-input v-model="propCreateEdit.curdFormData.color" placeholder="" style="width: 90%"/>
+                <el-color-picker v-model="propCreateEdit.curdFormData.color" />
               </el-form-item>
             </el-col>
             <el-col :span="11">
-              <el-form-item label="联系方式">
-                <el-input clearable v-model="propCreateEdit.curdFormData.phone"/>
+              <el-form-item label="请求方式" prop="allow_method">
+                <el-input clearable v-model="propCreateEdit.curdFormData.allow_method" placeholder="GET、POST等"/>
               </el-form-item>
             </el-col>
           </el-row>
@@ -37,19 +38,6 @@
                              :label="item.label" :value="item.value"
                   />
                 </el-select>
-              </el-form-item>
-            </el-col>
-          </el-row>
-
-          <el-row justify="space-between">
-            <el-col :span="11">
-              <el-form-item label="上传头像">
-                <UploadFile @fUploadCallback="fUploadCallback"/>
-              </el-form-item>
-            </el-col>
-            <el-col :span="11">
-              <el-form-item label="">
-                <Image :propImgShortPath="propCreateEdit.curdFormData.avatar"/>
               </el-form-item>
             </el-col>
           </el-row>
@@ -80,16 +68,11 @@
 <script>
 import {reactive, toRefs} from "vue";
 import commonFunc from '@/libs/common_func'
-import {create, edit} from '@/api/system-setting/user'
-import UploadFile from '@/components/common/upload_file.vue'
-import Image from '@/components/common/image.vue'
+import {create, edit} from '@/api/system-setting/button'
 
 export default {
   name: "CreateEdit",
-  components: {
-    UploadFile,
-    Image
-  },
+  components: {},
   props: {
     propCreateEdit: Object,
   },
@@ -101,9 +84,9 @@ export default {
       formRef: {},
       selectStatus: commonFunc.SelectStatus,
       rules: {
-        user_name: [{type: 'string', required: true, message: '账户不能为空', trigger: 'blur'}],
-        pass: [{type: 'string', required: true, message: '密码不能为空', trigger: 'blur'}],
-        real_name: [{type: 'string', required: true, message: '姓名不能为空', trigger: 'blur'}],
+        cn_name: [{type: 'string', required: true, message: '按钮名为必填项', trigger: 'blur'}],
+        en_name: [{type: 'string', required: true, message: '按钮英文编码为必填项', trigger: 'blur'}],
+        allow_method: [{type: 'string', required: true, message: '请求方式为必填项', trigger: 'blur'}],
       },
     })
 
