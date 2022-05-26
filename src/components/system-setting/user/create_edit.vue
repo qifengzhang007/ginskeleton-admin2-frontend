@@ -51,14 +51,13 @@
 
           <el-row justify="space-between">
             <el-col :span="11">
-              <el-form-item label="头像">
+              <el-form-item label="上传头像">
                 <UploadFile @fUploadCallback="fUploadCallback"/>
               </el-form-item>
             </el-col>
             <el-col :span="11">
               <el-form-item label="">
-                <img v-if="propCreateEdit.curdFormData.avatar.length>10" :src="imgServerPre+propCreateEdit.curdFormData.avatar" class="thumbnail" alt=""/>
-                <!--                <Image  :propShortPath="shortPath" />-->
+                <Image :propImgShortPath="propCreateEdit.curdFormData.avatar"/>
               </el-form-item>
             </el-col>
           </el-row>
@@ -94,12 +93,13 @@ import commonFunc from '@/libs/common_func'
 import {create, edit} from '@/api/system-setting/user'
 import UploadFile from '@/components/common/upload_file.vue'
 import {getServerIp} from '@/libs/util'
+import Image from '@/components/common/image.vue'
 
 export default {
   name: "CreateEdit",
   components: {
     UploadFile,
-    // Image
+    Image
   },
   props: {
     propCreateEdit: Object,

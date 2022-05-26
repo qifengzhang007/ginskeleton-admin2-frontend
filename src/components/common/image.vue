@@ -1,29 +1,26 @@
 <template>
-  <img v-if="propShortPath.length>10" :src="fullPath" class="thumbnail" alt=""/>
+  <img v-if="propImgShortPath.length>10" :src="imgServerPre+propImgShortPath" class="thumbnail" alt="图片缺失"/>
 </template>
 
 <script>
-import {reactive, toRefs, watch} from 'vue'
+import {reactive, toRefs} from 'vue'
 import {getServerIp} from '@/libs/util'
 
 export default {
   name: "Image",
   props: {
-    propShortPath: Object,
+    propImgShortPath: String,
   },
+  
   setup(props, context) {
-    const propShortPath = toRefs(props)
-    console.log("propShortPath",propShortPath)
+    const {propImgShortPath} = toRefs(props)
     const stateData = reactive({
-      fullPath: getServerIp() + propShortPath
+      imgServerPre: getServerIp()
     })
-
-    watch(propShortPath, (n, o) => {
-      console.log("监听路径变化：", n, o)
-    })
+    
     return {
       ...toRefs(stateData),
-      propShortPath
+      propImgShortPath
     }
   }
 }
@@ -33,5 +30,6 @@ export default {
 .thumbnail {
   max-width: 200px;
   max-height: 200px;
+  border: solid 1px red;
 }
 </style>
