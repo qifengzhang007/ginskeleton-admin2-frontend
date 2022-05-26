@@ -196,8 +196,4 @@ export default {
   width: 40px;
 }
 
-.thumbnail {
-  max-width: 200px;
-  max-height: 200px;
-}
 </style>

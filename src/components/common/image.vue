@@ -30,6 +30,5 @@ export default {
 .thumbnail {
   max-width: 200px;
   max-height: 200px;
-  border: solid 1px red;
 }
 </style>
