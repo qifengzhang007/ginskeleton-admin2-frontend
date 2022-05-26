@@ -1,15 +1,7 @@
 <template>
   <div>
-    <el-drawer
-        v-model="propCreateEdit.isShow"
-        :title="propCreateEdit.drawerTitle"
-        size="55%"
-        direction="rtl"
-        :before-close="fClose"
-        :close-on-click-modal="false"
-    >
+    <el-drawer v-model="propCreateEdit.isShow" :before-close="fClose" :close-on-click-modal="false" direction="rtl" :title="propCreateEdit.drawerTitle" size="55%">
       <template #default>
-
         <el-form ref="formRef" :model="propCreateEdit.curdFormData" :rules="rules" label-position="left" label-width="110px">
           <el-row justify="space-between">
             <el-col :span="11">
@@ -83,8 +75,6 @@
 
     </el-drawer>
   </div>
-
-
 </template>
 
 <script>
@@ -188,7 +178,6 @@ export default {
 .drawer-footer {
   display: block;
   text-align: center;
-
 }
 
 .blank-area {
