@@ -37,14 +37,17 @@ declare module '@vue/runtime-core' {
     ElSubMenu: typeof import('element-plus/es')['ElSubMenu']
     ElTable: typeof import('element-plus/es')['ElTable']
     ElTableColumn: typeof import('element-plus/es')['ElTableColumn']
+    ElUpload: typeof import('element-plus/es')['ElUpload']
     Form: typeof import('./components/system-setting/login-form/form.vue')['default']
     Header_banner: typeof import('./components/system-setting/layout/header_banner.vue')['default']
+    Image: typeof import('./components/common/image.vue')['default']
     Left_menu: typeof import('./components/system-setting/layout/left_menu.vue')['default']
     Paging: typeof import('./components/common/paging.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     Tabs: typeof import('./components/system-setting/layout/tabs.vue')['default']
     Title: typeof import('./components/system-setting/login-form/title.vue')['default']
+    Upload_file: typeof import('./components/common/upload_file.vue')['default']
     User: typeof import('./components/system-setting/user/index.vue')['default']
   }
 }

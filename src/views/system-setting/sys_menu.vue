@@ -6,16 +6,24 @@ sys_menu 系统菜单
 
 </template>
 
-<script>
-export default {
-  name: "SysMenu",
-  components:{},
-  setup(){
-    console.log("每次新开会触发吗？？？？SysMenu")
+<script  setup>
+// export default {
+//   name: "SysMenu",
+//   components:{},
+//   setup(){
+//     console.log("每次新开会触发吗？？？？SysMenu")
+//
+//     // return {}
+//   }
+// }
 
-    return {}
-  }
-}
+
+// setup(){
+//   console.log("每次新开会触发吗？？？？SysMenu")
+//
+//   // return {}
+// }
+
 </script>
 
 <style scoped>

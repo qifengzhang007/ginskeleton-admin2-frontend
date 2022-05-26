@@ -52,7 +52,13 @@
           <el-row justify="space-between">
             <el-col :span="11">
               <el-form-item label="头像">
-                <el-input clearable v-model="propCreateEdit.curdFormData.avatar"/>
+                <UploadFile @fUploadCallback="fUploadCallback"/>
+              </el-form-item>
+            </el-col>
+            <el-col :span="11">
+              <el-form-item label="">
+                <img v-if="propCreateEdit.curdFormData.avatar.length>10" :src="imgServerPre+propCreateEdit.curdFormData.avatar" class="thumbnail" alt=""/>
+                <!--                <Image  :propShortPath="shortPath" />-->
               </el-form-item>
             </el-col>
           </el-row>
@@ -86,10 +92,15 @@
 import {reactive, toRefs} from "vue";
 import commonFunc from '@/libs/common_func'
 import {create, edit} from '@/api/system-setting/user'
+import UploadFile from '@/components/common/upload_file.vue'
+import {getServerIp} from '@/libs/util'
 
 export default {
   name: "CreateEdit",
-  components: {},
+  components: {
+    UploadFile,
+    // Image
+  },
   props: {
     propCreateEdit: Object,
   },
@@ -100,12 +111,20 @@ export default {
     const stateData = reactive({
       formRef: {},
       selectStatus: commonFunc.SelectStatus,
+      imgServerPre: getServerIp(),
       rules: {
         user_name: [{type: 'string', required: true, message: '账户不能为空', trigger: 'blur'}],
         pass: [{type: 'string', required: true, message: '密码不能为空', trigger: 'blur'}],
         real_name: [{type: 'string', required: true, message: '姓名不能为空', trigger: 'blur'}],
       },
     })
+
+    // 文件上传组件相关的属性传递
+    //@shortSavePath 文件上传以后返回的短路径，例如：/public/storage/uploaded/2022_05/0ed83dee0302f84e345674ece32d3cb5.png
+    //@fullSavePath 文件上传以后返回的全路径，例如：http://127.0.0.1:20201/public/storage/uploaded/2022_05/0ed83dee0302f84e345674ece32d3cb5.png
+    const fUploadCallback = (shortSavePath, fullSavePath) => {
+      propCreateEdit.value.curdFormData.avatar = shortSavePath
+    }
 
     // 抽屉界面相关的操作
     const fClose = (done) => {
@@ -156,6 +175,7 @@ export default {
       ...toRefs(stateData),
       propCreateEdit,
 
+      fUploadCallback,
       fClose,
       fCancel,
       fConfirm
@@ -174,5 +194,10 @@ export default {
 .blank-area {
   display: inline-block;
   width: 40px;
+}
+
+.thumbnail {
+  max-width: 200px;
+  max-height: 200px;
 }
 </style>

@@ -26,7 +26,8 @@ export default {
     const stateData = reactive({
       pageOptions: commonFunc.PageSizeOptions
     })
-    // 分页组件改变事件,通过监听绑定的变量实现，elementPlus 官方提示，不要使用相关事件，后续版本会移出事件模式
+    // 分页组件改变事件,通过监听绑定的变量实现，
+    // elementPlus 官方提示，不要使用相关事件实现，后续版本会移出事件模式
     watch(() => propPage.value.searchKeyWords.page, (newPage, oldPage) => {
       context.emit('fPageCallback')
     }, {immediate: true})
