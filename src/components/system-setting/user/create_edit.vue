@@ -101,26 +101,21 @@ export default {
       formRef: {},
       selectStatus: commonFunc.SelectStatus,
       rules: {
-        user_name: [
-          {type: 'string', required: true, message: '账户不能为空', trigger: 'blur'}
-        ],
-        pass: [
-          {type: 'string', required: true, message: '密码不能为空', trigger: 'blur'}
-        ],
-        real_name: [
-          {type: 'string', required: true, message: '姓名不能为空', trigger: 'blur'}
-        ],
+        user_name: [{type: 'string', required: true, message: '账户不能为空', trigger: 'blur'}],
+        pass: [{type: 'string', required: true, message: '密码不能为空', trigger: 'blur'}],
+        real_name: [{type: 'string', required: true, message: '姓名不能为空', trigger: 'blur'}],
       },
     })
 
-
     // 抽屉界面相关的操作
     const fClose = (done) => {
-      // 关闭销毁变量
+      // 关闭按钮销毁变量
+      commonFunc.objInit(propCreateEdit.value.curdFormData)
       done()
     }
     const fCancel = () => {
-      // 关闭销毁变量
+      // 取消按钮销毁变量
+      commonFunc.objInit(propCreateEdit.value.curdFormData)
       propCreateEdit.value.isShow = false
     }
     const fConfirm = () => {

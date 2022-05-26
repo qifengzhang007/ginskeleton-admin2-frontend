@@ -8,7 +8,13 @@ sys_menu 系统菜单
 
 <script>
 export default {
-  name: "SysMenu"
+  name: "SysMenu",
+  components:{},
+  setup(){
+    console.log("每次新开会触发吗？？？？SysMenu")
+
+    return {}
+  }
 }
 </script>
 

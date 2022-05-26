@@ -145,9 +145,6 @@ export default {
 
 // 新增、修改相关
     const fCreateEdit = (action) => {
-      // 新增时初始化表单结构参数为默认值
-      commonFunc.objInit(stateData.curdCreateEdit.curdFormData)
-
       switch (action) {
         case 'insert':
           stateData.curdCreateEdit.curdFormData.status = 1
@@ -155,13 +152,12 @@ export default {
           break;
         case 'update':
           const selectedArray = stateData.tableRef.getSelectionRows()
-          if (selectedArray.length === 1) {
+          if (commonFunc.Curd.EditCheck(selectedArray.length === 1)) {
             stateData.curdCreateEdit.curdFormData = Object.assign({}, selectedArray[0])
             stateData.curdCreateEdit.curdFormData.pass = '####*****####'  // 密码掩码，该掩码表示不对密码做任何操作
             delete stateData.curdCreateEdit.curdFormData['created_at']  // 去除更新无关的字段
             delete stateData.curdCreateEdit.curdFormData['updated_at']
           } else {
-            commonFunc.Curd.EditCheck(selectedArray.length === 1)
             return
           }
           break;
@@ -179,13 +175,11 @@ export default {
     const fDelete = () => {
       const selectedArray = stateData.tableRef.getSelectionRows()
       const resObj = commonFunc.GetArrayColumnConcatVals(selectedArray, 'id')
-      if (resObj.id.length >= 1) {
+      if (commonFunc.Curd.DestroyCheckForMoreItem(resObj.id.length >= 1)) {
         stateData.curdDelete.actionName = commonFunc.CurdActionName['delete']
         stateData.curdDelete.isShow = true
         stateData.curdDelete.ids = resObj.id.toString()
         stateData.curdDelete.delCounts = resObj.id.length
-      } else {
-        commonFunc.Curd.DestroyCheckForMoreItem(resObj.id.length >= 1)
       }
     }
     //请求接口删除数据
