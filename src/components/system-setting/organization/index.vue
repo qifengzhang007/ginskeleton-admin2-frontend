@@ -86,7 +86,7 @@ export default {
         props: {
           label: 'title',
           children: 'children',
-          isLeaf: 'leaf',
+          isLeaf: 'is_leaf',
         },
         curItemId: 0,
         curItemTitle: '',
