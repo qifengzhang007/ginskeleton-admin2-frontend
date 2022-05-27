@@ -2,9 +2,9 @@
   <Split>
 
     <template v-slot:left>
-      <div :style="leftTreeContainerFixHeight">
+      <el-scrollbar :style="leftTreeContainerFixHeight" :height="leftTreeContainerFixHeight.height">
         <el-tree :expand-on-click-node="false" node-key="id" :current-node-key="1" :props="leftTree.props" :load="fASyncData" lazy :highlight-current="true" @node-click="fLeftTreeCurrentChange"/>
-      </div>
+      </el-scrollbar>
 
     </template>
 
