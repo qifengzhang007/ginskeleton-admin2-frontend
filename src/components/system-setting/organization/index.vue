@@ -12,8 +12,8 @@
       <div :style="{height:bodyHeight}">
         <div class="tableList-area">
           <div class="toolBanner">
-            区域名称:
-            <el-input v-model="tableList.searchKeyWords.name" placeholder="关键词" class="keyWordsInput"/>
+            组织机构名称:
+            <el-input v-model="tableList.searchKeyWords.title" placeholder="关键词" class="keyWordsInput"/>
             <el-button-group v-if="tableList.buttonGroupIsShow">
               <el-button type="primary" @click="fSearch" icon="Search" v-if="tableList.buttonList.select">查询</el-button>
               <el-button type="success" @click="fCreateEdit('insert')" icon="Plus" v-if="tableList.buttonList.insert">新增</el-button>
@@ -27,10 +27,8 @@
             <el-table-column prop="id" label="id" width="100" sortable fixed/>
             <!--    ↓↓↓↓   业务字段  ↓↓↓↓   -->
 
-            <el-table-column prop="name" label="区域名称" sortable show-overflow-tooltip/>
+            <el-table-column prop="title" label="组织机构名称" sortable show-overflow-tooltip/>
             <el-table-column prop="status" label="状态" sortable show-overflow-tooltip :formatter="fFormatter"/>
-            <el-table-column prop="node_level" label="节点深度" sortable show-overflow-tooltip/>
-            <el-table-column prop="sort" label="排序" sortable show-overflow-tooltip/>
 
             <!--     ↑↑↑↑   业务字段  ↑↑↑↑   -->
             <el-table-column prop="remark" label="备注" sortable show-overflow-tooltip/>
@@ -59,15 +57,15 @@
 import Split from '@/components/common/split.vue'
 import commonFunc from '@/libs/common_func'
 import {reactive, toRefs, watch} from "vue";
-import {destroy, getSubListByFid, list} from '@/api/data-dictionary/province_city'
 import {show_button, view_button_list} from '@/api/system-setting/auth'
 import DeleteDataDialog from '@/components/common/delete_data_dialog.vue'
 import Paging from '@/components/common/paging.vue'
-import CreateEdit from './create_edit.vue'
 import {useRouter} from "vue-router";
+import {destroy, getSubListByFid, list} from '@/api/system-setting/organization'
+import CreateEdit from './create_edit.vue'
 
 export default {
-  name: "ProvinceCityIndex",
+  name: "OrgPostIndex",
   components: {
     Split,
     CreateEdit,
@@ -100,7 +98,7 @@ export default {
       tableList: {
         // 查询相关的关键词
         searchKeyWords: {
-          name: '',
+          title: '',
           fid: 0,
           page: 1,
           limit: 20
@@ -129,8 +127,7 @@ export default {
           id: 0,
           fid: '',
           ftitle: '',
-          name: '',
-          sort: 0,
+          title: '',
           status: 1,
           remark: '',
         }
@@ -218,7 +215,7 @@ export default {
           const selectedArray = stateData.tableRef.getSelectionRows()
           if (commonFunc.Curd.EditCheck(selectedArray.length === 1)) {
             stateData.curdCreateEdit.curdFormData = Object.assign({}, selectedArray[0])
-            if (stateData.curdCreateEdit.curdFormData.ftitle === undefined || stateData.curdCreateEdit.curdFormData.ftitle === '') {
+            if (stateData.curdCreateEdit.curdFormData.ftitle===undefined || stateData.curdCreateEdit.curdFormData.ftitle === '') {
               stateData.curdCreateEdit.curdFormData.ftitle = stateData.leftTree.curItemTitle
             }
             delete stateData.curdCreateEdit.curdFormData['created_at']  // 去除更新无关的字段

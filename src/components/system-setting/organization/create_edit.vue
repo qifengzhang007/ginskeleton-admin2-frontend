@@ -11,8 +11,8 @@
               </el-form-item>
             </el-col>
             <el-col :span="11">
-              <el-form-item label="区域名称" prop="name">
-                <el-input clearable v-model="propCreateEdit.curdFormData.name"/>
+              <el-form-item label="组织机构名称" prop="title">
+                <el-input clearable v-model="propCreateEdit.curdFormData.title"/>
               </el-form-item>
             </el-col>
           </el-row>
@@ -23,11 +23,6 @@
                 <el-select v-model="propCreateEdit.curdFormData.status" :fit-input-width="true">
                   <el-option v-for="item in selectStatus" :key="item.value"   :label="item.label" :value="item.value"   />
                 </el-select>
-              </el-form-item>
-            </el-col>
-            <el-col :span="11">
-              <el-form-item label="排序">
-                <el-input type="number" clearable v-model="propCreateEdit.curdFormData.sort" placeholder=""/>
               </el-form-item>
             </el-col>
           </el-row>
@@ -56,7 +51,7 @@
 <script>
 import {reactive, toRefs} from "vue";
 import commonFunc from '@/libs/common_func'
-import {create, edit} from '@/api/data-dictionary/province_city'
+import {create, edit} from '@/api/system-setting/organization'
 
 export default {
   name: "CreateEdit",
@@ -73,7 +68,7 @@ export default {
       selectStatus: commonFunc.SelectStatus,
       rules: {
         fid: [{type: 'number', required: true, message: '上级节点为必填项', trigger: 'blur'}],
-        name: [{type: 'string', required: true, message: '区域名为必填项', trigger: 'blur'}],
+        title: [{type: 'string', required: true, message: '组织机构名称为必填项', trigger: 'blur'}],
       },
     })
 

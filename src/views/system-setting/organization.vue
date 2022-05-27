@@ -1,14 +1,16 @@
 <template>
-
-  <div>
-    organization  组织结构
-  </div>
+  <OrgPostIndex/>
 
 </template>
 
 <script>
+import OrgPostIndex from '@/components/system-setting/organization/index.vue'
+
 export default {
-  name: "Organization"
+  name: "Organization",
+  components: {
+    OrgPostIndex
+  }
 }
 </script>
 
