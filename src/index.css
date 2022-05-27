@@ -119,6 +119,11 @@ div.el-select {
     width: 100%;
 }
 
+/*树形列表字体设置*/
+span.el-tree-node__label {
+    font-size: 12px;
+}
+
 a {
     text-decoration: none;
 }

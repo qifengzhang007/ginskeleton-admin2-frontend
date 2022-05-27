@@ -1,12 +1,15 @@
 <template>
-<div>
-  province_city  省份城市数据字段
-</div>
+  <ProvinceCityIndex/>
 </template>
 
 <script>
+import ProvinceCityIndex from '@/components/data-dictionary/province-city/index.vue'
+
 export default {
-  name: "ProvinceCity"
+  name: "ProvinceCity",
+  components: {
+    ProvinceCityIndex
+  }
 }
 </script>
 

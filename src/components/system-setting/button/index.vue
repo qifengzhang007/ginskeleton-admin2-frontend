@@ -1,6 +1,5 @@
 <template>
   <div :style="{height:bodyHeight}">
-
     <div class="tableList-area">
       <div class="toolBanner">
         按钮名称:
@@ -119,7 +118,7 @@ export default {
       view_button_list(router.currentRoute.value.meta.id).then(res => {
         show_button(res.data.data, stateData.tableList.buttonList)
         stateData.tableList.buttonGroupIsShow = true
-        this.search()
+        fSearch()
       }).catch(res => {
       })
     }

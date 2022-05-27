@@ -24,16 +24,26 @@ export default {
   setup(props, context) {
     const {propPage} = toRefs(props)
     const stateData = reactive({
-      pageOptions: commonFunc.PageSizeOptions
+      pageOptions: commonFunc.PageSizeOptions,
+      tmpOldPage:1,
+      tmpOldLimit:20,
     })
+    stateData.tmpOldPage=propPage.value.searchKeyWords.page
+    stateData.tmpOldLimit=propPage.value.searchKeyWords.limit
     // 分页组件改变事件,通过监听绑定的变量实现，
     // elementPlus 官方提示，不要使用相关事件实现，后续版本会移出事件模式
     watch(() => propPage.value.searchKeyWords.page, (newPage, oldPage) => {
-      context.emit('fPageCallback')
+      if(stateData.tmpOldPage!==newPage){
+        context.emit('fPageCallback')
+      }
+      stateData.tmpOldPage=newPage
     }, {immediate: true})
 
     watch(() => propPage.value.searchKeyWords.limit, (newLimit, oldLimit) => {
-      context.emit('fPageCallback')
+      if(stateData.tmpOldLimit!==newLimit){
+        context.emit('fPageCallback')
+      }
+      stateData.tmpOldLimit=newLimit
     }, {immediate: true})
 
     return {

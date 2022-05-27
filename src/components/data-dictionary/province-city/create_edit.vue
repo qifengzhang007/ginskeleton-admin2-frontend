@@ -5,27 +5,14 @@
         <el-form ref="formRef" :model="propCreateEdit.curdFormData" :rules="rules" label-position="left" label-width="110px">
           <el-row justify="space-between">
             <el-col :span="11">
-              <el-form-item label="按钮名" prop="cn_name">
-                <el-input clearable v-model="propCreateEdit.curdFormData.cn_name"/>
+              <el-form-item label="上级节点" prop="fid">
+                <el-input clearable v-model="propCreateEdit.curdFormData.ftitle"/>
+                <el-input type="hidden" clearable v-model="propCreateEdit.curdFormData.fid"/>
               </el-form-item>
             </el-col>
             <el-col :span="11">
-              <el-form-item label="英文编码" prop="en_name">
-                <el-input clearable v-model="propCreateEdit.curdFormData.en_name"/>
-              </el-form-item>
-            </el-col>
-          </el-row>
-
-          <el-row justify="space-between">
-            <el-col :span="11">
-              <el-form-item label="按钮颜色">
-                <el-input v-model="propCreateEdit.curdFormData.color" placeholder="" style="width: 90%"/>
-                <el-color-picker v-model="propCreateEdit.curdFormData.color"/>
-              </el-form-item>
-            </el-col>
-            <el-col :span="11">
-              <el-form-item label="请求方式" prop="allow_method">
-                <el-input clearable v-model="propCreateEdit.curdFormData.allow_method" placeholder="GET、POST等"/>
+              <el-form-item label="区域名称" prop="name">
+                <el-input clearable v-model="propCreateEdit.curdFormData.name"/>
               </el-form-item>
             </el-col>
           </el-row>
@@ -38,6 +25,11 @@
                              :label="item.label" :value="item.value"
                   />
                 </el-select>
+              </el-form-item>
+            </el-col>
+            <el-col :span="11">
+              <el-form-item label="排序">
+                <el-input type="number" clearable v-model="propCreateEdit.curdFormData.sort" placeholder=""/>
               </el-form-item>
             </el-col>
           </el-row>
@@ -82,9 +74,8 @@ export default {
       formRef: {},
       selectStatus: commonFunc.SelectStatus,
       rules: {
-        cn_name: [{type: 'string', required: true, message: '按钮名为必填项', trigger: 'blur'}],
-        en_name: [{type: 'string', required: true, message: '按钮英文编码为必填项', trigger: 'blur'}],
-        allow_method: [{type: 'string', required: true, message: '请求方式为必填项', trigger: 'blur'}],
+        fid: [{type: 'number', required: true, message: '上级节点为必填项', trigger: 'blur'}],
+        name: [{type: 'string', required: true, message: '按钮名为必填项', trigger: 'blur'}],
       },
     })
 
@@ -98,6 +89,7 @@ export default {
     // 抽屉界面相关的操作
     const fClose = (done) => {
       // 关闭按钮销毁变量
+      commonFunc.objInit(propCreateEdit.value.curdFormData)
       commonFunc.objInit(propCreateEdit.value.curdFormData)
       done()
     }
