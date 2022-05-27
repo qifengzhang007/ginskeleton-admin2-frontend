@@ -5,14 +5,15 @@
         <el-form ref="formRef" :model="propCreateEdit.curdFormData" :rules="rules" label-position="left" label-width="110px">
           <el-row justify="space-between">
             <el-col :span="11">
-              <el-form-item label="上级节点" prop="fid">
-                <el-input clearable v-model="propCreateEdit.curdFormData.ftitle"/>
-                <el-input type="hidden" clearable v-model="propCreateEdit.curdFormData.fid"/>
+              <el-form-item label="岗位名称" prop="post_name">
+                <el-input clearable v-model="propCreateEdit.curdFormData.post_name"/>
+                <el-input type="hidden" clearable v-model="propCreateEdit.curdFormData.org_post_id"/>
               </el-form-item>
             </el-col>
             <el-col :span="11">
-              <el-form-item label="区域名称" prop="name">
-                <el-input clearable v-model="propCreateEdit.curdFormData.name"/>
+              <el-form-item label="用户名" prop="user_name">
+                <el-input clearable v-model="propCreateEdit.curdFormData.user_name"/>
+                <el-input type="hidden" clearable v-model="propCreateEdit.curdFormData.user_id"/>
               </el-form-item>
             </el-col>
           </el-row>
@@ -21,13 +22,8 @@
             <el-col :span="11">
               <el-form-item label="状态">
                 <el-select v-model="propCreateEdit.curdFormData.status" :fit-input-width="true">
-                  <el-option v-for="item in selectStatus" :key="item.value"   :label="item.label" :value="item.value"   />
+                  <el-option v-for="item in selectStatus" :key="item.value" :label="item.label" :value="item.value"/>
                 </el-select>
-              </el-form-item>
-            </el-col>
-            <el-col :span="11">
-              <el-form-item label="排序">
-                <el-input type="number" clearable v-model="propCreateEdit.curdFormData.sort" placeholder=""/>
               </el-form-item>
             </el-col>
           </el-row>
@@ -56,7 +52,7 @@
 <script>
 import {reactive, toRefs} from "vue";
 import commonFunc from '@/libs/common_func'
-import {create, edit} from '@/api/data-dictionary/province_city'
+import {create, edit} from '@/api/system-setting/org_post_members'
 
 export default {
   name: "CreateEdit",
@@ -72,9 +68,10 @@ export default {
       formRef: {},
       selectStatus: commonFunc.SelectStatus,
       rules: {
-        ftitle: [{type: 'number', required: true, message: '上级节点为必填项', trigger: 'blur'}],
-        fid: [{type: 'number', min:1,required: true, message: '上级节点为必填项', trigger: 'blur'}],
-        name: [{type: 'string', required: true, message: '区域名为必填项', trigger: 'blur'}],
+        org_post_id: [{type: 'number',min:1, required: true, message: '岗位为必填项', trigger: 'blur'}],
+        user_id: [{type: 'string',min:1, required: true, message: '用户名名称为必填项', trigger: 'blur'}],
+        post_name: [{type: 'number',required: true, message: '岗位为必填项', trigger: 'blur'}],
+        user_name: [{type: 'string',required: true, message: '用户名名称为必填项', trigger: 'blur'}],
       },
     })
 

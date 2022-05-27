@@ -46,6 +46,7 @@ declare module '@vue/runtime-core' {
     Image: typeof import('./components/common/image.vue')['default']
     Left_menu: typeof import('./components/system-setting/layout/left_menu.vue')['default']
     Organization: typeof import('./components/system-setting/organization/index.vue')['default']
+    OrganizationMembers: typeof import('./components/system-setting/organization-members/index.vue')['default']
     OrgPostTree: typeof import('./components/system-setting/org-post-tree/index.vue')['default']
     Paging: typeof import('./components/common/paging.vue')['default']
     ProvinceCity: typeof import('./components/data-dictionary/province-city/index.vue')['default']

@@ -21,11 +21,11 @@
         <el-table-column prop="user_name" label="用户名" sortable show-overflow-tooltip/>
         <el-table-column prop="real_name" label="姓名" sortable show-overflow-tooltip/>
         <el-table-column prop="phone" label="联系方式" sortable show-overflow-tooltip/>
-        <el-table-column prop="status" label="状态" sortable show-overflow-tooltip :formatter="fFormatter"/>
         <el-table-column prop="login_times" label="登陆次数" sortable show-overflow-tooltip/>
         <el-table-column prop="last_login_ip" label="最近登陆ip" sortable show-overflow-tooltip/>
 
         <!--     ↑↑↑↑   业务字段  ↑↑↑↑   -->
+        <el-table-column prop="status" label="状态" sortable show-overflow-tooltip :formatter="fFormatter"/>
         <el-table-column prop="remark" label="备注" sortable show-overflow-tooltip/>
         <el-table-column prop="created_at" label="创建时间" width="150" sortable show-overflow-tooltip/>
         <el-table-column prop="updated_at" label="更新时间" width="150" sortable show-overflow-tooltip/>

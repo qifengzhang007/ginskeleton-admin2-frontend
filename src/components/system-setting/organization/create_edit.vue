@@ -67,7 +67,8 @@ export default {
       formRef: {},
       selectStatus: commonFunc.SelectStatus,
       rules: {
-        fid: [{type: 'number', required: true, message: '上级节点为必填项', trigger: 'blur'}],
+        fid: [{type: 'number', min:1,required: true, message: '上级节点为必填项', trigger: 'blur'}],
+        ftitle: [{type: 'string', required: true, message: '上级节点为必填项', trigger: 'blur'}],
         title: [{type: 'string', required: true, message: '组织机构名称为必填项', trigger: 'blur'}],
       },
     })

@@ -12,8 +12,8 @@
       <div :style="{height:bodyHeight}">
         <div class="tableList-area">
           <div class="toolBanner">
-            区域名称:
-            <el-input v-model="tableList.searchKeyWords.name" placeholder="关键词" class="keyWordsInput"/>
+            用户名:
+            <el-input v-model="tableList.searchKeyWords.user_name" placeholder="关键词" class="keyWordsInput"/>
             <el-button-group v-if="tableList.buttonGroupIsShow">
               <el-button type="primary" @click="fSearch" icon="Search" v-if="tableList.buttonList.select">查询</el-button>
               <el-button type="success" @click="fCreateEdit('insert')" icon="Plus" v-if="tableList.buttonList.insert">新增</el-button>
@@ -27,9 +27,9 @@
             <el-table-column prop="id" label="id" width="100" sortable fixed/>
             <!--    ↓↓↓↓   业务字段  ↓↓↓↓   -->
 
-            <el-table-column prop="name" label="区域名称" sortable show-overflow-tooltip/>
-            <el-table-column prop="node_level" label="节点深度" sortable show-overflow-tooltip/>
-            <el-table-column prop="sort" label="排序" sortable show-overflow-tooltip/>
+            <el-table-column prop="user_name" label="用户名" sortable show-overflow-tooltip/>
+            <el-table-column prop="real_name" label="姓名" sortable show-overflow-tooltip/>
+            <el-table-column prop="post_name" label="岗位名称" sortable show-overflow-tooltip/>
 
             <!--     ↑↑↑↑   业务字段  ↑↑↑↑   -->
             <el-table-column prop="status" label="状态" sortable show-overflow-tooltip :formatter="fFormatter"/>
@@ -59,15 +59,16 @@
 import Split from '@/components/common/split.vue'
 import commonFunc from '@/libs/common_func'
 import {reactive, toRefs, watch} from "vue";
-import {destroy, getSubListByFid, list} from '@/api/data-dictionary/province_city'
 import {show_button, view_button_list} from '@/api/system-setting/auth'
 import DeleteDataDialog from '@/components/common/delete_data_dialog.vue'
 import Paging from '@/components/common/paging.vue'
-import CreateEdit from './create_edit.vue'
 import {useRouter} from "vue-router";
+import {getSubListByFid} from '@/api/system-setting/organization'
+import {destroy, getMembersByOrgPostId} from '@/api/system-setting/org_post_members'
+import CreateEdit from './create_edit.vue'
 
 export default {
-  name: "ProvinceCityIndex",
+  name: "OrganizationMembersIndex",
   components: {
     Split,
     CreateEdit,
@@ -100,8 +101,8 @@ export default {
       tableList: {
         // 查询相关的关键词
         searchKeyWords: {
-          name: '',
-          fid: 0,
+          org_post_id: 0,
+          user_name: '',
           page: 1,
           limit: 20
         },
@@ -127,10 +128,11 @@ export default {
         curdFormData: {
           action: '',
           id: 0,
-          fid: '',
-          ftitle: '',
-          name: '',
-          sort: 0,
+          user_id: 0,
+          user_name: '',
+          real_name: '',
+          org_post_id: 0,
+          post_name: '',
           status: 1,
           remark: '',
         }
@@ -156,7 +158,7 @@ export default {
         if (node.level === 0 && stateData.leftTree.data.length > 0) {
           stateData.leftTree.curItemId = (stateData.leftTree.data[0]).id
           stateData.leftTree.curItemTitle = (stateData.leftTree.data[0]).title
-          stateData.tableList.searchKeyWords.fid = stateData.leftTree.curItemId
+          stateData.tableList.searchKeyWords.org_post_id = stateData.leftTree.curItemId
         }
         return resolve(
             stateData.leftTree.data
@@ -170,12 +172,13 @@ export default {
       if (curItem.id > 0 && stateData.leftTree.curItemId !== curItem.id) {
         stateData.leftTree.curItemId = curItem.id
         stateData.leftTree.curItemTitle = curItem.title
-        stateData.tableList.searchKeyWords.fid = stateData.leftTree.curItemId
+        stateData.tableList.searchKeyWords.org_post_id = stateData.leftTree.curItemId
       }
     }
 
     watch(() => stateData.leftTree.curItemId, (newItemId, oldItemId) => {
       if (newItemId > 0 && oldItemId !== undefined) {
+
         fSearch()
       }
     })
@@ -192,7 +195,7 @@ export default {
 
     // 查询相关======================
     const fSearch = () => {
-      list(stateData.tableList.searchKeyWords).then(res => {
+      getMembersByOrgPostId(stateData.tableList.searchKeyWords).then(res => {
         stateData.tableList.data = res.data.data.data
         stateData.tableList.total = res.data.data.count
       }).catch(res => {
