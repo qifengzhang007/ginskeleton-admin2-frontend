@@ -40,6 +40,7 @@ declare module '@vue/runtime-core' {
     ElTable: typeof import('element-plus/es')['ElTable']
     ElTableColumn: typeof import('element-plus/es')['ElTableColumn']
     ElTree: typeof import('element-plus/es')['ElTree']
+    ElUpload: typeof import('element-plus/es')['ElUpload']
     Form: typeof import('./components/system-setting/login-form/form.vue')['default']
     Header_banner: typeof import('./components/system-setting/layout/header_banner.vue')['default']
     Image: typeof import('./components/common/image.vue')['default']

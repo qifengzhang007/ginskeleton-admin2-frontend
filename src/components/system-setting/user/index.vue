@@ -122,7 +122,7 @@ export default {
       view_button_list(router.currentRoute.value.meta.id).then(res => {
         show_button(res.data.data, stateData.tableList.buttonList)
         stateData.tableList.buttonGroupIsShow = true
-        this.search()
+        fSearch()
       }).catch(res => {
       })
     }
