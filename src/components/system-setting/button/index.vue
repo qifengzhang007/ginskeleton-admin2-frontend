@@ -13,20 +13,17 @@
       </div>
 
       <el-table border :style="tableList.style" :height="tableList.style.height" :data="tableList.data" ref="tableRef" @row-click="fTableRowClick">
-        <el-table-column type="selection" width="50" align="center" id="t500"/>
-        <el-table-column prop="id" label="id" width="100" sortable fixed/>
+        <TableHeader1/>
         <!--    ↓↓↓↓   业务字段  ↓↓↓↓   -->
 
         <el-table-column prop="cn_name" label="按钮名" sortable show-overflow-tooltip/>
         <el-table-column prop="en_name" label="英文编码" sortable show-overflow-tooltip/>
         <el-table-column prop="color" label="按钮颜色" sortable show-overflow-tooltip/>
         <el-table-column prop="allow_method" label="允许请求方式" sortable show-overflow-tooltip/>
-        <el-table-column prop="status" label="状态" sortable show-overflow-tooltip :formatter="fFormatter"/>
-        <el-table-column prop="remark" label="备注" sortable show-overflow-tooltip/>
 
         <!--     ↑↑↑↑   业务字段  ↑↑↑↑   -->
-        <el-table-column prop="created_at" label="创建时间" width="150" sortable show-overflow-tooltip/>
-        <el-table-column prop="updated_at" label="更新时间" width="150" sortable show-overflow-tooltip/>
+        <el-table-column prop="status" label="状态" sortable show-overflow-tooltip :formatter="fFormatter"/>
+        <TableHeader1/>
       </el-table>
     </div>
     <div class="paging-area">
@@ -49,12 +46,16 @@ import {reactive, toRefs} from 'vue'
 import {show_button, view_button_list} from '@/api/system-setting/auth'
 import DeleteDataDialog from '@/components/common/delete_data_dialog.vue'
 import Paging from '@/components/common/paging.vue'
+import TableHeader1 from '@/components/common/table_header1.vue'
+import TableHeader2 from '@/components/common/table_header2.vue'
 import {destroy, list} from '@/api/system-setting/button'
 import CreateEdit from './create_edit.vue'
 
 export default {
   name: "ButtonIndex",
   components: {
+    TableHeader1,
+    TableHeader2,
     CreateEdit,
     DeleteDataDialog,
     Paging,

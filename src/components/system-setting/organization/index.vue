@@ -23,22 +23,18 @@
           </div>
 
           <el-table border :style="tableList.style" :height="tableList.style.height" :data="tableList.data" ref="tableRef" @row-click="fTableRowClick">
-            <el-table-column type="selection" width="50" align="center" id="t500"/>
-            <el-table-column prop="id" label="id" width="100" sortable fixed/>
+            <TableHeader1/>
             <!--    ↓↓↓↓   业务字段  ↓↓↓↓   -->
 
             <el-table-column prop="title" label="组织机构名称" sortable show-overflow-tooltip/>
-            <el-table-column prop="status" label="状态" sortable show-overflow-tooltip :formatter="fFormatter"/>
 
             <!--     ↑↑↑↑   业务字段  ↑↑↑↑   -->
-            <el-table-column prop="remark" label="备注" sortable show-overflow-tooltip/>
-            <el-table-column prop="created_at" label="创建时间" width="150" sortable show-overflow-tooltip/>
-            <el-table-column prop="updated_at" label="更新时间" width="150" sortable show-overflow-tooltip/>
+            <el-table-column prop="status" label="状态" sortable show-overflow-tooltip :formatter="fFormatter"/>
+            <TableHeader2/>
           </el-table>
         </div>
         <div class="paging-area">
           <Paging :propPage="tableList" @fPageCallback="fPageCallback"/>
-
         </div>
 
         <!--    新增、修改组件： 需要两个必传参数：1.属性变量、2.新增或者修改后的回调函数 -->
@@ -61,6 +57,8 @@ import {show_button, view_button_list} from '@/api/system-setting/auth'
 import DeleteDataDialog from '@/components/common/delete_data_dialog.vue'
 import Paging from '@/components/common/paging.vue'
 import {useRouter} from "vue-router";
+import TableHeader1 from '@/components/common/table_header1.vue'
+import TableHeader2 from '@/components/common/table_header2.vue'
 import {destroy, getSubListByFid, list} from '@/api/system-setting/organization'
 import CreateEdit from './create_edit.vue'
 
@@ -68,6 +66,8 @@ export default {
   name: "OrgPostIndex",
   components: {
     Split,
+    TableHeader1,
+    TableHeader2,
     CreateEdit,
     DeleteDataDialog,
     Paging,
@@ -239,7 +239,7 @@ export default {
       const selectedArray = stateData.tableRef.getSelectionRows()
       const resObj = commonFunc.GetArrayColumnConcatVals(selectedArray, 'id')
       if (commonFunc.Curd.DestroyCheckForMoreItem(resObj.id.length >= 1)) {
-        stateData.curdDelete.actionName = commonFunc.CurdActionName[action
+        stateData.curdDelete.actionName = commonFunc.CurdActionName[action]
         stateData.curdDelete.isShow = true
         stateData.curdDelete.ids = resObj.id.toString()
         stateData.curdDelete.delCounts = resObj.id.length
