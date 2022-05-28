@@ -6,7 +6,11 @@
           <el-row justify="space-between">
             <el-col :span="11">
               <el-form-item label="上级节点" prop="fid">
-                <el-input clearable v-model="propCreateEdit.curdFormData.ftitle"/>
+                <el-input clearable v-model="propCreateEdit.curdFormData.ftitle" readonly>
+                  <template #append>
+                    <el-button icon="Search" @click="fSelectProvinceCity"/>
+                  </template>
+                </el-input>
                 <el-input type="hidden" clearable v-model="propCreateEdit.curdFormData.fid"/>
               </el-form-item>
             </el-col>
@@ -50,6 +54,8 @@
       </template>
 
     </el-drawer>
+<!--    引入省份城市公共组件-->
+    <SelectProvinceCity :propSelect="propSelectProvinceCity" @fSelectedCallback="fSelectedProvinceCityCallback"/>
   </div>
 </template>
 
@@ -57,10 +63,13 @@
 import {reactive, toRefs} from "vue";
 import commonFunc from '@/libs/common_func'
 import {create, edit} from '@/api/data-dictionary/province_city'
+import SelectProvinceCity  from '@/components/common/select_province_city.vue'
 
 export default {
   name: "CreateEdit",
-  components: {},
+  components: {
+    SelectProvinceCity
+  },
   props: {
     propCreateEdit: Object,
   },
@@ -72,9 +81,14 @@ export default {
       formRef: {},
       selectStatus: commonFunc.SelectStatus,
       rules: {
-        ftitle: [{type: 'number', required: true, message: '上级节点为必填项', trigger: 'blur'}],
         fid: [{type: 'number', min:1,required: true, message: '上级节点为必填项', trigger: 'blur'}],
-        name: [{type: 'string', required: true, message: '区域名为必填项', trigger: 'blur'}],
+        name: [{type: 'string',required: true, message: '区域名称为必填项', trigger: 'blur'}],
+      },
+      // 选择省份城市，公共组件
+      propSelectProvinceCity: {
+        isShow: false,
+        title: "选择省份城市",
+        mode: 'one'  // 对于树形列表次参数无效
       },
     })
 
@@ -126,6 +140,18 @@ export default {
         }
       })
     }
+    // 2选择省份城市
+    const fSelectProvinceCity = () => {
+      stateData.propSelectProvinceCity.isShow = true
+    }
+    // 省份城市公共对象选择结果回调
+    // 树形表格：返回结果是一个对象
+    const fSelectedProvinceCityCallback = (row) => {
+      if (row) {
+        propCreateEdit.value.curdFormData.fid = row.id
+        propCreateEdit.value.curdFormData.ftitle = row.title
+      }
+    }
 
     return {
       ...toRefs(stateData),
@@ -133,7 +159,9 @@ export default {
 
       fUploadCallback,
       fClose,
-      fConfirm
+      fConfirm,
+      fSelectProvinceCity,
+      fSelectedProvinceCityCallback
     }
   }
 }

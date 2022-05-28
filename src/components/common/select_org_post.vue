@@ -106,9 +106,3 @@ export default {
 <style scoped>
 
 </style>
-
-<style>
-/*div.el-dialog__body {*/
-/*  font-size: 13px;*/
-/*}*/
-</style>

@@ -59,7 +59,8 @@ export default {
                 ElMessage({
                     message: '请选中父级节点，才允许新增！',
                     type: 'error',
-                    grouping: true
+                    grouping: true,
+                    duration:1500
                 })
                 return false
             }
@@ -73,6 +74,7 @@ export default {
                     message: '请选中一条数据进行修改！',
                     type: 'error',
                     grouping: true,
+                    duration:1500
                 })
                 return false
             }
@@ -85,6 +87,7 @@ export default {
                     message: '请至少选中一条数据进行删除',
                     type: 'error',
                     grouping: true,
+                    duration:1500
                 })
                 return false
             }
@@ -96,6 +99,7 @@ export default {
                 ElMessage({
                     message: '请选中一条数据进行删除',
                     type: 'error',
+                    duration:1500
                 })
                 return false
             }
@@ -105,14 +109,16 @@ export default {
             ElMessage({
                 message: msg,
                 type: 'success',
-                grouping: true
+                grouping: true,
+                duration:1000
             })
         },
         FailTips(msg = '失败') {
             ElMessage({
                 message: msg,
                 type: 'error',
-                grouping: true
+                grouping: true,
+                duration:1500
             })
         },
         // 公共对象

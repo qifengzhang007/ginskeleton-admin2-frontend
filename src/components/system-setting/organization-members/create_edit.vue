@@ -5,7 +5,7 @@
         <el-form ref="formRef" :model="propCreateEdit.curdFormData" :rules="rules" label-position="left" label-width="110px">
           <el-row justify="space-between">
             <el-col :span="11">
-              <el-form-item label="岗位名称" prop="post_name">
+              <el-form-item label="岗位名称" prop="org_post_id">
                 <el-input clearable v-model="propCreateEdit.curdFormData.post_name" readonly>
                   <template #append>
                     <el-button icon="Search" @click="fSelectOrgPost"/>
@@ -15,7 +15,7 @@
               </el-form-item>
             </el-col>
             <el-col :span="11">
-              <el-form-item label="用户名" prop="user_name">
+              <el-form-item label="用户名" prop="user_id">
                 <el-input clearable v-model="propCreateEdit.curdFormData.user_name" readonly>
                   <template #append>
                     <el-button icon="Search" @click="fSelectUser"/>
@@ -86,8 +86,8 @@ export default {
       formRef: {},
       selectStatus: commonFunc.SelectStatus,
       rules: {
-        post_name: [{type: 'string', required: true, message: '岗位为必填项', trigger: 'blur'}],
-        user_name: [{type: 'string', required: true, message: '用户名名称为必填项', trigger: 'blur'}],
+        org_post_id: [{type: 'number', min: 1, required: true, message: '岗位为必填项', trigger: 'blur'}],
+        user_id: [{type: 'number', min: 1, required: true, message: '用户名名称为必填项', trigger: 'blur'}],
       },
       propSelectUser: {
         isShow: false,
@@ -117,9 +117,11 @@ export default {
     }
 // 确认事件
     const fConfirm = () => {
+      console.log("action:",propCreateEdit.value.curdFormData.action)
       // 表单参数校验完成后提交
       stateData.formRef.validate((valid, fields) => {
         if (valid) {
+          console.log("action2:",propCreateEdit.value.curdFormData.action)
           switch (propCreateEdit.value.curdFormData.action) {
             case 'insert':
               create(propCreateEdit.value.curdFormData).then(res => {
@@ -172,7 +174,6 @@ export default {
     // 树形表格：返回结果是一个对象
     const fSelectedOrgPostCallback = (row) => {
       if (row) {
-        console.log("回调结果：", row)
         propCreateEdit.value.curdFormData.org_post_id = row.id
         propCreateEdit.value.curdFormData.post_name = row.title
       }
