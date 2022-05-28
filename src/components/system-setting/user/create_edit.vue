@@ -67,9 +67,7 @@
 
       <template #footer>
         <div class="drawer-footer">
-          <el-button @click="fCancel">取消</el-button>
-          <span class="blank-area"></span>
-          <el-button type="primary" @click="fConfirm">确认</el-button>
+          <el-button type="primary" @click="fConfirm">{{ propCreateEdit.drawerTitle }}</el-button>
         </div>
       </template>
 
@@ -120,11 +118,7 @@ export default {
       commonFunc.objInit(propCreateEdit.value.curdFormData)
       done()
     }
-    const fCancel = () => {
-      // 取消按钮销毁变量
-      commonFunc.objInit(propCreateEdit.value.curdFormData)
-      propCreateEdit.value.isShow = false
-    }
+
     const fConfirm = () => {
       // 表单参数校验完成后提交
       stateData.formRef.validate((valid, fields) => {
@@ -165,7 +159,6 @@ export default {
 
       fUploadCallback,
       fClose,
-      fCancel,
       fConfirm
     }
   }

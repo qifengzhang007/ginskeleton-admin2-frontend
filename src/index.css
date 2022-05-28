@@ -124,6 +124,23 @@ span.el-tree-node__label {
     font-size: 12px;
 }
 
+/*对话框紧凑化*/
+header.el-dialog__header{
+    padding: 6px 6px
+}
+div.el-dialog__body {
+    padding: 6px 10px;
+    font-size: 13px;
+}
+
+
+/*分页样式全部底部居中*/
+.paging-area {
+    margin: 6px 0 2px 0;
+    text-align: center;
+    vertical-align: middle;
+}
+
 a {
     text-decoration: none;
 }

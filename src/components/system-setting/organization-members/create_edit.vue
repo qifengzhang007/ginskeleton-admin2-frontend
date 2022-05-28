@@ -6,13 +6,21 @@
           <el-row justify="space-between">
             <el-col :span="11">
               <el-form-item label="岗位名称" prop="post_name">
-                <el-input clearable v-model="propCreateEdit.curdFormData.post_name"/>
+                <el-input clearable v-model="propCreateEdit.curdFormData.post_name" readonly>
+                  <template #append>
+                    <el-button icon="Search" @click="fSelectOrg"/>
+                  </template>
+                </el-input>
                 <el-input type="hidden" clearable v-model="propCreateEdit.curdFormData.org_post_id"/>
               </el-form-item>
             </el-col>
             <el-col :span="11">
               <el-form-item label="用户名" prop="user_name">
-                <el-input clearable v-model="propCreateEdit.curdFormData.user_name"/>
+                <el-input clearable v-model="propCreateEdit.curdFormData.user_name" readonly>
+                  <template #append>
+                    <el-button icon="Search" @click="fSelectUser"/>
+                  </template>
+                </el-input>
                 <el-input type="hidden" clearable v-model="propCreateEdit.curdFormData.user_id"/>
               </el-form-item>
             </el-col>
@@ -46,6 +54,9 @@
       </template>
 
     </el-drawer>
+
+    <!--    引入其他公共组件-->
+    <SelectUser :propSelect="propSelectUser"/>
   </div>
 </template>
 
@@ -53,10 +64,13 @@
 import {reactive, toRefs} from "vue";
 import commonFunc from '@/libs/common_func'
 import {create, edit} from '@/api/system-setting/org_post_members'
+import SelectUser from '@/components/common/select_user.vue'
 
 export default {
   name: "CreateEdit",
-  components: {},
+  components: {
+    SelectUser
+  },
   props: {
     propCreateEdit: Object,
   },
@@ -68,11 +82,15 @@ export default {
       formRef: {},
       selectStatus: commonFunc.SelectStatus,
       rules: {
-        org_post_id: [{type: 'number',min:1, required: true, message: '岗位为必填项', trigger: 'blur'}],
-        user_id: [{type: 'string',min:1, required: true, message: '用户名名称为必填项', trigger: 'blur'}],
-        post_name: [{type: 'number',required: true, message: '岗位为必填项', trigger: 'blur'}],
-        user_name: [{type: 'string',required: true, message: '用户名名称为必填项', trigger: 'blur'}],
+        org_post_id: [{type: 'number', min: 1, required: true, message: '岗位为必填项', trigger: 'blur'}],
+        user_id: [{type: 'string', min: 1, required: true, message: '用户名名称为必填项', trigger: 'blur'}],
+        post_name: [{type: 'number', required: true, message: '岗位为必填项', trigger: 'blur'}],
+        user_name: [{type: 'string', required: true, message: '用户名名称为必填项', trigger: 'blur'}],
       },
+      propSelectUser: {
+        isShow: false,
+        title: "选择用户"
+      }
     })
 
     // 文件上传组件相关的属性传递
@@ -86,10 +104,9 @@ export default {
     const fClose = (done) => {
       // 关闭按钮销毁变量
       commonFunc.objInit(propCreateEdit.value.curdFormData)
-      commonFunc.objInit(propCreateEdit.value.curdFormData)
       done()
     }
-
+// 确认事件
     const fConfirm = () => {
       // 表单参数校验完成后提交
       stateData.formRef.validate((valid, fields) => {
@@ -124,13 +141,25 @@ export default {
       })
     }
 
+    // 公共组件
+    // 1.选择岗位
+    const fSelectOrg = () => {
+
+    }
+    // 1.选择用户
+    const fSelectUser = () => {
+      stateData.propSelectUser.isShow = true
+    }
+
     return {
       ...toRefs(stateData),
       propCreateEdit,
 
       fUploadCallback,
       fClose,
-      fConfirm
+      fConfirm,
+      fSelectOrg,
+      fSelectUser
     }
   }
 }

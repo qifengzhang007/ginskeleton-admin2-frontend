@@ -9,7 +9,7 @@
           <el-button type="primary" @click="fSearch" icon="Search" v-if="tableList.buttonList.select">查询</el-button>
           <el-button type="success" @click="fCreateEdit('insert')" icon="Plus" v-if="tableList.buttonList.insert">新增</el-button>
           <el-button type="primary" @click="fCreateEdit('update')" icon="Edit" v-if="tableList.buttonList.update">修改</el-button>
-          <el-button type="danger" @click="fDelete" icon="curdDelete" v-if="tableList.buttonList.delete">批量删除</el-button>
+          <el-button type="danger" @click="fDelete('delete')" icon="curdDelete" v-if="tableList.buttonList.delete">批量删除</el-button>
         </el-button-group>
       </div>
 
@@ -33,7 +33,6 @@
     </div>
     <div class="paging-area">
       <Paging :propPage="tableList" @fPageCallback="fPageCallback"/>
-
     </div>
 
     <!--    新增、修改组件： 需要两个必传参数：1.属性变量、2.新增或者修改后的回调函数 -->
@@ -172,11 +171,11 @@ export default {
 
 
     // 删除之前收集请求参数、弹出对话框
-    const fDelete = () => {
+    const fDelete = (action) => {
       const selectedArray = stateData.tableRef.getSelectionRows()
       const resObj = commonFunc.GetArrayColumnConcatVals(selectedArray, 'id')
       if (commonFunc.Curd.DestroyCheckForMoreItem(resObj.id.length >= 1)) {
-        stateData.curdDelete.actionName = commonFunc.CurdActionName['delete']
+        stateData.curdDelete.actionName = commonFunc.CurdActionName[action]
         stateData.curdDelete.isShow = true
         stateData.curdDelete.ids = resObj.id.toString()
         stateData.curdDelete.delCounts = resObj.id.length
@@ -232,11 +231,6 @@ export default {
   padding: 2px 0 6px 2px;
 }
 
-.paging-area {
-  margin: 2px 0;
-  text-align: center;
-  vertical-align: middle;
-}
 
 .keyWordsInput {
   width: 150px;

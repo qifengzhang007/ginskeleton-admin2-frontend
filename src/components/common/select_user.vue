@@ -1,0 +1,164 @@
+<template>
+  <el-dialog v-model="propSelect.isShow" :title="propSelect.title" width="56%" draggable top="15vh" @close="fClose">
+    <template #header>
+      <div>
+        <el-icon>
+          <Search color="#606060FF"/>
+        </el-icon>
+        {{ propSelect.title }}
+      </div>
+    </template>
+    <div >
+
+      <div class="tableList-area">
+        <div class="toolBanner">
+          用户名:
+          <el-input v-model="tableList.searchKeyWords.user_name" placeholder="关键词" class="keyWordsInput"/>
+          <el-button type="primary" @click="fSearch" icon="Search">查询</el-button>
+        </div>
+
+        <el-table border :style="tableList.style" :height="tableList.style.height" :data="tableList.data" ref="tableRef" @row-click="fTableRowClick">
+          <TableHeader1/>
+          <!--    ↓↓↓↓   业务字段  ↓↓↓↓   -->
+
+          <el-table-column prop="user_name" label="用户名" sortable show-overflow-tooltip/>
+          <el-table-column prop="real_name" label="姓名" sortable show-overflow-tooltip/>
+          <el-table-column prop="phone" label="联系方式" sortable show-overflow-tooltip/>
+<!--          <el-table-column prop="status" label="状态" sortable show-overflow-tooltip :formatter="fFormatter"/>-->
+          <!--     ↑↑↑↑   业务字段  ↑↑↑↑   -->
+
+          <TableHeader2/>
+        </el-table>
+      </div>
+      <div class="paging-area">
+        <Paging :propPage="tableList" @fPageCallback="fSearch"/>
+      </div>
+
+    </div>
+    <template #footer>
+      <span class="dialog-footer">
+        <el-button @click="propSelect.isShow = false">取消</el-button>
+        <el-button type="primary" @click="fSelected" :disabled="propSelect.serverResCode===200">  确认   </el-button>
+      </span>
+    </template>
+  </el-dialog>
+</template>
+
+<script>
+import {toRefs,reactive} from 'vue'
+import commonFunc from '@/libs/common_func'
+import TableHeader1 from './table_header1.vue'
+import TableHeader2 from './table_header2.vue'
+import Paging from '@/components/common/paging.vue'
+import {list} from '@/api/system-setting/user'
+
+export default {
+  name: 'SelectUser',
+  components: {
+    TableHeader1,
+    TableHeader2,
+    Paging,
+
+
+  },
+  props: {
+    propSelect: Object,
+  },
+  emits: ['fSelectedCallback'],
+  setup(props, context) {
+    const {propSelect} = toRefs(props)
+    const stateData = reactive({
+      bodyHeight: '600px',
+      tableRef: {},
+      tableList: {
+        // 查询相关的关键词
+        searchKeyWords: {
+          user_name: '',
+          page: 1,
+          limit: 20
+        },
+        total: 0, // 数据总条数
+        data: [],
+        buttonGroupIsShow: false,
+        // 本页面可展示的按钮列表全部先定义
+        buttonList: {
+          insert: 'insert',
+          delete: 'delete',
+          update: 'update',
+          select: 'select',
+        },
+        style: {
+          width: '100%',
+          height: '450px'
+        }
+      },
+    })
+
+    // 查询相关======================
+    const fSearch = () => {
+      list(stateData.tableList.searchKeyWords).then(res => {
+        stateData.tableList.data = res.data.data.data
+        stateData.tableList.total = res.data.data.count
+      }).catch(res => {
+        stateData.tableList.data = []
+        stateData.tableList.total = 0
+      })
+    }
+    // 分页组件回调函数
+    const fPageCallback = () => {
+      fSearch()
+    }
+
+    const fTableRowClick = (row, column, event) => {
+      stateData.tableRef.toggleRowSelection(row, undefined)
+    }
+
+    const fSelected = () => {
+      context.emit('fSelectedCallback')
+    }
+
+    // 对话框关闭时所有的变量恢复为默认值
+    const fClose = () => {
+      // elementPlus 的对话框消失的时候有个渐渐淡出的动画，滞后200毫秒销毁本界面相关的变量，用户就不会在界面未消失时看见界面数据的变化。
+      setTimeout(() => {
+        commonFunc.objInit(propSelect.value)
+      }, 200)
+    }
+
+    // 默认执行一次查询
+    fSearch()
+
+    return {
+      ...toRefs(stateData),
+      fSearch,
+      fTableRowClick,
+
+      propSelect,
+      fSelected,
+      fClose
+    }
+  }
+
+}
+</script>
+
+<style scoped>
+.keyWordsInput {
+  width: 300px;
+  margin-left: 4px;
+  margin-right: 10px;
+}
+
+.toolBanner {
+  display: flex;
+  align-items: center;
+  padding: 2px 0 6px 2px;
+}
+
+</style>
+
+<style>
+div.el-dialog__body {
+  font-size: 13px;
+}
+</style>
