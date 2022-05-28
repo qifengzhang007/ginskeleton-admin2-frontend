@@ -55,8 +55,9 @@
 
     </el-drawer>
 
-    <!--    引入其他公共组件-->
+    <!--   引入用户公共组件  -->
     <SelectUser :propSelect="propSelectUser" @fSelectedCallback="fSelectedUserCallback"/>
+    <!--   引入组织机构公共组件  -->
     <SelectOrgPost :propSelect="propSelectOrgPost" @fSelectedCallback="fSelectedOrgPostCallback"/>
   </div>
 </template>
@@ -96,7 +97,7 @@ export default {
       },
       propSelectOrgPost: {
         isShow: false,
-        title: "选择岗位",
+        title: "选择 部门 -> 岗位",
         mode: 'one'  // 对于树形列表次参数无效
       },
 

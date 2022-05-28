@@ -6,7 +6,11 @@
           <el-row justify="space-between">
             <el-col :span="11">
               <el-form-item label="上级节点" prop="fid">
-                <el-input clearable v-model="propCreateEdit.curdFormData.ftitle"/>
+                <el-input clearable v-model="propCreateEdit.curdFormData.ftitle" readonly>
+                  <template #append>
+                    <el-button icon="Search" @click="fSelectOrgPost"/>
+                  </template>
+                </el-input>
                 <el-input type="hidden" clearable v-model="propCreateEdit.curdFormData.fid"/>
               </el-form-item>
             </el-col>
@@ -21,7 +25,7 @@
             <el-col :span="11">
               <el-form-item label="状态">
                 <el-select v-model="propCreateEdit.curdFormData.status" :fit-input-width="true">
-                  <el-option v-for="item in selectStatus" :key="item.value"   :label="item.label" :value="item.value"   />
+                  <el-option v-for="item in selectStatus" :key="item.value" :label="item.label" :value="item.value"/>
                 </el-select>
               </el-form-item>
             </el-col>
@@ -45,6 +49,8 @@
       </template>
 
     </el-drawer>
+    <!--   引入组织机构公共组件  -->
+    <SelectOrgPost :propSelect="propSelectOrgPost" @fSelectedCallback="fSelectedOrgPostCallback"/>
   </div>
 </template>
 
@@ -52,10 +58,13 @@
 import {reactive, toRefs} from "vue";
 import commonFunc from '@/libs/common_func'
 import {create, edit} from '@/api/system-setting/organization'
+import SelectOrgPost from '@/components/common/select_org_post.vue'
 
 export default {
   name: "CreateEdit",
-  components: {},
+  components: {
+    SelectOrgPost
+  },
   props: {
     propCreateEdit: Object,
   },
@@ -67,9 +76,14 @@ export default {
       formRef: {},
       selectStatus: commonFunc.SelectStatus,
       rules: {
-        fid: [{type: 'number', min:1,required: true, message: '上级节点为必填项', trigger: 'blur'}],
+        fid: [{type: 'number', min: 1, required: true, message: '上级节点为必填项', trigger: 'blur'}],
         ftitle: [{type: 'string', required: true, message: '上级节点为必填项', trigger: 'blur'}],
         title: [{type: 'string', required: true, message: '组织机构名称为必填项', trigger: 'blur'}],
+      },
+      propSelectOrgPost: {
+        isShow: false,
+        title: "选择上级节点",
+        mode: 'one'  // 对于树形列表次参数无效
       },
     })
 
@@ -86,6 +100,19 @@ export default {
       commonFunc.objInit(propCreateEdit.value.curdFormData)
       commonFunc.objInit(propCreateEdit.value.curdFormData)
       done()
+    }
+
+    // 选择组织机构
+    const fSelectOrgPost = () => {
+      stateData.propSelectOrgPost.isShow = true
+    }
+    // 部门岗位公共对象选择结果回调
+    // 树形表格：返回结果是一个对象
+    const fSelectedOrgPostCallback = (row) => {
+      if (row) {
+        propCreateEdit.value.curdFormData.fid = row.id
+        propCreateEdit.value.curdFormData.ftitle = row.title
+      }
     }
 
     const fConfirm = () => {
@@ -127,6 +154,8 @@ export default {
       propCreateEdit,
 
       fUploadCallback,
+      fSelectOrgPost,
+      fSelectedOrgPostCallback,
       fClose,
       fConfirm
     }
