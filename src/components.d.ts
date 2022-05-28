@@ -57,6 +57,7 @@ declare module '@vue/runtime-core' {
     Select_province_city: typeof import('./components/common/select_province_city.vue')['default']
     Select_user: typeof import('./components/common/select_user.vue')['default']
     Split: typeof import('./components/common/split.vue')['default']
+    SystemMenu: typeof import('./components/system-setting/system-menu/index.vue')['default']
     Table_header1: typeof import('./components/common/table_header1.vue')['default']
     Table_header2: typeof import('./components/common/table_header2.vue')['default']
     Tabs: typeof import('./components/system-setting/layout/tabs.vue')['default']

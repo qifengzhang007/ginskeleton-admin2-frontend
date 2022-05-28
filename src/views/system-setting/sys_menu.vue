@@ -1,29 +1,9 @@
 <template>
-
-  <div>
-sys_menu 系统菜单
-  </div>
-
+  <SystemMenuIndex/>
 </template>
 
-<script  setup>
-// export default {
-//   name: "SysMenu",
-//   components:{},
-//   setup(){
-//     console.log("每次新开会触发吗？？？？SysMenu")
-//
-//     // return {}
-//   }
-// }
-
-
-// setup(){
-//   console.log("每次新开会触发吗？？？？SysMenu")
-//
-//   // return {}
-// }
-
+<script setup>
+import SystemMenuIndex from '@/components/system-setting/system-menu/index.vue'
 </script>
 
 <style scoped>

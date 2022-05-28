@@ -1,16 +1,9 @@
 <template>
 <OrganizationMembersIndex/>
-
 </template>
 
-<script>
+<script setup>
 import OrganizationMembersIndex  from '@/components/system-setting/organization-members/index.vue'
-export default {
-  name: "PostMembers",
-  components:{
-    OrganizationMembersIndex
-  }
-}
 </script>
 
 <style scoped>

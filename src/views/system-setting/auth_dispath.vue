@@ -4,10 +4,8 @@
  </div>
 </template>
 
-<script>
-export default {
-  name: "AuthDispath"
-}
+<script setup>
+
 </script>
 
 <style scoped>

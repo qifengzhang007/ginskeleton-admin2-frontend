@@ -3,7 +3,7 @@
 
     <template v-slot:left>
       <el-scrollbar :style="leftTreeContainerFixHeight" :height="leftTreeContainerFixHeight.height">
-        <el-tree :expand-on-click-node="false" node-key="id" :current-node-key="1" :props="leftTree.props" :load="fASyncData" lazy :highlight-current="true" @node-click="fLeftTreeCurrentChange"/>
+        <el-tree :expand-on-click-node="false" node-key="id" :current-node-key="1" :props="leftTree.props" :load="fASyncData" lazy :highlight-current="true" ref="leftTreeRef" @node-click="fLeftTreeCurrentChange"/>
       </el-scrollbar>
     </template>
 
@@ -11,7 +11,7 @@
       <div :style="{height:bodyHeight}">
         <div class="tableList-area">
           <div class="toolBanner">
-            组织机构名称:
+            菜单名称:
             <el-input v-model="tableList.searchKeyWords.title" placeholder="关键词" class="keyWordsInput"/>
             <el-button-group v-if="tableList.buttonGroupIsShow">
               <el-button type="primary" @click="fSearch" icon="Search" v-if="tableList.buttonList.select">查询</el-button>
@@ -25,7 +25,11 @@
             <TableHeader1/>
             <!--    ↓↓↓↓   业务字段  ↓↓↓↓   -->
 
-            <el-table-column prop="title" label="组织机构名称" sortable show-overflow-tooltip/>
+            <el-table-column prop="title" label="菜单名称" width="160" sortable show-overflow-tooltip/>
+            <el-table-column prop="icon" label="图标" width="120" sortable show-overflow-tooltip/>
+            <el-table-column prop="name" label="路由名称" width="180" sortable show-overflow-tooltip/>
+            <el-table-column prop="component" label="视图组件路径" width="280" sortable show-overflow-tooltip/>
+            <el-table-column prop="sort" label="排序" sortable show-overflow-tooltip/>
 
             <!--     ↑↑↑↑   业务字段  ↑↑↑↑   -->
             <el-table-column prop="status" label="状态" sortable show-overflow-tooltip :formatter="fFormatter"/>
@@ -58,11 +62,11 @@ import Paging from '@/components/common/paging.vue'
 import {useRouter} from "vue-router";
 import TableHeader1 from '@/components/common/table_header1.vue'
 import TableHeader2 from '@/components/common/table_header2.vue'
-import {destroy, getSubListByFid, list} from '@/api/system-setting/organization'
+import {destroy, getSubListByFid, list} from '@/api/system-setting/system_menu'
 import CreateEdit from './create_edit.vue'
 
 export default {
-  name: "OrgPostIndex",
+  name: "SystemMenuIndex",
   components: {
     Split,
     TableHeader1,
@@ -81,6 +85,7 @@ export default {
         height: (commonFunc.GetBrowserHeight() - 115) + 'px',
         marginTop: "6px",
       },
+      leftTreeRef: {},
       leftTree: {
         props: {
           label: 'title',
@@ -163,7 +168,13 @@ export default {
     }
     // 树形节点选中、改变事件
     const fLeftTreeCurrentChange = (curItem, node, event) => {
+
+      console.log("当前选中节点：", stateData.leftTreeRef.getCurrentKey())
+
+      // stateData.leftTreeRef.highlightCurrent = false
+      //stateData.leftTreeRef.setChecked(41,false,false)
       if (curItem.id > 0 && stateData.leftTree.curItemId !== curItem.id) {
+
         stateData.leftTree.curItemId = curItem.id
         stateData.leftTree.curItemTitle = curItem.title
         stateData.tableList.searchKeyWords.fid = stateData.leftTree.curItemId
