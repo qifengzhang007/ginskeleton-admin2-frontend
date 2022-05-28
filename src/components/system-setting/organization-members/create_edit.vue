@@ -56,7 +56,7 @@
     </el-drawer>
 
     <!--    引入其他公共组件-->
-    <SelectUser :propSelect="propSelectUser"/>
+    <SelectUser :propSelect="propSelectUser" @fSelectedCallback="fSelectedUserCallback"/>
   </div>
 </template>
 
@@ -77,7 +77,8 @@ export default {
   emits: ['fCreateEditCallback'],
   setup(props, context) {
     const {propCreateEdit} = toRefs(props)
-
+    const formCreateEdit = Object.assign({}, propCreateEdit.value)
+// console.log("属性副本：",formCreateEdit)
     const stateData = reactive({
       formRef: {},
       selectStatus: commonFunc.SelectStatus,
@@ -89,7 +90,8 @@ export default {
       },
       propSelectUser: {
         isShow: false,
-        title: "选择用户"
+        title: "选择用户",
+        mode: 'one'  // 数据选择模式： one=单选（选择后返回的结果只有一条），more(允许选择多条数据)，选择结果是一个数组
       }
     })
 
@@ -150,16 +152,26 @@ export default {
     const fSelectUser = () => {
       stateData.propSelectUser.isShow = true
     }
+    // 选择结果回调函数，如果是单选模式（one），返回一行对象类型的数据，如果是多选模式（more），返回一个对象数组
+    const fSelectedUserCallback = (row) => {
+      if (row) {
+        propCreateEdit.value.curdFormData.user_id = row.id
+        propCreateEdit.value.curdFormData.user_name = row.user_name
+        propCreateEdit.value.curdFormData.real_name = row.real_name
+      }
+    }
 
     return {
       ...toRefs(stateData),
       propCreateEdit,
+      formCreateEdit,
 
       fUploadCallback,
       fClose,
       fConfirm,
       fSelectOrg,
-      fSelectUser
+      fSelectUser,
+      fSelectedUserCallback
     }
   }
 }

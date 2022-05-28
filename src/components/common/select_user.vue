@@ -8,11 +8,11 @@
         {{ propSelect.title }}
       </div>
     </template>
-    <div >
+    <div>
 
       <div class="tableList-area">
         <div class="toolBanner">
-          用户名:
+          用户名、姓名:
           <el-input v-model="tableList.searchKeyWords.user_name" placeholder="关键词" class="keyWordsInput"/>
           <el-button type="primary" @click="fSearch" icon="Search">查询</el-button>
         </div>
@@ -24,7 +24,7 @@
           <el-table-column prop="user_name" label="用户名" sortable show-overflow-tooltip/>
           <el-table-column prop="real_name" label="姓名" sortable show-overflow-tooltip/>
           <el-table-column prop="phone" label="联系方式" sortable show-overflow-tooltip/>
-<!--          <el-table-column prop="status" label="状态" sortable show-overflow-tooltip :formatter="fFormatter"/>-->
+          <!--          <el-table-column prop="status" label="状态" sortable show-overflow-tooltip :formatter="fFormatter"/>-->
           <!--     ↑↑↑↑   业务字段  ↑↑↑↑   -->
 
           <TableHeader2/>
@@ -38,15 +38,14 @@
     <template #footer>
       <span class="dialog-footer">
         <el-button @click="propSelect.isShow = false">取消</el-button>
-        <el-button type="primary" @click="fSelected" :disabled="propSelect.serverResCode===200">  确认   </el-button>
+        <el-button type="primary" @click="fSelected">  确认   </el-button>
       </span>
     </template>
   </el-dialog>
 </template>
 
 <script>
-import {toRefs,reactive} from 'vue'
-import commonFunc from '@/libs/common_func'
+import {reactive, toRefs} from 'vue'
 import TableHeader1 from './table_header1.vue'
 import TableHeader2 from './table_header2.vue'
 import Paging from '@/components/common/paging.vue'
@@ -110,19 +109,31 @@ export default {
     }
 
     const fTableRowClick = (row, column, event) => {
+      if (propSelect.value.mode === 'one') {
+        stateData.tableRef.clearSelection()
+      }
       stateData.tableRef.toggleRowSelection(row, undefined)
     }
 
     const fSelected = () => {
-      context.emit('fSelectedCallback')
+      const selectedRows = stateData.tableRef.getSelectionRows()
+      if (selectedRows.length < 1) {
+        return
+      }
+      if (propSelect.value.mode === 'one') {
+        context.emit('fSelectedCallback', selectedRows[0])
+      } else if (propSelect.value.mode === 'more') {
+        context.emit('fSelectedCallback', selectedRows)
+      }
+      propSelect.value.isShow = false
     }
 
     // 对话框关闭时所有的变量恢复为默认值
     const fClose = () => {
       // elementPlus 的对话框消失的时候有个渐渐淡出的动画，滞后200毫秒销毁本界面相关的变量，用户就不会在界面未消失时看见界面数据的变化。
-      setTimeout(() => {
-        commonFunc.objInit(propSelect.value)
-      }, 200)
+      // setTimeout(() => {
+      //   commonFunc.objInit(propSelect.value)
+      // }, 200)
     }
 
     // 默认执行一次查询
