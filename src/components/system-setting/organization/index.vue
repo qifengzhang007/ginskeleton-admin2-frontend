@@ -5,7 +5,6 @@
       <el-scrollbar :style="leftTreeContainerFixHeight" :height="leftTreeContainerFixHeight.height">
         <el-tree :expand-on-click-node="false" node-key="id" :current-node-key="1" :props="leftTree.props" :load="fASyncData" lazy :highlight-current="true" @node-click="fLeftTreeCurrentChange"/>
       </el-scrollbar>
-
     </template>
 
     <template v-slot:right>
@@ -204,6 +203,8 @@ export default {
 
 // 新增、修改相关
     const fCreateEdit = (action) => {
+      stateData.curdCreateEdit.curdFormData.action = action
+      stateData.curdCreateEdit.drawerTitle = commonFunc.CurdActionName[action]
       switch (action) {
         case 'insert':
           stateData.curdCreateEdit.curdFormData.status = 1
@@ -225,8 +226,6 @@ export default {
           }
           break;
       }
-      stateData.curdCreateEdit.curdFormData.action = action
-      stateData.curdCreateEdit.drawerTitle = commonFunc.CurdActionName[action]
       stateData.curdCreateEdit.isShow = true
     }
     const fCreateEditCallback = () => {

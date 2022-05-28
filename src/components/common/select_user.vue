@@ -45,6 +45,7 @@
 </template>
 
 <script>
+import commonFunc from '@/libs/common_func'
 import {reactive, toRefs} from 'vue'
 import TableHeader1 from './table_header1.vue'
 import TableHeader2 from './table_header2.vue'
@@ -118,6 +119,7 @@ export default {
     const fSelected = () => {
       const selectedRows = stateData.tableRef.getSelectionRows()
       if (selectedRows.length < 1) {
+        commonFunc.Curd.FailTips("请至少选中一条才能确认")
         return
       }
       if (propSelect.value.mode === 'one') {

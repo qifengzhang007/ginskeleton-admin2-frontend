@@ -211,20 +211,19 @@ export default {
 
 // 新增、修改相关
     const fCreateEdit = (action) => {
+      stateData.curdCreateEdit.curdFormData.action = action
+      stateData.curdCreateEdit.drawerTitle = commonFunc.CurdActionName[action]
       switch (action) {
         case 'insert':
           stateData.curdCreateEdit.curdFormData.status = 1
-          stateData.curdCreateEdit.curdFormData.fid = stateData.leftTree.curItemId
-          stateData.curdCreateEdit.curdFormData.ftitle = stateData.leftTree.curItemTitle
+          stateData.curdCreateEdit.curdFormData.org_post_id = stateData.leftTree.curItemId
+          stateData.curdCreateEdit.curdFormData.post_name = stateData.leftTree.curItemTitle
           delete stateData.curdCreateEdit.curdFormData['id']  // 去除新增无关的字段 id
           break;
         case 'update':
           const selectedArray = stateData.tableRef.getSelectionRows()
           if (commonFunc.Curd.EditCheck(selectedArray.length === 1)) {
             stateData.curdCreateEdit.curdFormData = Object.assign({}, selectedArray[0])
-            if (stateData.curdCreateEdit.curdFormData.ftitle === undefined || stateData.curdCreateEdit.curdFormData.ftitle === '') {
-              stateData.curdCreateEdit.curdFormData.ftitle = stateData.leftTree.curItemTitle
-            }
             delete stateData.curdCreateEdit.curdFormData['created_at']  // 去除更新无关的字段
             delete stateData.curdCreateEdit.curdFormData['updated_at']
           } else {
@@ -232,8 +231,6 @@ export default {
           }
           break;
       }
-      stateData.curdCreateEdit.curdFormData.action = action
-      stateData.curdCreateEdit.drawerTitle = commonFunc.CurdActionName[action]
       stateData.curdCreateEdit.isShow = true
     }
     const fCreateEditCallback = () => {

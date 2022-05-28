@@ -8,7 +8,7 @@
               <el-form-item label="岗位名称" prop="post_name">
                 <el-input clearable v-model="propCreateEdit.curdFormData.post_name" readonly>
                   <template #append>
-                    <el-button icon="Search" @click="fSelectOrg"/>
+                    <el-button icon="Search" @click="fSelectOrgPost"/>
                   </template>
                 </el-input>
                 <el-input type="hidden" clearable v-model="propCreateEdit.curdFormData.org_post_id"/>
@@ -57,6 +57,7 @@
 
     <!--    引入其他公共组件-->
     <SelectUser :propSelect="propSelectUser" @fSelectedCallback="fSelectedUserCallback"/>
+    <SelectOrgPost :propSelect="propSelectOrgPost" @fSelectedCallback="fSelectedOrgPostCallback"/>
   </div>
 </template>
 
@@ -65,11 +66,13 @@ import {reactive, toRefs} from "vue";
 import commonFunc from '@/libs/common_func'
 import {create, edit} from '@/api/system-setting/org_post_members'
 import SelectUser from '@/components/common/select_user.vue'
+import SelectOrgPost from '@/components/common/select_org_post.vue'
 
 export default {
   name: "CreateEdit",
   components: {
-    SelectUser
+    SelectUser,
+    SelectOrgPost
   },
   props: {
     propCreateEdit: Object,
@@ -83,16 +86,20 @@ export default {
       formRef: {},
       selectStatus: commonFunc.SelectStatus,
       rules: {
-        org_post_id: [{type: 'number', min: 1, required: true, message: '岗位为必填项', trigger: 'blur'}],
-        user_id: [{type: 'string', min: 1, required: true, message: '用户名名称为必填项', trigger: 'blur'}],
-        post_name: [{type: 'number', required: true, message: '岗位为必填项', trigger: 'blur'}],
+        post_name: [{type: 'string', required: true, message: '岗位为必填项', trigger: 'blur'}],
         user_name: [{type: 'string', required: true, message: '用户名名称为必填项', trigger: 'blur'}],
       },
       propSelectUser: {
         isShow: false,
         title: "选择用户",
         mode: 'one'  // 数据选择模式： one=单选（选择后返回的结果只有一条），more(允许选择多条数据)，选择结果是一个数组
-      }
+      },
+      propSelectOrgPost: {
+        isShow: false,
+        title: "选择岗位",
+        mode: 'one'  // 对于树形列表次参数无效
+      },
+
     })
 
     // 文件上传组件相关的属性传递
@@ -144,20 +151,30 @@ export default {
     }
 
     // 公共组件
-    // 1.选择岗位
-    const fSelectOrg = () => {
-
-    }
     // 1.选择用户
     const fSelectUser = () => {
       stateData.propSelectUser.isShow = true
     }
-    // 选择结果回调函数，如果是单选模式（one），返回一行对象类型的数据，如果是多选模式（more），返回一个对象数组
+    // 用户模块公共对象选择结果回调
+    // 水平表格：如果是单选模式（one），返回一行对象类型的数据，如果是多选模式（more），返回一个对象数组
     const fSelectedUserCallback = (row) => {
       if (row) {
         propCreateEdit.value.curdFormData.user_id = row.id
         propCreateEdit.value.curdFormData.user_name = row.user_name
         propCreateEdit.value.curdFormData.real_name = row.real_name
+      }
+    }
+    // 2..选择岗位
+    const fSelectOrgPost = () => {
+      stateData.propSelectOrgPost.isShow = true
+    }
+    // 部门岗位公共对象选择结果回调
+    // 树形表格：返回结果是一个对象
+    const fSelectedOrgPostCallback = (row) => {
+      if (row) {
+        console.log("回调结果：", row)
+        propCreateEdit.value.curdFormData.org_post_id = row.id
+        propCreateEdit.value.curdFormData.post_name = row.title
       }
     }
 
@@ -169,9 +186,10 @@ export default {
       fUploadCallback,
       fClose,
       fConfirm,
-      fSelectOrg,
+      fSelectOrgPost,
       fSelectUser,
-      fSelectedUserCallback
+      fSelectedUserCallback,
+      fSelectedOrgPostCallback
     }
   }
 }
@@ -181,11 +199,6 @@ export default {
 .drawer-footer {
   display: block;
   text-align: center;
-}
-
-.blank-area {
-  display: inline-block;
-  width: 40px;
 }
 
 </style>
