@@ -29,11 +29,11 @@
             <el-table-column prop="icon" label="图标" width="120" sortable show-overflow-tooltip/>
             <el-table-column prop="name" label="路由名称" width="180" sortable show-overflow-tooltip/>
             <el-table-column prop="component" label="视图组件路径" width="280" sortable show-overflow-tooltip/>
-            <el-table-column prop="sort" label="排序" sortable show-overflow-tooltip/>
+            <el-table-column prop="sort" label="排序"  width="120"  sortable show-overflow-tooltip/>
 
             <!--     ↑↑↑↑   业务字段  ↑↑↑↑   -->
-            <el-table-column prop="status" label="状态" sortable show-overflow-tooltip :formatter="fFormatter"/>
-            <TableHeader2/>
+            <el-table-column prop="status" label="状态" width="120" sortable show-overflow-tooltip :formatter="fFormatter"/>
+            <el-table-column prop="remark" label="备注" sortable show-overflow-tooltip/>
           </el-table>
         </div>
         <div class="paging-area">
