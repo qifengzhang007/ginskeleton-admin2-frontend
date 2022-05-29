@@ -56,6 +56,7 @@ declare module '@vue/runtime-core' {
     Select_menu: typeof import('./components/common/select_menu.vue')['default']
     Select_org_post: typeof import('./components/common/select_org_post.vue')['default']
     Select_province_city: typeof import('./components/common/select_province_city.vue')['default']
+    Select_sys_menu: typeof import('./components/common/select_sys_menu.vue')['default']
     Select_user: typeof import('./components/common/select_user.vue')['default']
     Split: typeof import('./components/common/split.vue')['default']
     SystemMenu: typeof import('./components/system-setting/system-menu/index.vue')['default']

@@ -6,7 +6,7 @@
           <el-row justify="space-between">
             <el-col :span="11">
               <el-form-item label="上级节点">
-                <el-input clearable v-model="propCreateEdit.curdFormData.ftitle">
+                <el-input  v-model="propCreateEdit.curdFormData.ftitle" readonly>
                   <template #append>
                     <el-button icon="Search" @click="fSelectSysMenu"/>
                   </template>
@@ -77,7 +77,7 @@
 
     </el-drawer>
     <!--   引入组织机构公共组件  -->
-    <SelectOrgPost :propSelect="propSelectSysMenu" @fSelectedCallback="fSelectedSysMenuCallback"/>
+    <SelectSysMenu :propSelect="propSelectSysMenu" @fSelectedCallback="fSelectedSysMenuCallback"/>
   </div>
 </template>
 
@@ -85,12 +85,14 @@
 import {reactive, toRefs} from "vue";
 import commonFunc from '@/libs/common_func'
 import {create, edit} from '@/api/system-setting/organization'
-import SelectOrgPost from '@/components/common/select_org_post.vue'
+// import SelectOrgPost from '@/components/common/select_org_post.vue'
+import SelectSysMenu from '@/components/common/select_sys_menu.vue'
 
 export default {
   name: "CreateEdit",
   components: {
-    SelectOrgPost
+    // SelectOrgPost,
+    SelectSysMenu
   },
   props: {
     propCreateEdit: Object,
@@ -143,10 +145,6 @@ export default {
     }
 
     const fConfirm = () => {
-      // 检测菜单的上级节点是否被手动删除，如果是，则同时清除fid
-      if (propCreateEdit.value.curdFormData.ftitle.trim() === '') {
-        propCreateEdit.value.curdFormData.fid = 0
-      }
       // 表单参数校验完成后提交
       stateData.formRef.validate((valid, fields) => {
         if (valid) {
