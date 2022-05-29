@@ -9,17 +9,8 @@
 <script>
 export default {
   name: 'Carouse',
-  data () {
-    return {
-      setting: {
-        autoplay: true,
-        autoplaySpeed: 2000,
-        dots: 'inside',
-        radiusDot: true,
-        trigger: 'click',
-        arrow: 'never' // hover 悬浮显;  always 一直显示 ;  never  不显示
-      }
-    }
+  setup(){
+    return {}
   }
 }
 </script>

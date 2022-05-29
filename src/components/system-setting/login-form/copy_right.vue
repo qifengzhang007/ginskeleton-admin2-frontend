@@ -4,12 +4,17 @@
 
 <script>
 import config from '@/config/index'
+import {reactive, toRefs} from "vue";
 
 export default {
   name: 'CopyRight',
-  data() {
-    return {
+  setup() {
+    const stateData = reactive({
       copyright: config.copy_right
+    })
+
+    return {
+      ...toRefs(stateData)
     }
   }
 }

@@ -1,18 +1,22 @@
 <template>
   <div class="system_title_common system_title">
-    <img src="@/assets/images/system_logo.png"/>
-    <span>{{title}}</span>
+    <img src="@/assets/images/system_logo.png" alt="图片缺失"/>
+    <span>{{ title }}</span>
   </div>
 </template>
 
 <script>
 import config from '@/config/index'
+import {reactive, toRefs} from "vue";
 
 export default {
   name: 'Title',
-  data(){
+  setup() {
+    const stateData = reactive({
+      title: config.loginTitle
+    })
     return {
-      title:config.loginTitle
+      ...toRefs(stateData)
     }
   }
 }

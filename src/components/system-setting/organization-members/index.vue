@@ -3,7 +3,7 @@
 
     <template v-slot:left>
       <el-scrollbar :style="leftTreeContainerFixHeight" :height="leftTreeContainerFixHeight.height">
-        <el-tree :expand-on-click-node="false" node-key="id" :current-node-key="1" :default-expanded-keys="[1]"
+        <el-tree :expand-on-click-node="false" node-key="id"  :default-expanded-keys="[1]"
                  :props="leftTree.props" :load="fASyncData" lazy :highlight-current="true" @node-click="fLeftTreeCurrentChange"/>
       </el-scrollbar>
 
@@ -158,9 +158,10 @@ export default {
       getSubListByFid(curNodeId).then(res => {
         stateData.leftTree.data = res.data.data
         if (node.level === 0 && stateData.leftTree.data.length > 0) {
-          stateData.leftTree.curItemId = (stateData.leftTree.data[0]).id
-          stateData.leftTree.curItemTitle = (stateData.leftTree.data[0]).title
-          stateData.tableList.searchKeyWords.org_post_id = stateData.leftTree.curItemId
+          stateData.leftTree.curItemId =0
+          stateData.leftTree.curItemTitle = ''
+          stateData.tableList.searchKeyWords.org_post_id = 0
+          fSearch()
         }
         return resolve(
             stateData.leftTree.data
@@ -180,7 +181,6 @@ export default {
 
     watch(() => stateData.leftTree.curItemId, (newItemId, oldItemId) => {
       if (newItemId > 0 && oldItemId !== undefined) {
-
         fSearch()
       }
     })

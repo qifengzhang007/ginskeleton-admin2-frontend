@@ -6,6 +6,7 @@ import '@vue/runtime-core'
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     AuthAnalysis: typeof import('./components/system-setting/auth-analysis/index.vue')['default']
+    AuthAssignment: typeof import('./components/system-setting/auth-assignment/index.vue')['default']
     Button: typeof import('./components/system-setting/button/index.vue')['default']
     Carouse: typeof import('./components/system-setting/login-form/carouse.vue')['default']
     Copy_right: typeof import('./components/system-setting/login-form/copy_right.vue')['default']
