@@ -33,7 +33,22 @@
 
     <template v-slot:right>
       <el-scrollbar :style="leftTreeContainerFixHeight" :height="leftTreeContainerFixHeight.height">
-        <el-tree :expand-on-click-node="false" node-key="Id" :current-node-key="1" :props="rightTree.props" :data="rightTree.data" :highlight-current="true"/>
+        <el-tree :expand-on-click-node="false" node-key="Id" :current-node-key="1" :props="rightTree.props" :data="rightTree.data" :highlight-current="true">
+          <template #default="{ node, data }">
+          <span class="tree-node">
+            <template  v-if="data.node_type==='dept'">
+                 <OfficeBuilding style="width: 15px; height: 15px; color: #1178e2"/>
+            </template>
+             <template  v-else-if="data.node_type==='menu'">
+                 <Menu style="width: 15px; height: 15px; color: #2ebbd9"/>
+            </template>
+              <template  v-else-if="data.node_type==='button'">
+                 <SetUp style="width: 15px; height: 15px; color:#008000"/>
+            </template>
+          <span class="tree-node-title">  {{ node.label }}</span>
+          </span>
+          </template>
+        </el-tree>
       </el-scrollbar>
     </template>
 
@@ -210,6 +225,20 @@ export default {
 .sub-title {
   display: block;
   color: #94989f;
+}
+
+.tree-node {
+  display: inline-block;
+  height: 25px;
+  line-height: 25px;
+  vertical-align: middle;
+}
+span.tree-node * {
+  vertical-align: middle;
+}
+
+.tree-node-title{
+  padding-left: 6px;
 }
 
 </style>
