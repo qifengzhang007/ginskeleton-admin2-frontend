@@ -1,44 +1,21 @@
 <template>
   <div :style="{width:browseWidth}">
     <Title></Title>
-    <Form ref="loginForm"></Form>
+    <Form></Form>
     <Carouse></Carouse>
     <CopyRight></CopyRight>
   </div>
 </template>
 
-<script>
+<script setup>
 import Title from '_c/system-setting/login-form/title.vue'
 import Carouse from '_c/system-setting/login-form/carouse.vue'
 import Form from '_c/system-setting/login-form/form.vue'
 import CopyRight from '_c/system-setting/login-form/copy_right.vue'
 import commonFunc from '@/libs/common_func'
-import {reactive, ref, toRefs} from "vue"
+import {ref} from "vue"
 
-export default {
-  name: 'Login',
-  components: {
-    Title,
-    Carouse,
-    Form,
-    CopyRight
-  },
-  setup() {
-    const loginForm = ref(null)
-    const stateData = reactive({
-      browseWidth: commonFunc.GetBrowserWidth() + 'px',
-
-    })
-    const handleSubmit = () => {
-    }
-    return {
-      ...toRefs(stateData),
-      loginForm,
-      handleSubmit
-    }
-
-  }
-}
+const browseWidth = ref(commonFunc.GetBrowserWidth() + 'px')
 </script>
 
 <style scoped>
