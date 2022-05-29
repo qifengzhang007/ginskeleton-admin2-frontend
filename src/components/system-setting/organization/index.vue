@@ -87,8 +87,9 @@ export default {
           children: 'children',
           isLeaf: 'is_leaf',
         },
-        curItemId: 0,
-        curItemTitle: '',
+        curItemId: 0, // 左侧树当前行的id
+        curItemTitle: '',  // 左侧树当前行的标题
+        curItemIsLeaf: false,  //左侧当前行节点是否为叶子节点
         data: [],
       },
       // 右侧table相关的变量
@@ -150,6 +151,7 @@ export default {
       getSubListByFid(curNodeId).then(res => {
         stateData.leftTree.data = res.data.data
         if (node.level === 0 && stateData.leftTree.data.length > 0) {
+          stateData.leftTree.curItemIsLeaf = (stateData.leftTree.data[0]).is_leaf
           stateData.leftTree.curItemId = (stateData.leftTree.data[0]).id
           stateData.leftTree.curItemTitle = (stateData.leftTree.data[0]).title
           stateData.tableList.searchKeyWords.fid = stateData.leftTree.curItemId
@@ -164,17 +166,22 @@ export default {
     // 树形节点选中、改变事件
     const fLeftTreeCurrentChange = (curItem, node, event) => {
       if (curItem.id > 0 && stateData.leftTree.curItemId !== curItem.id) {
+        stateData.leftTree.curItemIsLeaf = curItem.is_leaf
         stateData.leftTree.curItemId = curItem.id
         stateData.leftTree.curItemTitle = curItem.title
         stateData.tableList.searchKeyWords.fid = stateData.leftTree.curItemId
       }
     }
-
-    watch(() => stateData.leftTree.curItemId, (newItemId, oldItemId) => {
-      if (newItemId > 0 && oldItemId !== undefined) {
+    // 监听左侧树选中节点值改变后触发右侧数据刷新
+    watch(() => stateData.leftTree, (newItem, oldItem) => {
+      if (newItem.curItemIsLeaf === false && newItem.curItemId >= 0 && oldItem !== undefined) {
         fSearch()
+      } else if (newItem.curItemIsLeaf) {
+        stateData.tableList.data = []
       }
-    })
+    }, {deep: true, immediate: true})
+
+
     // 右侧内容区域
     //界面元素鉴权后显示
     const btnElementAuth = () => {

@@ -3,7 +3,7 @@
 
     <template v-slot:left>
       <el-scrollbar :style="leftTreeContainerFixHeight" :height="leftTreeContainerFixHeight.height">
-        <el-tree :expand-on-click-node="false" node-key="id" :current-node-key="1" :props="leftTree.props" :load="fASyncData" lazy :highlight-current="true" ref="leftTreeRef" @node-click="fLeftTreeCurrentChange"/>
+        <el-tree :expand-on-click-node="false" node-key="id" :current-node-key="0" :props="leftTree.props" :load="fASyncData" lazy :highlight-current="true" ref="leftTreeRef" @node-click="fLeftTreeCurrentChange"/>
       </el-scrollbar>
     </template>
 
@@ -29,7 +29,7 @@
             <el-table-column prop="icon" label="图标" width="120" sortable show-overflow-tooltip/>
             <el-table-column prop="name" label="路由名称" width="180" sortable show-overflow-tooltip/>
             <el-table-column prop="component" label="视图组件路径" width="280" sortable show-overflow-tooltip/>
-            <el-table-column prop="sort" label="排序"  width="120"  sortable show-overflow-tooltip/>
+            <el-table-column prop="sort" label="排序" width="120" sortable show-overflow-tooltip/>
 
             <!--     ↑↑↑↑   业务字段  ↑↑↑↑   -->
             <el-table-column prop="status" label="状态" width="120" sortable show-overflow-tooltip :formatter="fFormatter"/>
@@ -92,8 +92,9 @@ export default {
           children: 'children',
           isLeaf: 'is_leaf',
         },
-        curItemId: 0,
-        curItemTitle: '',
+        curItemId: 0, // 左侧树当前行的id
+        curItemTitle: '',  // 左侧树当前行的标题
+        curItemIsLeaf: false,  //左侧当前行节点是否为叶子节点
         data: [],
       },
       // 右侧table相关的变量
@@ -108,7 +109,7 @@ export default {
           limit: 20
         },
         total: 0, // 数据总条数
-        data: [],
+        data: [],  // 后台接口返回的table 列表数据
         buttonGroupIsShow: false,
         // 本页面可展示的按钮列表全部先定义
         buttonList: {
@@ -151,10 +152,27 @@ export default {
 // 树形列表异步加载数据
     const fASyncData = (node, resolve) => {
       let curNodeId = node.level === 0 ? 0 : node.data.id
-      // 左侧树数据初始化
+      if (node.level === 0) {
+        stateData.leftTree.curItemId = 0
+        stateData.leftTree.curItemIsLeaf = false
+        stateData.leftTree.curItemTitle = '菜单虚拟根节点'
+        stateData.tableList.searchKeyWords.fid = 0
+        fSearch()
+        return resolve(
+            [{
+              id: 0,
+              fid: 0,
+              title: "菜单虚拟根节点",
+              is_leaf: false,
+              children: []
+            }]
+        )
+      }
+      // 左侧树鼠标点击箭头加载下一级
       getSubListByFid(curNodeId).then(res => {
         stateData.leftTree.data = res.data.data
         if (node.level === 0 && stateData.leftTree.data.length > 0) {
+          stateData.leftTree.curItemIsLeaf = (stateData.leftTree.data[0]).is_leaf
           stateData.leftTree.curItemId = (stateData.leftTree.data[0]).id
           stateData.leftTree.curItemTitle = (stateData.leftTree.data[0]).title
           stateData.tableList.searchKeyWords.fid = stateData.leftTree.curItemId
@@ -168,24 +186,23 @@ export default {
     }
     // 树形节点选中、改变事件
     const fLeftTreeCurrentChange = (curItem, node, event) => {
-
-      console.log("当前选中节点：", stateData.leftTreeRef.getCurrentKey())
-
-      // stateData.leftTreeRef.highlightCurrent = false
-      //stateData.leftTreeRef.setChecked(41,false,false)
-      if (curItem.id > 0 && stateData.leftTree.curItemId !== curItem.id) {
-
+      if (stateData.leftTree.curItemId !== curItem.id) {
+        stateData.leftTree.curItemIsLeaf = curItem.is_leaf
         stateData.leftTree.curItemId = curItem.id
         stateData.leftTree.curItemTitle = curItem.title
         stateData.tableList.searchKeyWords.fid = stateData.leftTree.curItemId
       }
     }
-
-    watch(() => stateData.leftTree.curItemId, (newItemId, oldItemId) => {
-      if (newItemId > 0 && oldItemId !== undefined) {
+    // 监听左侧树选中节点值改变后触发右侧数据刷新
+    watch(() => stateData.leftTree, (newItem, oldItem) => {
+      if (newItem.curItemIsLeaf === false && newItem.curItemId >= 0 && oldItem !== undefined) {
         fSearch()
+      } else if (newItem.curItemIsLeaf) {
+        stateData.tableList.data = []
       }
-    })
+    }, {deep: true, immediate: true})
+
+
     // 右侧内容区域
     //界面元素鉴权后显示
     const btnElementAuth = () => {

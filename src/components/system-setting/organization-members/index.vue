@@ -92,8 +92,8 @@ export default {
           children: 'children',
           isLeaf: 'is_leaf',
         },
-        curItemId: 0,
-        curItemTitle: '',
+        curItemId: 0, // 左侧树当前行的id
+        curItemTitle: '',  // 左侧树当前行的标题
         data: [],
       },
       // 右侧table相关的变量
@@ -108,7 +108,7 @@ export default {
           limit: 20
         },
         total: 0, // 数据总条数
-        data: [],
+        data: [],  // 后台接口返回的table 列表数据
         buttonGroupIsShow: false,
         // 本页面可展示的按钮列表全部先定义
         buttonList: {
