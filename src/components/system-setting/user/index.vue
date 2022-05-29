@@ -13,7 +13,7 @@
         </el-button-group>
       </div>
 
-      <el-table border :style="tableList.style" :height="tableList.style.height" :data="tableList.data" ref="tableRef" @row-click="fTableRowClick">
+      <el-table border :highlight-current-row="true" :style="tableList.style" :height="tableList.style.height" :data="tableList.data" ref="tableRef" @row-click="fTableRowClick">
         <TableHeader1/>
         <!--    ↓↓↓↓   业务字段  ↓↓↓↓   -->
 

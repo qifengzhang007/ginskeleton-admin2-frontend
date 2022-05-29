@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="split-left-area">
+    <div :style="splitLeftArea" class="split-left-area">
       <slot name="left"></slot>
     </div>
 
@@ -8,7 +8,7 @@
       <span class="split-flags"></span>
     </div>
 
-    <div class="split-right-area">
+    <div :style="splitRightArea" class="split-right-area">
       <slot name="right"></slot>
     </div>
   </div>
@@ -16,13 +16,35 @@
 </template>
 
 <script>
-import {onMounted} from "vue";
+import {onMounted, reactive, toRefs} from "vue";
 
 export default {
   name: "Split",
-  props: [],
+  props: {
+    // 左侧分割比例，单位：百分比，右侧会自动计算，不需要指定
+    splitRatio: {
+      type: Number,
+      default: 16
+    }
+  },
   setup(props, context) {
 
+    const {splitRatio} = toRefs(props)
+
+    const stateData = reactive({
+      splitLeftArea: {
+        display: 'inline-block',
+        width: `calc(${splitRatio.value}%)`,
+        height: '100vh'
+      },
+      splitRightArea: {
+        display: 'inline-block',
+        width: `calc(${100 - splitRatio.value - 1}%)`,
+        height: '100vh'
+      }
+    })
+
+    // 页面元素加载结束开始处理分割逻辑相关的拖拽事件
     onMounted(() => {
       const leftDom = document.querySelector("div.split-left-area")
       const rightDom = document.querySelector("div.split-right-area")
@@ -51,22 +73,18 @@ export default {
             document.onmouseup()
           }
         }
-
       })
+
     })
 
-    return {}
+    return {
+      ...toRefs(stateData),
+    }
   }
 }
 </script>
 
 <style scoped>
-
-.split-left-area {
-  display: inline-block;
-  width: calc(16%);
-  height: 100vh;
-}
 
 .split-vertical-line {
   display: inline-block;
@@ -84,12 +102,6 @@ export default {
   position: relative;
   top: 40%;
   background: url("../../assets/images/split_flag.png");
-}
-
-.split-right-area {
-  display: inline-block;
-  width: calc(83%);
-  height: 100vh
 }
 
 </style>

@@ -12,7 +12,7 @@
         </el-button-group>
       </div>
 
-      <el-table border :style="tableList.style" :height="tableList.style.height" :data="tableList.data" ref="tableRef" @row-click="fTableRowClick">
+      <el-table border :highlight-current-row="true" :style="tableList.style" :height="tableList.style.height" :data="tableList.data" ref="tableRef" @row-click="fTableRowClick">
         <TableHeader1/>
         <!--    ↓↓↓↓   业务字段  ↓↓↓↓   -->
 
@@ -23,7 +23,7 @@
 
         <!--     ↑↑↑↑   业务字段  ↑↑↑↑   -->
         <el-table-column prop="status" label="状态" sortable show-overflow-tooltip :formatter="fFormatter"/>
-        <TableHeader1/>
+        <TableHeader2/>
       </el-table>
     </div>
     <div class="paging-area">

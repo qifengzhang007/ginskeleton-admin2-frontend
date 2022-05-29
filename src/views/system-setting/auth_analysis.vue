@@ -1,11 +1,11 @@
 <template>
-  <div>
-    auth_analysis 权限分析
-  </div>
+  <AuthAnalysisIndex/>
 </template>
 
 <script setup>
+import AuthAnalysisIndex from '@/components/system-setting/auth-analysis/index.vue'
 
+//
 </script>
 
 <style scoped>

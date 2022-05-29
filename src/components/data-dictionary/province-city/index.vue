@@ -22,9 +22,8 @@
             </el-button-group>
           </div>
 
-          <el-table border :style="tableList.style" :height="tableList.style.height" :data="tableList.data" ref="tableRef" @row-click="fTableRowClick">
-            <el-table-column type="selection" width="50" align="center" id="t500"/>
-            <el-table-column prop="id" label="id" width="100" sortable fixed/>
+          <el-table border :highlight-current-row="true" :style="tableList.style" :height="tableList.style.height" :data="tableList.data" ref="tableRef" @row-click="fTableRowClick">
+            <TableHeader1/>
             <!--    ↓↓↓↓   业务字段  ↓↓↓↓   -->
 
             <el-table-column prop="name" label="区域名称" sortable show-overflow-tooltip/>
@@ -33,9 +32,7 @@
 
             <!--     ↑↑↑↑   业务字段  ↑↑↑↑   -->
             <el-table-column prop="status" label="状态" sortable show-overflow-tooltip :formatter="fFormatter"/>
-            <el-table-column prop="remark" label="备注" sortable show-overflow-tooltip/>
-            <el-table-column prop="created_at" label="创建时间" width="150" sortable show-overflow-tooltip/>
-            <el-table-column prop="updated_at" label="更新时间" width="150" sortable show-overflow-tooltip/>
+            <TableHeader2/>
           </el-table>
         </div>
         <div class="paging-area">
@@ -63,6 +60,8 @@ import {destroy, getSubListByFid, list} from '@/api/data-dictionary/province_cit
 import {show_button, view_button_list} from '@/api/system-setting/auth'
 import DeleteDataDialog from '@/components/common/delete_data_dialog.vue'
 import Paging from '@/components/common/paging.vue'
+import TableHeader1 from '@/components/common/table_header1.vue'
+import TableHeader2 from '@/components/common/table_header2.vue'
 import CreateEdit from './create_edit.vue'
 import {useRouter} from "vue-router";
 
@@ -70,6 +69,8 @@ export default {
   name: "ProvinceCityIndex",
   components: {
     Split,
+    TableHeader1,
+    TableHeader2,
     CreateEdit,
     DeleteDataDialog,
     Paging,
