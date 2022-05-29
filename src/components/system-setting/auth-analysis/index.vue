@@ -33,17 +33,17 @@
 
     <template v-slot:right>
       <el-scrollbar :style="leftTreeContainerFixHeight" :height="leftTreeContainerFixHeight.height">
-        <el-tree :expand-on-click-node="false" node-key="Id" :current-node-key="1" :props="rightTree.props" :data="rightTree.data" :highlight-current="true">
+        <el-tree :expand-on-click-node="false" :highlight-current="true" node-key="id" :current-node-key="1" :props="rightTree.props" :data="rightTree.data" :default-expanded-keys="rightTree.needExpandedKeys">
           <template #default="{ node, data }">
           <span class="tree-node">
-            <template  v-if="data.node_type==='dept'">
+            <template v-if="data.node_type==='dept'">
                  <OfficeBuilding style="width: 15px; height: 15px; color: #1178e2"/>
             </template>
-             <template  v-else-if="data.node_type==='menu'">
-                 <Menu style="width: 15px; height: 15px; color: #2ebbd9"/>
+             <template v-else-if="data.node_type==='menu'">
+                 <Menu style="width: 15px; height: 15px; color: #54a1f6"/>
             </template>
-              <template  v-else-if="data.node_type==='button'">
-                 <SetUp style="width: 15px; height: 15px; color:#008000"/>
+              <template v-else-if="data.node_type==='button'">
+                 <SetUp style="width: 15px; height: 15px; color:#045bb4"/>
             </template>
           <span class="tree-node-title">  {{ node.label }}</span>
           </span>
@@ -90,6 +90,7 @@ export default {
         curItemTitle: '',  // 左侧树当前行的标题
         curItemIsLeaf: false,  //左侧当前行节点是否为叶子节点
         data: [],
+        needExpandedKeys: [],
       },
       // 右侧table相关的变量
       bodyHeight: commonFunc.BodyHeight(),
@@ -181,6 +182,7 @@ export default {
     const showUserHasAuthList = (userId) => {
       has_auth_list(userId).then(res => {
         stateData.rightTree.data = res.data.data
+        commonFunc.getNeedExpandTreeNode(res.data.data, stateData.rightTree.needExpandedKeys)
       }).catch(res => {
         stateData.rightTree.data = []
       })
@@ -233,11 +235,12 @@ export default {
   line-height: 25px;
   vertical-align: middle;
 }
+
 span.tree-node * {
   vertical-align: middle;
 }
 
-.tree-node-title{
+.tree-node-title {
   padding-left: 6px;
 }
 

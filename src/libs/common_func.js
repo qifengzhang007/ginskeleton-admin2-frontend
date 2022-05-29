@@ -60,7 +60,7 @@ export default {
                     message: '请选中父级节点，才允许新增！',
                     type: 'error',
                     grouping: true,
-                    duration:1500
+                    duration: 1500
                 })
                 return false
             }
@@ -74,7 +74,7 @@ export default {
                     message: '请选中一条数据进行修改！',
                     type: 'error',
                     grouping: true,
-                    duration:1500
+                    duration: 1500
                 })
                 return false
             }
@@ -87,7 +87,7 @@ export default {
                     message: '请至少选中一条数据进行删除',
                     type: 'error',
                     grouping: true,
-                    duration:1500
+                    duration: 1500
                 })
                 return false
             }
@@ -99,7 +99,7 @@ export default {
                 ElMessage({
                     message: '请选中一条数据进行删除',
                     type: 'error',
-                    duration:1500
+                    duration: 1500
                 })
                 return false
             }
@@ -110,7 +110,7 @@ export default {
                 message: msg,
                 type: 'success',
                 grouping: true,
-                duration:1000
+                duration: 1000
             })
         },
         FailTips(msg = '失败') {
@@ -118,7 +118,7 @@ export default {
                 message: msg,
                 type: 'error',
                 grouping: true,
-                duration:1500
+                duration: 1500
             })
         },
         // 公共对象
@@ -172,5 +172,20 @@ export default {
             }
         }
         return obj;
+    },
+
+    // 处理权限分析界面界面需要展开的节点
+    // @treeArray 用户已有权限的原始数据数组
+    // @resArray 接受结果的数组，需要用户传入一个空数组接受结果
+    getNeedExpandTreeNode(treeArray = [], resArray = []) {
+        for (let i = 0; i < treeArray.length; i++) {
+            if (treeArray[i].children) {
+                this.getNeedExpandTreeNode(treeArray[i].children, resArray)
+            }
+            if (treeArray[i].expand) {
+                resArray.push(treeArray[i].id)
+            }
+        }
     }
+
 }
