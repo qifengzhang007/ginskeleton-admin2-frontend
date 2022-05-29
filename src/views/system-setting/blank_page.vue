@@ -4,10 +4,8 @@
 </div>
 </template>
 
-<script>
-export default {
-  name: "BlankPage"
-}
+<script setup>
+
 </script>
 
 <style scoped>
