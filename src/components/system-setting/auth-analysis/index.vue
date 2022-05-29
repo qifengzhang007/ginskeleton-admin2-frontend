@@ -117,30 +117,6 @@ export default {
           height: commonFunc.TableHeight(),
         }
       },
-      // 新增、修改时，传递给子组件的属性变量，
-      curdCreateEdit: {
-        isShow: false,
-        drawerTitle: '',
-        curdFormData: {
-          action: '',
-          id: 0,
-          fid: '',
-          ftitle: '',
-          title: '',
-          status: 1,
-          remark: '',
-        }
-      },
-      // 删除数据时，传递给子组件的属性变量，数据格式如下：
-      curdDelete: {
-        actionName: '',
-        isShow: false,
-        ids: '',
-        delCounts: 0,
-        // ↓↓↓  请求接口后服务端返回的 code 和 msg
-        serverResCode: 0,
-        serverResMsg: '',
-      }
     })
 
 
