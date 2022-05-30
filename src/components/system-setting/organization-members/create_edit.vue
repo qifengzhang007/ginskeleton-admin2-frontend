@@ -2,7 +2,7 @@
   <div>
     <el-drawer v-model="propCreateEdit.isShow" :before-close="fClose" :close-on-click-modal="false" direction="rtl" :title="propCreateEdit.drawerTitle" size="55%">
       <template #default>
-        <el-form ref="formRef" :model="propCreateEdit.curdFormData" :rules="rules" label-position="left" label-width="110px">
+        <el-form ref="formRef" :inline-message="true" :model="propCreateEdit.curdFormData" :rules="rules" label-position="left" label-width="110px">
           <el-row justify="space-between">
             <el-col :span="11">
               <el-form-item label="岗位名称" prop="org_post_id">
@@ -118,11 +118,11 @@ export default {
     }
 // 确认事件
     const fConfirm = () => {
-      console.log("action:",propCreateEdit.value.curdFormData.action)
+      console.log("action:", propCreateEdit.value.curdFormData.action)
       // 表单参数校验完成后提交
       stateData.formRef.validate((valid, fields) => {
         if (valid) {
-          console.log("action2:",propCreateEdit.value.curdFormData.action)
+          console.log("action2:", propCreateEdit.value.curdFormData.action)
           switch (propCreateEdit.value.curdFormData.action) {
             case 'insert':
               create(propCreateEdit.value.curdFormData).then(res => {

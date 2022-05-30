@@ -2,6 +2,7 @@ import axios from 'axios'
 import {clearLocalStorageAll, getToken, removeToken} from '@/libs/util'
 import config from '@/config/index'
 import router from '@/router/index'
+import commonFunc from "./common_func";
 
 class HttpRequest {
     constructor(baseUrl = '') {
@@ -60,7 +61,8 @@ class HttpRequest {
                     }, 1000);
                     break
                 case 405:
-                    ElMessage.error(config.errorSetting.noAuthTips)
+                    // ElMessage.error(config.errorSetting.noAuthTips)
+                    commonFunc.Curd.FailTips(config.errorSetting.noAuthTips)
                     break
             }
             return Promise.reject(error)

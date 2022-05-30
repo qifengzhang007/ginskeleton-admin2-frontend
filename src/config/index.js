@@ -40,7 +40,7 @@ export default {
      */
     errorSetting: {
         serverNotStartTips: '可能是服务端未启动，请联系管理员',
-        noAuthTips: '该接口没有权限访问，请联系管理员分配权限.',
+        noAuthTips: 'Casbin 鉴权未通过，请在后台检查 casbin 设置参数',
         tokenExpiredTips: '页面token授权已过期，请重新登陆.',
     },
     /**

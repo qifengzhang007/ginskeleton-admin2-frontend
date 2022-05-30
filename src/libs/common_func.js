@@ -53,15 +53,16 @@ export default {
     PageSizeOptions: [5, 20, 50, 100, 200, 500],
     // CURD 相关的公共函数
     Curd: {
-        // 参数列表：
-        // 1.开发者传递一个bool类型的条件，不满足该条件就会进行提示
-        CreateCheck(condition) {
+        // 新增数据前的检查
+        // @condition 修改数据时的验证条件，如果不满足条件就提示
+        // @duration  提示文本持续毫秒
+        CreateCheck(condition, duration = 2000) {
             if (!condition) {
                 ElMessage({
                     message: '请选中父级节点，才允许新增！',
                     type: 'error',
                     grouping: true,
-                    duration: 2000,
+                    duration: duration,
                     center: true,
                     customClass: "elMessageStyle"
                 })
@@ -69,15 +70,17 @@ export default {
             }
             return true
         },
-        // 修改数据钱的检查
+        // 修改数据前的检查
         // 参数列表参见 CreateCheck 函数
-        EditCheck(condition) {
+        // @condition 修改数据时的验证条件，如果不满足条件就提示
+        // @duration  提示文本持续毫秒
+        EditCheck(condition, duration = 2000) {
             if (!condition) {
                 ElMessage({
                     message: '请选中一条数据进行修改！',
                     type: 'error',
                     grouping: true,
-                    duration: 2000,
+                    duration: duration,
                     center: true,
                     customClass: "elMessageStyle"
                 })
@@ -86,13 +89,15 @@ export default {
             return true
         },
         // 删除数据前的校验（适用于多条数据删除动作）
-        DestroyCheckForMoreItem(condition) {
+        // @condition  删除多条数据时的验证条件，如果不满足条件就提示
+        // @duration  提示文本持续毫秒
+        DestroyCheckForMoreItem(condition, duration = 2000) {
             if (!condition) {
                 ElMessage({
                     message: '请至少选中一条数据进行删除',
                     type: 'error',
                     grouping: true,
-                    duration: 2000,
+                    duration: duration,
                     center: true,
                     customClass: "elMessageStyle"
                 })
@@ -101,12 +106,14 @@ export default {
             return true
         },
         // 删除数据前的校验（适用于单条数据删除动作）
-        DestroyCheckForOneItem(condition) {
+        // @condition  删除单条数据时的验证条件，如果不满足条件就提示
+        // @duration  提示文本持续毫秒
+        DestroyCheckForOneItem(condition, duration = 2000) {
             if (!condition) {
                 ElMessage({
                     message: '请选中一条数据进行删除',
                     type: 'error',
-                    duration: 2000,
+                    duration: duration,
                     center: true,
                     customClass: "elMessageStyle"
                 })
@@ -114,22 +121,28 @@ export default {
             }
             return true
         },
-        SuccessTips(msg = '成功') {
+        // 成功时的提示
+        // @msg  提示文本
+        // @duration  提示文本持续毫秒
+        SuccessTips(msg = '成功', duration = 1500) {
             ElMessage({
                 message: msg,
                 type: 'success',
                 grouping: true,
-                duration: 1500,
+                duration: duration,
                 center: true,
                 customClass: "elMessageStyle"
             })
         },
-        FailTips(msg = '失败') {
+        // 失败时的提示
+        // @msg  提示文本
+        // @duration  提示文本持续毫秒
+        FailTips(msg = '失败', duration = 3000) {
             ElMessage({
                 message: msg,
                 type: 'error',
                 grouping: true,
-                duration: 3000,
+                duration: duration,
                 center: true,
                 customClass: "elMessageStyle"
             })
