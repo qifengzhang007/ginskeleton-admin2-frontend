@@ -129,7 +129,7 @@ export default {
                 message: msg,
                 type: 'error',
                 grouping: true,
-                duration: 2000,
+                duration: 3000,
                 center: true,
                 customClass: "elMessageStyle"
             })

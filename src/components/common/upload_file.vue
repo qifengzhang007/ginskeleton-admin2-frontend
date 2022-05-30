@@ -5,6 +5,7 @@
       :headers="headers"
       :show-file-list="false"
       :on-success="fSuccess"
+      :on-error="fError"
       :before-upload="fBeforeUpload"
   >
     <el-icon class="avatar-uploader-icon">
@@ -35,12 +36,21 @@ export default {
 
     }
     // 上传成功后的回调
+    // @res 上传成功返回的结果
+    // @uploadFile 被上传的文件路径信息
     const fSuccess = (res, uploadFile) => {
       if (res.code === 200) {
         context.emit('fUploadCallback', res.data.path, commonFunc.getServerIp() + res.data.path)
       } else {
-        commonFunc.FailTips("文件上传失败：" + res.msg)
+        commonFunc.Curd.FailTips("文件上传失败：" + res.msg)
       }
+    }
+    //上传失败后的回调
+    // @errRes 上传失败返回的结果
+    // @uploadFile 被上传的文件路径信息
+    const fError=(errRes, uploadFile)=>{
+     const err= JSON.parse(errRes.message)
+      commonFunc.Curd.FailTips("文件上传失败：" + err.msg)
     }
 
     return {
@@ -48,6 +58,7 @@ export default {
 
       fBeforeUpload,
       fSuccess,
+      fError
     }
   }
 }
