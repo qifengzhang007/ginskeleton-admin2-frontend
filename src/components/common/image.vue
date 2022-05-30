@@ -1,8 +1,8 @@
 <template>
-  <el-image v-if="propImgShortPath.length>10" :src="imgServerPre+propImgShortPath" fit="contain" class="thumbnail" :style="imgStyle">
+  <el-image v-if="propImgShortPath.length>10" :src="imgServerPre+propImgShortPath" fit="contain" :style="imgStyle">
     <template #error>
       <div class="image-slot">
-        <Picture style="width: 30px; color: lightgray"/>
+        <Picture :style="imgStyle" class="thumbnail"/>
       </div>
     </template>
   </el-image>
@@ -46,7 +46,6 @@ export default {
 
 <style scoped>
 .thumbnail {
-  max-width: 200px;
-  max-height: 200px;
+  color: lightgray;
 }
 </style>

@@ -22,7 +22,7 @@
         <el-table-column prop="phone" label="联系方式" sortable show-overflow-tooltip/>
         <el-table-column prop="login_times" label="登陆次数" sortable show-overflow-tooltip/>
         <el-table-column prop="last_login_ip" label="最近登陆ip" sortable show-overflow-tooltip/>
-        <el-table-column prop="avatar" label="头像">
+        <el-table-column prop="avatar" label="头像"  width="100" >
           <template #default="scope">
             <Image width="40px" height="40px" :propImgShortPath="scope.row.avatar"/>
           </template>

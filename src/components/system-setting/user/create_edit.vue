@@ -49,7 +49,7 @@
             </el-col>
             <el-col :span="11">
               <el-form-item label="">
-                <Image :propImgShortPath="propCreateEdit.curdFormData.avatar"/>
+                <Image :propImgShortPath="propCreateEdit.curdFormData.avatar" width="100px"  height="100px"/>
               </el-form-item>
             </el-col>
           </el-row>
