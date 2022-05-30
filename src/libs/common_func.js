@@ -60,7 +60,9 @@ export default {
                     message: '请选中父级节点，才允许新增！',
                     type: 'error',
                     grouping: true,
-                    duration: 1500
+                    duration: 2000,
+                    center:true,
+                    customClass:"elMessageStyle"
                 })
                 return false
             }
@@ -74,7 +76,9 @@ export default {
                     message: '请选中一条数据进行修改！',
                     type: 'error',
                     grouping: true,
-                    duration: 1500
+                    duration: 2000,
+                    center:true,
+                    customClass:"elMessageStyle"
                 })
                 return false
             }
@@ -87,7 +91,9 @@ export default {
                     message: '请至少选中一条数据进行删除',
                     type: 'error',
                     grouping: true,
-                    duration: 1500
+                    duration: 2000,
+                    center:true,
+                    customClass:"elMessageStyle"
                 })
                 return false
             }
@@ -99,7 +105,9 @@ export default {
                 ElMessage({
                     message: '请选中一条数据进行删除',
                     type: 'error',
-                    duration: 1500
+                    duration: 2000,
+                    center:true,
+                    customClass:"elMessageStyle"
                 })
                 return false
             }
@@ -110,7 +118,9 @@ export default {
                 message: msg,
                 type: 'success',
                 grouping: true,
-                duration: 1000
+                duration: 1500,
+                center:true,
+                customClass:"elMessageStyle"
             })
         },
         FailTips(msg = '失败') {
@@ -118,19 +128,12 @@ export default {
                 message: msg,
                 type: 'error',
                 grouping: true,
-                duration: 1500
+                duration: 2000,
+                center:true,
+                customClass:"elMessageStyle"
             })
         },
-        // 公共对象
-        // 参数列表参见 CreateCheck 函数
-        // CommonComponentSelectedCheck(obj_vue, condition) {
-        //     if (!condition) {
-        //         ElMessage.warning("只允许选中一条数据进行引用")
-        //         return false
-        //     }
-        //     return true
-        // },
-        // 获取后端public路径
+
     },
     // 获取数组中字段的拼接值
     // 示例： 参数一：  数组，参数二，数组中的键1，参数三，数组中的键2  ...  依次类推

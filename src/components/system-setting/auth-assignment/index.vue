@@ -206,37 +206,44 @@ export default {
     // 分配权限
     const fAssignAuth = () => {
       const checkedNodes = stateData.allAuthRef.getCheckedNodes()
-      if (checkedNodes.length > 0) {
-        // 涉及到多个接口请求，使用promise，全部请求结束做统一提示
-        let finalArray = []
-        checkedNodes.every((item, index) => {
-          finalArray[index] = new Promise((resolve, reject) => {
-            const sendData = {
-              org_post_id: stateData.leftTree.curItemId,
-              system_menu_id: item.system_menu_id,
-              system_menu_fid: item.system_menu_fid,
-              button_id: item.button_id,
-              node_type: item.node_type
-            }
-            assignMenuToOrg(sendData).then(res => {
-              resolve(true)
-            }).catch(res => {
-              reject(false)
-            })
-          })
-          return true
-        })
-        Promise.all(finalArray).then(finalRes => {
-          commonFunc.Curd.SuccessTips('权限分配成功')
-          getAssignedAuthList(stateData.leftTree.curItemId)
-        }).catch(res => {
-          commonFunc.Curd.FailTips('个别请求失败')
-        })
+      if (checkedNodes.length < 1) {
+        commonFunc.Curd.FailTips("请勾选需要分配的权限节点")
+        return
       }
+      // 涉及到多个接口请求，使用promise，全部请求结束做统一提示
+      let finalArray = []
+      checkedNodes.every((item, index) => {
+        finalArray[index] = new Promise((resolve, reject) => {
+          const sendData = {
+            org_post_id: stateData.leftTree.curItemId,
+            system_menu_id: item.system_menu_id,
+            system_menu_fid: item.system_menu_fid,
+            button_id: item.button_id,
+            node_type: item.node_type
+          }
+          assignMenuToOrg(sendData).then(res => {
+            resolve(true)
+          }).catch(res => {
+            reject(false)
+          })
+        })
+        return true
+      })
+      Promise.all(finalArray).then(finalRes => {
+        commonFunc.Curd.SuccessTips('权限分配成功')
+        getAssignedAuthList(stateData.leftTree.curItemId)
+      }).catch(res => {
+        commonFunc.Curd.FailTips('个别请求失败')
+      })
     }
+
     // 删除权限
     const fDestroyAuth = () => {
       const checkedNodes = stateData.assignedAuthRef.getCheckedNodes()
+      if (checkedNodes.length < 1) {
+        commonFunc.Curd.FailTips("请勾选需要移出的权限节点")
+        return
+      }
       // 批量请求删除已分配权限
       let finalArray = []
       checkedNodes.every((item, index) => {

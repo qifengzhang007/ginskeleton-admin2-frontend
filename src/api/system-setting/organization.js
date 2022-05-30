@@ -4,7 +4,6 @@ export const list = (params) => {
     return axios.get('/organization/list', params)
 }
 
-
 export const create = (data) => {
     return axios.post('/organization/create', data)
 }

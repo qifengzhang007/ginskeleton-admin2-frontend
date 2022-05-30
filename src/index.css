@@ -76,8 +76,16 @@ span.el-dialog__title {
 }
 
 /*消息提示样式统一规定在右侧展示*/
-.el-message {
-    left: 90%
+.elMessageStyle {
+    left:calc(100% - 120px);
+    min-width: 240px;
+    text-align: center;
+}
+div.elMessageStyle.el-message--success{
+    border: solid  1px  rgba(66,160,66,0.5);
+}
+div.elMessageStyle.el-message--error{
+    border: solid  1px rgba(231, 18, 18, 0.5);
 }
 
 /*drawer 抽屉组件头高度统一减小*/
