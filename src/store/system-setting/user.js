@@ -1,6 +1,6 @@
 import {defineStore} from 'pinia'
 import commonFunc from '@/libs/common_func'
-import {clearCookie, clearLocalStorageAll, getServerIp, removeToken} from '@/libs/util'
+import {clearCookie, clearLocalStorageAll, removeToken} from '@/libs/util'
 import {useTabStore} from '@/store/system-setting/tabs'
 import config from '@/config/index'
 
@@ -60,7 +60,7 @@ export const useUserStore = defineStore(
                 this.user.info.user_name = userInfo.user_name
                 this.user.info.real_name = userInfo.real_name
                 this.user.info.avatar = userInfo.avatar
-                this.user.info.fullAvatarUrl = getServerIp() + userInfo.avatar
+                this.user.info.fullAvatarUrl = commonFunc.getServerIp() + userInfo.avatar
                 this.user.info.phone = userInfo.phone
                 this.user.info.login_times = userInfo.login_times
                 this.user.token.isValid = true

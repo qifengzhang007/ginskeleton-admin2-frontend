@@ -39,8 +39,9 @@ export default {
      * @description 出错设置
      */
     errorSetting: {
-        serverNotStartTips: '网络错误 - 可能是服务端未启动，请联系管理员',
+        serverNotStartTips: '可能是服务端未启动，请联系管理员',
         noAuthTips: '该接口没有权限访问，请联系管理员分配权限.',
+        tokenExpiredTips: '页面token授权已过期，请重新登陆.',
     },
     /**
      * @description 默认路由设置

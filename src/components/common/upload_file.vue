@@ -15,7 +15,7 @@
 
 <script>
 import {reactive, toRefs} from "vue";
-import {getApiUrlPre, getServerIp, getToken} from '@/libs/util'
+import {getToken} from '@/libs/util'
 import commonFunc from '@/libs/common_func'
 
 export default {
@@ -25,7 +25,7 @@ export default {
   emits: ['fUploadCallback'],
   setup(props, context) {
     const stateData = reactive({
-      actionUrl: getApiUrlPre() + '/upload/files',
+      actionUrl: commonFunc.getApiUrlPre() + '/upload/files',
       headers: {
         Authorization: 'Bearer ' + getToken()
       },
@@ -37,7 +37,7 @@ export default {
     // 上传成功后的回调
     const fSuccess = (res, uploadFile) => {
       if (res.code === 200) {
-        context.emit('fUploadCallback', res.data.path, getServerIp() + res.data.path)
+        context.emit('fUploadCallback', res.data.path, commonFunc.getServerIp() + res.data.path)
       } else {
         commonFunc.FailTips("文件上传失败：" + res.msg)
       }

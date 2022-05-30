@@ -1,23 +1,29 @@
 <template>
-  <img v-if="propImgShortPath.length>10" :src="imgServerPre+propImgShortPath" class="thumbnail" alt="图片缺失"/>
+  <el-image v-if="propImgShortPath.length>10" :src="imgServerPre+propImgShortPath" fit="contain" class="thumbnail">
+    <template #error>
+      <div class="image-slot">
+        <Picture style="width: 80px; color: lightgray" />
+      </div>
+    </template>
+  </el-image>
 </template>
 
 <script>
 import {reactive, toRefs} from 'vue'
-import {getServerIp} from '@/libs/util'
+import commonFunc from '@/libs/common_func'
 
 export default {
   name: "Image",
   props: {
     propImgShortPath: String,
   },
-  
+
   setup(props, context) {
     const {propImgShortPath} = toRefs(props)
     const stateData = reactive({
-      imgServerPre: getServerIp()
+      imgServerPre: commonFunc.getServerIp()
     })
-    
+
     return {
       ...toRefs(stateData),
       propImgShortPath

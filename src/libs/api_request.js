@@ -1,9 +1,9 @@
 import HttpRequest from '@/libs/axios'
-import {getApiUrlPre, getServerIp} from '@/libs/util'
+import commonFunc from '@/libs/common_func'
 import Qs from 'qs'
 
-const httpClient = new HttpRequest(getApiUrlPre())
-const captchaClient = new HttpRequest(getServerIp())
+const httpClient = new HttpRequest(commonFunc.getApiUrlPre())
+const captchaClient = new HttpRequest(commonFunc.getServerIp())
 
 export default {
   name: "axios",

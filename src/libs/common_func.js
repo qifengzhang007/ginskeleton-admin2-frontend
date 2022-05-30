@@ -1,55 +1,56 @@
 /*
 这里主要封装一些业务使用的公共函数
  */
-
+import config from '@/config/index'
 
 export default {
     name: 'commonFunc',
+// 获取当前环境名称：dev=开发环境；pro=编译后环境
+    getEnvName() {
+        return process.env.NODE_ENV === 'development' ? 'dev' : 'pro'
+    },
+    // 获取配置项中的服务器ip（也可能是域名）
+    getServerIp() {
+        return this.getEnvName() === 'dev' ? config.baseUrl.dev_server_ip : config.baseUrl.pro_server_ip
+    },
+    // 获取配置项中的接口服务前缀
+    getApiUrlPre() {
+        return this.getEnvName() === 'dev' ? config.baseUrl.dev_api_pre : config.baseUrl.pro_api_pre
+    },
+    // 获取浏览器宽度
     GetBrowserWidth() {
         return document.body.clientWidth
     },
+    // 获取浏览器高度
     GetBrowserHeight() {
         return document.body.clientHeight
     },
+    // 获取菜单点击后渲染的内容区域高度
     BodyHeight() {
         return (document.body.clientHeight - 110) + 'px'
     },
+    // 获取菜单点击后渲染的内容区域中 table 表格容器的高度
     TableHeight() {
         return (document.body.clientHeight - 185) + 'px'
     },
+    // 组件select options 使用
     SelectStatus: [
         {value: 1, label: '启用'},
         {value: 0, label: '禁用'}
     ],
+    // table数据中 status 为 0、1 映射为中文
     StatusMap: {
         0: '禁用',
         1: '启用'
     },
+    // curd操作时顶栏显示的操作名
     CurdActionName: {
         insert: '新增',
         update: '修改',
         delete: '删除'
     },
+    // 全局统一分页配置
     PageSizeOptions: [5, 20, 50, 100, 200, 500],
-    // 处理异步加载时树形数据格式
-    DelNullChildren(data, firstIsSelected) {
-        if (data && data.length > 0) {
-            return data.map((value, index) => {
-                if (index === 0) {
-                    value.selected = firstIsSelected
-                } else {
-                    value.selected = 0
-                }
-                if (value.children == null) {
-                    delete value.children
-                    delete value.loading
-                }
-                return value
-            })
-        } else {
-            return data
-        }
-    },
     // CURD 相关的公共函数
     Curd: {
         // 参数列表：
@@ -61,8 +62,8 @@ export default {
                     type: 'error',
                     grouping: true,
                     duration: 2000,
-                    center:true,
-                    customClass:"elMessageStyle"
+                    center: true,
+                    customClass: "elMessageStyle"
                 })
                 return false
             }
@@ -77,8 +78,8 @@ export default {
                     type: 'error',
                     grouping: true,
                     duration: 2000,
-                    center:true,
-                    customClass:"elMessageStyle"
+                    center: true,
+                    customClass: "elMessageStyle"
                 })
                 return false
             }
@@ -92,8 +93,8 @@ export default {
                     type: 'error',
                     grouping: true,
                     duration: 2000,
-                    center:true,
-                    customClass:"elMessageStyle"
+                    center: true,
+                    customClass: "elMessageStyle"
                 })
                 return false
             }
@@ -106,8 +107,8 @@ export default {
                     message: '请选中一条数据进行删除',
                     type: 'error',
                     duration: 2000,
-                    center:true,
-                    customClass:"elMessageStyle"
+                    center: true,
+                    customClass: "elMessageStyle"
                 })
                 return false
             }
@@ -119,8 +120,8 @@ export default {
                 type: 'success',
                 grouping: true,
                 duration: 1500,
-                center:true,
-                customClass:"elMessageStyle"
+                center: true,
+                customClass: "elMessageStyle"
             })
         },
         FailTips(msg = '失败') {
@@ -129,8 +130,8 @@ export default {
                 type: 'error',
                 grouping: true,
                 duration: 2000,
-                center:true,
-                customClass:"elMessageStyle"
+                center: true,
+                customClass: "elMessageStyle"
             })
         },
 

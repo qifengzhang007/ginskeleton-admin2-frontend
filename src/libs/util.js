@@ -38,7 +38,6 @@ export const clearLocalStorageAll = () => {
     window.localStorage.clear()
 }
 
-
 /*
 清除所有cookies
  */
@@ -52,26 +51,3 @@ export const clearCookie = () => {
         }
     }
 }
-
-
-/*
-获取环境名称：dev=开发环境；pro=生产环境
- */
-export const getEnvName = () => {
-    return process.env.NODE_ENV === 'development' ? 'dev' : 'pro'
-}
-
-/*
-获取服务器ip，自动适配环境
- */
-export const getServerIp = () => {
-    return getEnvName() === 'dev' ? config.baseUrl.dev_server_ip : config.baseUrl.pro_server_ip
-}
-
-/*
-获取 api 接口前缀
- */
-export const getApiUrlPre = () => {
-    return getEnvName() === 'dev' ? config.baseUrl.dev_api_pre : config.baseUrl.pro_api_pre
-}
-

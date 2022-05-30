@@ -2,5 +2,6 @@
 // We suggest you to commit this file into source control
 declare global {
   const ElMessage: typeof import('element-plus/es')['ElMessage']
+  const ElNotification: typeof import('element-plus/es')['ElNotification']
 }
 export {}

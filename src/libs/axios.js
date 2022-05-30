@@ -2,7 +2,6 @@ import axios from 'axios'
 import {clearLocalStorageAll, getToken, removeToken} from '@/libs/util'
 import config from '@/config/index'
 import router from '@/router/index'
-import {ElMessage} from 'element-plus'
 
 class HttpRequest {
     constructor(baseUrl = '') {
@@ -45,15 +44,20 @@ class HttpRequest {
                 case 0:
                     removeToken()
                     clearLocalStorageAll()
-                    ElMessage(config.errorSetting.serverNotStartTips)
-                    alert("错误：" + config.errorSetting.serverNotStartTips)
-                    if (!window.location.href.endsWith("login")) {
-                        router.push({name:config.defaultRoute.notLoginDefaultRouterName})
-                    }
+                    ElNotification({
+                        title: '网络通讯错误',
+                        message: config.errorSetting.serverNotStartTips,
+                        type: 'error',
+                    })
                     break
                 case 401:
                     removeToken()
                     clearLocalStorageAll()
+                    ElNotification({
+                        title: '页面授权过期',
+                        message: config.errorSetting.tokenExpiredTips,
+                        type: 'error',
+                    })
                     setTimeout(() => {
                         router.push({name:config.defaultRoute.notLoginDefaultRouterName})
                     }, 1000);

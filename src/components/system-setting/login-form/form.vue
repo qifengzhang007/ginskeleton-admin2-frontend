@@ -52,7 +52,8 @@ import config from '@/config/index'
 import {reactive, ref, toRefs} from "vue";
 import {useRouteStore} from "@/store/system-setting/route";
 import {useUserStore} from "@/store/system-setting/user";
-import {getServerIp, setToken} from '@/libs/util'
+import {setToken} from '@/libs/util'
+import commonFunc from '@/libs/common_func'
 import {useReloadStore} from "@/store/system-setting/reload";
 
 export default {
@@ -104,8 +105,8 @@ export default {
         if (res.status === 200) {
           stateData.captcha.captchaId = res.data.data.id
           stateData.captcha.captchaShortUrl = res.data.data.img_url
-          stateData.captcha.captchaFullUrl = getServerIp() + res.data.data.img_url
-          stateData.captcha.captchaRefreshUrl = getServerIp() + res.data.data.refresh
+          stateData.captcha.captchaFullUrl = commonFunc.getServerIp() + res.data.data.img_url
+          stateData.captcha.captchaRefreshUrl = commonFunc.getServerIp() + res.data.data.refresh
           stateData.form.captcha_id = stateData.captcha.captchaId
         }
       }).catch(errResponse => {
