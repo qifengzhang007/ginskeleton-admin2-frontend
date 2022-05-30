@@ -45,8 +45,6 @@ export const useTabStore = defineStore({
         @actionFrom 调用tab-add方法事件来源
         */
         add(menuName, menuId, menuIcon, menuPath, actionFrom = 'menu') {
-            console.log("tab-add 收到的参数：", menuName, menuId, menuIcon, menuPath, actionFrom)
-            console.log("this.tabs.curMenuItem.path:", this.tabs.curMenuItem.path)
             if (this.tabs.curMenuItem.path === menuPath || menuName === '') return
 
             // tepItem 变量用于后面的数组方法：push，不能直接使用this.tabs.curMenuItem ，否则永远只会添加成功最一条
