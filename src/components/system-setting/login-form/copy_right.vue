@@ -10,7 +10,7 @@ export default {
   name: 'CopyRight',
   setup() {
     const stateData = reactive({
-      copyright: config.copy_right
+      copyright: config.copyRight
     })
 
     return {

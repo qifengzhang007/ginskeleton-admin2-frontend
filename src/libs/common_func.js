@@ -11,11 +11,11 @@ export default {
     },
     // 获取配置项中的服务器ip（也可能是域名）
     getServerIp() {
-        return this.getEnvName() === 'dev' ? config.baseUrl.dev_server_ip : config.baseUrl.pro_server_ip
+        return this.getEnvName() === 'dev' ? config.baseUrl.devServerIp : config.baseUrl.proServerIp
     },
     // 获取配置项中的接口服务前缀
     getApiUrlPre() {
-        return this.getEnvName() === 'dev' ? config.baseUrl.dev_api_pre : config.baseUrl.pro_api_pre
+        return this.getEnvName() === 'dev' ? config.baseUrl.devApiPre : config.baseUrl.proApiPre
     },
     // 获取浏览器宽度
     GetBrowserWidth() {

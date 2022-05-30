@@ -73,8 +73,8 @@ export default {
         captchaTmpRefreshUrl: "",
       },
       form: {
-        user_name: config.login_params.user_name,
-        pass: config.login_params.pass,
+        user_name: config.loginParams.userName,
+        pass: config.loginParams.pass,
         captcha_id: "",
         captcha_value: ""
       },

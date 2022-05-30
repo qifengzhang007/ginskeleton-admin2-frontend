@@ -61,7 +61,6 @@ class HttpRequest {
                     }, 1000);
                     break
                 case 405:
-                    // ElMessage.error(config.errorSetting.noAuthTips)
                     commonFunc.Curd.FailTips(config.errorSetting.noAuthTips)
                     break
             }
