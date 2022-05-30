@@ -196,7 +196,6 @@ export default {
                 this.getNeedExpandTreeNodeForAssignedAuth(treeArray[i].children, resArray)
             }
             if (treeArray[i].expand !== undefined && treeArray[i].expand === 1) {
-              console.log(treeArray[i])
                 resArray.push(treeArray[i].system_menu_id)
             }
         }

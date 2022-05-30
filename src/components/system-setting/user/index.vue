@@ -222,17 +222,6 @@ export default {
 
 <style scoped>
 
-.tableList-area {
-  padding-left: 4px;
-}
-
-.toolBanner {
-  display: flex;
-  align-items: center;
-  padding: 2px 0 6px 2px;
-}
-
-
 .keyWordsInput {
   width: 150px;
   margin-left: 4px;

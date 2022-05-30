@@ -125,20 +125,46 @@ span.el-tree-node__label {
 }
 
 /*对话框紧凑化*/
-header.el-dialog__header{
+header.el-dialog__header {
     padding: 6px 6px
 }
+
 div.el-dialog__body {
     padding: 6px 10px;
     font-size: 13px;
 }
 
+/*table表格查询按钮层样式*/
+.tableList-area {
+    padding-left: 4px;
+}
+.toolBanner {
+    display: flex;
+    align-items: center;
+    padding: 2px 0 6px 2px;
+}
 
 /*分页样式全部底部居中*/
 .paging-area {
     margin: 6px 0 2px 0;
     text-align: center;
     vertical-align: middle;
+}
+
+/*权限分析、分配界面自定义图标样式*/
+.tree-node {
+    display: inline-block;
+    height: 25px;
+    line-height: 25px;
+    vertical-align: middle;
+}
+
+span.tree-node * {
+    vertical-align: middle;
+}
+
+.tree-node-title {
+    padding-left: 6px;
 }
 
 a {

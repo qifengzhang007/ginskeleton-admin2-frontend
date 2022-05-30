@@ -291,25 +291,10 @@ export default {
 
 <style scoped>
 
-.tableList-area {
-  padding-left: 4px;
-}
-
-.toolBanner {
-  display: flex;
-  align-items: center;
-  padding: 2px 0 6px 2px;
-}
-
-.paging-area {
-  margin: 2px 0;
-  text-align: center;
-  vertical-align: middle;
-}
-
 .keyWordsInput {
   width: 150px;
   margin-left: 4px;
   margin-right: 10px;
 }
+
 </style>

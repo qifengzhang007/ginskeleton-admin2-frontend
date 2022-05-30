@@ -35,8 +35,10 @@
 
           <Split :splitRatio="15">
             <template v-slot:left>
-              <div>
-                2个操作按钮
+              <div v-show="assignAuthEle.buttonWarp" :style="assignAuthEle.style">
+                <el-button type="primary" @click="fAssignAuth" icon="ArrowLeft" v-if="assignAuthEle.buttonList.insert">分配</el-button>
+                <div style="height: 10px"></div>
+                <el-button type="danger" @click="fDestroyAuth" icon="ArrowRight" v-if="assignAuthEle.buttonList.delete">删除</el-button>
               </div>
             </template>
 
@@ -118,6 +120,17 @@ export default {
         data: [], //全部权限列表（待分配权限列表）
         needExpandedKeys: [],  // 默认需要展开的菜单keys（id数组）
       },
+      assignAuthEle: {
+        buttonWarp: false,
+        buttonList: {
+          insert: 'insert',
+          delete: 'delete'
+        },
+        style: {
+          textAlign: 'center',
+          marginTop: parseInt((commonFunc.GetBrowserHeight() - 110)  / 2 -35 ) + 'px'
+        }
+      }
 
     })
 
@@ -143,7 +156,6 @@ export default {
       if (curItem.id > 0 && stateData.leftTree.curItemId !== curItem.id) {
         stateData.leftTree.curItemId = curItem.id
         stateData.leftTree.curItemTitle = curItem.title
-        console.log(stateData.leftTree.curItemId, stateData.leftTree.curItemTitle)
       }
     }
 
@@ -158,8 +170,8 @@ export default {
     //界面元素鉴权后显示
     const btnElementAuth = () => {
       view_button_list(router.currentRoute.value.meta.id).then(res => {
-        show_button(res.data.data, stateData.tableList.buttonList)
-        stateData.tableList.buttonGroupIsShow = true
+        show_button(res.data.data, stateData.assignAuthEle.buttonList)
+        stateData.assignAuthEle.buttonWarp = true
       }).catch(res => {
       })
     }
@@ -188,15 +200,26 @@ export default {
       })
     }
 
+    // 分配权限
+    const fAssignAuth = () => {
+
+    }
+    // 删除权限
+    const fDestroyAuth = () => {
+
+    }
+
     // 页面打开需要执行一次的函数
     getAllAuthList()
-
+    btnElementAuth()
 
     return {
       ...toRefs(stateData),
+
       fASyncData,
       fLeftTreeCurrentChange,
-
+      fAssignAuth,
+      fDestroyAuth,
     }
   }
 }

@@ -205,19 +205,4 @@ export default {
   color: #94989f;
 }
 
-.tree-node {
-  display: inline-block;
-  height: 25px;
-  line-height: 25px;
-  vertical-align: middle;
-}
-
-span.tree-node * {
-  vertical-align: middle;
-}
-
-.tree-node-title {
-  padding-left: 6px;
-}
-
 </style>
