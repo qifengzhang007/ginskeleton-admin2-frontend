@@ -23,3 +23,26 @@ export const show_button = (hasButtonList, curButtonList) => {
         })
     }
 }
+
+
+
+/*   ↓↓↓↓↓   权限分配、分析界面相关的接口     ↓↓↓↓↓   */
+
+// 为组织机构（部门、岗位）分配菜单、按钮权限
+export const assignMenuToOrg = (data) => {
+    return axios.post('/system_menu/assgin_to_org', data)
+}
+
+// 删除已分配权限给组织机构的菜单、按钮权限
+export const delMenuAuthFromOrg = (data) => {
+    return axios.post('/system_menu/del_auth_from_org', data)
+}
+
+// 待分配权限列表（全部可被用于分配的权限列表）
+export const getAllSystemMenuTree = () => {
+    return axios.get('/system_menu/all_list', {})
+}
+// 已分配给部门、岗位的菜单、按钮权限列表
+export const getAssignedSystemMenuTree = (orgPostId) => {
+    return axios.get('/system_menu/assgined_list', {org_post_id: orgPostId})
+}

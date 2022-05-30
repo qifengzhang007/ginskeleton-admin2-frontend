@@ -174,16 +174,30 @@ export default {
         return obj;
     },
 
-    // 处理权限分析界面界面需要展开的节点
+    // 计算权限分析界面需要展开的节点
     // @treeArray 用户已有权限的原始数据数组
     // @resArray 接受结果的数组，需要用户传入一个空数组接受结果
-    getNeedExpandTreeNode(treeArray = [], resArray = []) {
+    getNeedExpandTreeNodeForAnalysis(treeArray = [], resArray = []) {
         for (let i = 0; i < treeArray.length; i++) {
             if (treeArray[i].children) {
-                this.getNeedExpandTreeNode(treeArray[i].children, resArray)
+                this.getNeedExpandTreeNodeForAnalysis(treeArray[i].children, resArray)
             }
             if (treeArray[i].expand) {
                 resArray.push(treeArray[i].id)
+            }
+        }
+    },
+    // 计算已分配的权限列表界面需要展开的节点
+    // @treeArray 用户已有权限的原始数据数组
+    // @resArray 接受结果的数组，需要用户传入一个空数组接受结果
+    getNeedExpandTreeNodeForAssignedAuth(treeArray = [], resArray = []) {
+        for (let i = 0; i < treeArray.length; i++) {
+            if (treeArray[i].children) {
+                this.getNeedExpandTreeNodeForAssignedAuth(treeArray[i].children, resArray)
+            }
+            if (treeArray[i].expand !== undefined && treeArray[i].expand === 1) {
+              console.log(treeArray[i])
+                resArray.push(treeArray[i].system_menu_id)
             }
         }
     }

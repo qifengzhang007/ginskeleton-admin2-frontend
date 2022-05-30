@@ -158,7 +158,7 @@ export default {
     const showUserHasAuthList = (userId) => {
       has_auth_list(userId).then(res => {
         stateData.rightTree.data = res.data.data
-        commonFunc.getNeedExpandTreeNode(res.data.data, stateData.rightTree.needExpandedKeys)
+        commonFunc.getNeedExpandTreeNodeForAnalysis(res.data.data, stateData.rightTree.needExpandedKeys)
       }).catch(res => {
         stateData.rightTree.data = []
       })
