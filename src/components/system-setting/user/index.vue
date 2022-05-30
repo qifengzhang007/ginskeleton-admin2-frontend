@@ -22,6 +22,11 @@
         <el-table-column prop="phone" label="联系方式" sortable show-overflow-tooltip/>
         <el-table-column prop="login_times" label="登陆次数" sortable show-overflow-tooltip/>
         <el-table-column prop="last_login_ip" label="最近登陆ip" sortable show-overflow-tooltip/>
+        <el-table-column prop="avatar" label="头像">
+          <template #default="scope">
+            <Image width="40px" height="40px" :propImgShortPath="scope.row.avatar"/>
+          </template>
+        </el-table-column>
 
         <!--     ↑↑↑↑   业务字段  ↑↑↑↑   -->
         <el-table-column prop="status" label="状态" sortable show-overflow-tooltip :formatter="fFormatter"/>
@@ -51,7 +56,7 @@ import TableHeader1 from '@/components/common/table_header1.vue'
 import TableHeader2 from '@/components/common/table_header2.vue'
 import CreateEdit from './create_edit.vue'
 import Paging from '@/components/common/paging.vue'
-
+import Image from '@/components/common/image.vue'
 
 export default {
   name: "UserIndex",
@@ -61,6 +66,7 @@ export default {
     CreateEdit,
     DeleteDataDialog,
     Paging,
+    Image
   },
   setup() {
     const router = useRouter()
