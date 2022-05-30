@@ -39,11 +39,8 @@ class HttpRequest {
             const {data, status} = res
             return {data, status}
         }, error => {
-            // console.log("响应错误原始信息：：", error)
             switch (error.response.status) {
                 case 0:
-                    removeToken()
-                    clearLocalStorageAll()
                     ElNotification({
                         title: '网络通讯错误',
                         message: config.errorSetting.serverNotStartTips,
