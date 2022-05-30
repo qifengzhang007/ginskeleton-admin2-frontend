@@ -45,6 +45,8 @@ export const useTabStore = defineStore({
         @actionFrom 调用tab-add方法事件来源
         */
         add(menuName, menuId, menuIcon, menuPath, actionFrom = 'menu') {
+            console.log("tab-add 收到的参数：", menuName, menuId, menuIcon, menuPath, actionFrom)
+            console.log("this.tabs.curMenuItem.path:", this.tabs.curMenuItem.path)
             if (this.tabs.curMenuItem.path === menuPath || menuName === '') return
 
             // tepItem 变量用于后面的数组方法：push，不能直接使用this.tabs.curMenuItem ，否则永远只会添加成功最一条
@@ -96,7 +98,8 @@ export const useTabStore = defineStore({
                 this.tabs.curMenuItem.path = this.tabs.list[nextTabIndex].path
                 this.syncChangeRouter(this.tabs.curMenuItem.path, 'tab')
             } else {
-                this.syncChangeRouter('/blank_page', 'tab')
+                //关闭最后一个tab页签，直接调用全部关闭方法即可
+                this.closeAllTabs()
             }
         },
 
@@ -141,6 +144,7 @@ export const useTabStore = defineStore({
         */
         closeAllTabs() {
             this.tabs.list = []
+            commonFunc.objInit(this.tabs.curMenuItem)
             this.syncChangeRouter('/blank_page', 'tab')
         },
 
