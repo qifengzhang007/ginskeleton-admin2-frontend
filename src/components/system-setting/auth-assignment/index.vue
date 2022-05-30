@@ -12,7 +12,7 @@
         <template v-slot:left>
           <el-scrollbar :style="leftTreeContainerFixHeight" :height="leftTreeContainerFixHeight.height">
             <el-tree :expand-on-click-node="false" :highlight-current="true" node-key="system_menu_id" :current-node-key="1" show-checkbox
-                     :props="leftTree.props" :data="assignedAuth.data" :default-expanded-keys="assignedAuth.needExpandedKeys">
+                     ref="assignedAuthRef" :props="leftTree.props" :data="assignedAuth.data" :default-expanded-keys="assignedAuth.needExpandedKeys">
               <template #default="{ node, data }">
           <span class="tree-node">
             <template v-if="data.node_type==='dept'">
@@ -45,7 +45,7 @@
             <template v-slot:right>
               <el-scrollbar :style="leftTreeContainerFixHeight" :height="leftTreeContainerFixHeight.height">
                 <el-tree :expand-on-click-node="false" :highlight-current="true" node-key="system_menu_id" :current-node-key="1" show-checkbox
-                         :props="leftTree.props" :data="allAuth.data" :default-expanded-keys="allAuth.needExpandedKeys">
+                         ref="allAuthRef" :props="leftTree.props" :data="allAuth.data" :default-expanded-keys="allAuth.needExpandedKeys">
                   <template #default="{ node, data }">
           <span class="tree-node">
             <template v-if="data.node_type==='dept'">
@@ -85,6 +85,7 @@ import {getAllSystemMenuTree, getAssignedSystemMenuTree, show_button, view_butto
 import Paging from '@/components/common/paging.vue'
 import {useRouter} from "vue-router";
 import {getSubListByFid} from '@/api/system-setting/organization'
+import {assignMenuToOrg, delMenuAuthFromOrg} from "../../../api/system-setting/auth";
 
 export default {
   name: "AuthAssignmentIndex",
@@ -112,10 +113,12 @@ export default {
         curItemTitle: '',  // 左侧树当前行的标题
         data: [],
       },
+      assignedAuthRef: {},
       assignedAuth: {
         data: [],   //已分配的权限列表
         needExpandedKeys: [],  // 默认需要展开的菜单keys（id数组）
       },
+      allAuthRef: {},
       allAuth: {
         data: [], //全部权限列表（待分配权限列表）
         needExpandedKeys: [],  // 默认需要展开的菜单keys（id数组）
@@ -128,7 +131,7 @@ export default {
         },
         style: {
           textAlign: 'center',
-          marginTop: parseInt((commonFunc.GetBrowserHeight() - 110)  / 2 -35 ) + 'px'
+          marginTop: parseInt((commonFunc.GetBrowserHeight() - 110) / 2 - 35) + 'px'
         }
       }
 
@@ -202,10 +205,61 @@ export default {
 
     // 分配权限
     const fAssignAuth = () => {
-
+      const checkedNodes = stateData.allAuthRef.getCheckedNodes()
+      if (checkedNodes.length > 0) {
+        // 涉及到多个接口请求，使用promise，全部请求结束做统一提示
+        let finalArray = []
+        checkedNodes.every((item, index) => {
+          finalArray[index] = new Promise((resolve, reject) => {
+            const sendData = {
+              org_post_id: stateData.leftTree.curItemId,
+              system_menu_id: item.system_menu_id,
+              system_menu_fid: item.system_menu_fid,
+              button_id: item.button_id,
+              node_type: item.node_type
+            }
+            assignMenuToOrg(sendData).then(res => {
+              resolve(true)
+            }).catch(res => {
+              reject(false)
+            })
+          })
+          return true
+        })
+        Promise.all(finalArray).then(finalRes => {
+          commonFunc.Curd.SuccessTips('权限分配成功')
+          getAssignedAuthList(stateData.leftTree.curItemId)
+        }).catch(res => {
+          commonFunc.Curd.FailTips('个别请求失败')
+        })
+      }
     }
     // 删除权限
     const fDestroyAuth = () => {
+      const checkedNodes = stateData.assignedAuthRef.getCheckedNodes()
+      // 批量请求删除已分配权限
+      let finalArray = []
+      checkedNodes.every((item, index) => {
+        finalArray[index] = new Promise((resolve, reject) => {
+          const sendData = {
+            post_mount_has_menu_id: item.post_mount_has_menu_id,
+            post_mount_has_menu_button_id: item.post_mount_has_menu_button_id,
+            node_type: item.node_type
+          }
+          delMenuAuthFromOrg(sendData).then(res => {
+            resolve(true)
+          }).catch(res => {
+            reject(false)
+          })
+        })
+        return true
+      })
+      Promise.all(finalArray).then(finalRes => {
+        commonFunc.Curd.SuccessTips('权限移出成功')
+        getAssignedAuthList(stateData.leftTree.curItemId)
+      }).catch(res => {
+        commonFunc.Curd.FailTips('个别请求失败')
+      })
 
     }
 
