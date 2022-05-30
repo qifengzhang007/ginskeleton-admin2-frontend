@@ -3,7 +3,7 @@
 
     <template v-slot:left>
       <el-scrollbar :style="leftTreeContainerFixHeight" :height="leftTreeContainerFixHeight.height">
-        <el-tree :expand-on-click-node="false" node-key="id" :current-node-key="1" :highlight-current="true"
+        <el-tree :expand-on-click-node="false" node-key="id" :current-node-key="1" :highlight-current="true"  empty-text="暂无数据"
                  :props="leftTree.props" :default-expanded-keys="[1]" :load="fASyncData" lazy @node-click="fLeftTreeCurrentChange"/>
       </el-scrollbar>
     </template>
