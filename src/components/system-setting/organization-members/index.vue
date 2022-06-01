@@ -3,8 +3,9 @@
 
     <template v-slot:left>
       <el-scrollbar :style="leftTreeContainerFixHeight" :height="leftTreeContainerFixHeight.height">
-        <el-tree :expand-on-click-node="false" node-key="id"  :default-expanded-keys="[1]"  empty-text="暂无数据"
-                 :props="leftTree.props" :load="fASyncData" lazy :highlight-current="true" @node-click="fLeftTreeCurrentChange"/>
+        <el-tree :expand-on-click-node="false" node-key="id" :default-expanded-keys="[1]" empty-text="暂无数据" ref="leftTreeRef" :current-node-key="leftTree.curNodeKey"
+                 :props="leftTree.props" :load="fASyncData" lazy :highlight-current="true" @node-click="fLeftTreeCurrentChange">
+        </el-tree>
       </el-scrollbar>
 
     </template>
@@ -87,6 +88,7 @@ export default {
         height: (commonFunc.GetBrowserHeight() - 115) + 'px',
         marginTop: "6px",
       },
+      leftTreeRef: {},
       leftTree: {
         props: {
           label: 'title',
@@ -95,6 +97,9 @@ export default {
         },
         curItemId: 0, // 左侧树当前行的id
         curItemTitle: '',  // 左侧树当前行的标题
+        curNodeKey: 0,
+        // curItemBgIsShow: false,
+        // tmpId: 0,
         data: [],
       },
       // 右侧table相关的变量
@@ -158,7 +163,7 @@ export default {
       getSubListByFid(curNodeId).then(res => {
         stateData.leftTree.data = res.data.data
         if (node.level === 0 && stateData.leftTree.data.length > 0) {
-          stateData.leftTree.curItemId =0
+          stateData.leftTree.curItemId = 0
           stateData.leftTree.curItemTitle = ''
           stateData.tableList.searchKeyWords.org_post_id = 0
           fSearch()
@@ -172,12 +177,31 @@ export default {
     }
     // 树形节点选中、改变事件
     const fLeftTreeCurrentChange = (curItem, node, event) => {
+// console.log(curItem)
+// console.log( stateData.leftTreeRef)
+// stateData.leftTreeRef.setCheckedNodes([{id:0,title:""}])
+// stateData.leftTreeRef.setCurrentNode(null)
+// stateData.leftTreeRef.setChecked(6,true,false)
+// if(curItem.id===stateData.leftTree.curNodeKey){
+//
+// }
+//       stateData.leftTree.tmpId =stateData.leftTree.tmpId=== curItem.id?0:curItem.id
+//       // console.log("stateData.leftTree.curNodeKey", stateData.leftTree.curNodeKey)
+//       // stateData.leftTree.curNodeKey = 6
+//       return
       if (curItem.id > 0 && stateData.leftTree.curItemId !== curItem.id) {
         stateData.leftTree.curItemId = curItem.id
         stateData.leftTree.curItemTitle = curItem.title
         stateData.tableList.searchKeyWords.org_post_id = stateData.leftTree.curItemId
       }
     }
+
+    // const customNodeClass = (data, node) => {
+    //   if (data.isPenultimate) {
+    //     return 'is-penultimate'
+    //   }
+    //   return null
+    // }
 
     watch(() => stateData.leftTree.curItemId, (newItemId, oldItemId) => {
       if (newItemId > 0 && oldItemId !== undefined) {

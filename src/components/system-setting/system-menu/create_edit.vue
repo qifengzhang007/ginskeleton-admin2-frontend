@@ -66,6 +66,10 @@
             </el-col>
           </el-row>
 
+          菜单对应页面元素
+          <ChildrenTable :propChildrenTable="childrenTable"/>
+
+
         </el-form>
       </template>
 
@@ -85,14 +89,14 @@
 import {reactive, toRefs} from "vue";
 import commonFunc from '@/libs/common_func'
 import {create, edit} from '@/api/system-setting/organization'
-// import SelectOrgPost from '@/components/common/select_org_post.vue'
+import ChildrenTable from '@/components/common/children_table.vue'
 import SelectSysMenu from '@/components/common/select_sys_menu.vue'
 
 export default {
   name: "CreateEdit",
   components: {
-    // SelectOrgPost,
-    SelectSysMenu
+    SelectSysMenu,
+    ChildrenTable
   },
   props: {
     propCreateEdit: Object,
@@ -114,6 +118,116 @@ export default {
         title: "选择上级节点",
         mode: 'one'  // 对于树形列表次参数无效
       },
+
+      // 子表相关的配置
+      childrenTable: {
+        allRows: [], // 结果存储数组
+        deletedIds: '', // 子表 被删除的id存储数组, 如果需要文本格式，deletedIds.toString() 可以快速转换
+        //定义一行(条)记录所需要的字段
+        rowField: {
+          id: 0,
+          fr_auth_system_menu_id: 0,
+          fr_auth_button_cn_en_id: 0,
+          button_name: '',
+          request_url: '/',
+          request_method: "*",
+          remark: ''
+        },
+        // 定义表的一行需要展示的全部字段格式
+        rowFieldFormat: [
+          {
+            name: '按钮名称',//表单名称
+            type: "dialog",//类型{弹出框}
+            field: 'button_name',//字段名
+            componentPath: './select_button.vue',  // 只能使用相对路径，基准路径就是 ChildrenTable 子表的目录
+            width: 6,//宽度,参考 elementPlus 的row、col布局，一个  row 由24个column构成
+          //  modalWidth: '900px', // 弹出框宽度
+            //字段与弹出框组件字段的映射
+            map: {
+              fr_auth_button_cn_en_id: 'id',
+              button_name: 'cn_name',
+              request_method: 'allow_method'
+            }
+          },
+          {
+            name: '接口地址',
+            type: "string",
+            field: 'request_url',
+            width: 6,
+          },
+          {
+            name: '接口允许请求方式',
+            type: "selectOption",
+            field: 'request_method',
+            width: 6,
+            options: [
+              {
+                label: "*",
+                value: "*",
+              },
+              {
+                label: "GET",
+                value: "GET",
+              },
+              {
+                label: "POST",
+                value: "POST",
+              },
+            ]
+          },
+          {
+            name: '备注',
+            type: "string",
+            field: 'remark',
+            width: 4,
+          },
+          {
+            name: '删除',
+            type: "action",
+            field: 'action',
+            width: 2,
+          },
+        ],
+        // 新增界面可以设置默认填充的值
+        defaultListForCreate: [
+          {
+            id: 0,
+            fr_auth_system_menu_id: 0,
+            fr_auth_button_cn_en_id: 1,
+            button_name: '新增',
+            request_url: '/',
+            request_method: "POST",
+            remark: ''
+          },
+          {
+            id: 0,
+            fr_auth_system_menu_id: 0,
+            fr_auth_button_cn_en_id: 2,
+            button_name: '删除',
+            request_url: '/',
+            request_method: "POST",
+            remark: ''
+          },
+          {
+            id: 0,
+            fr_auth_system_menu_id: 0,
+            fr_auth_button_cn_en_id: 3,
+            button_name: '修改',
+            request_url: '/',
+            request_method: "POST",
+            remark: ''
+          },
+          {
+            id: 0,
+            fr_auth_system_menu_id: 0,
+            fr_auth_button_cn_en_id: 4,
+            button_name: '查询',
+            request_url: '/',
+            request_method: "GET",
+            remark: ''
+          }
+        ]
+      }
     })
 
     // 文件上传组件相关的属性传递

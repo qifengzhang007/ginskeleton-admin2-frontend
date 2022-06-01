@@ -1,5 +1,5 @@
 <template>
-  <el-dialog v-model="propSelect.isShow" :title="propSelect.title" width="450px" draggable top="15vh" @close="fClose">
+  <el-dialog v-model="propSelect.isShow"  :title="propSelect.title.length>1?propSelect.title:'选择省份城市'"  width="450px" draggable top="15vh" @close="fClose">
     <template #header>
       <div>
         <el-icon>
@@ -29,9 +29,9 @@ export default {
   name: 'SelectProvinceCity',
   components: {},
   props: {
-    propSelect: Object,
+    propSelect: Object,      // 属性名必须固定为： propSelect
   },
-  emits: ['fSelectedCallback'],
+  emits: ['fSelectedCallback'],      //向上回调函数名必须固定为：fSelectedCallback
   setup(props, context) {
     const {propSelect} = toRefs(props)
 

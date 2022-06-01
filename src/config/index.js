@@ -36,7 +36,7 @@ export default {
      */
     dataStore: {
         // 存储cookie、localStorage 时，key 的前缀，
-        keyPre: "K1_",
+        keyPre: "K1_",  // 建议不同的项目使用项目编号作为前缀
         userTokenKey: "UserToken",   // 用户登录后token存储在cookie的键
         tokenStoreToCookieExpiration: 8,  //  token存储到cookie的默认有效期（单位：小时）
     },

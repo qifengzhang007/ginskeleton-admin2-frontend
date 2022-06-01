@@ -1,19 +1,19 @@
 <template>
-  <el-dialog v-model="propSelect.isShow" :title="propSelect.title.length>1?propSelect.title:'选择用户'" width="56%" draggable top="15vh" @close="fClose">
+  <el-dialog v-model="propSelect.isShow" :title="propSelect.title.length>1?propSelect.title:'选择按钮'" width="56%" draggable top="15vh" @close="fClose">
     <template #header>
       <div>
         <el-icon>
           <Search color="#606060FF"/>
         </el-icon>
-        {{ propSelect.title.length > 1 ? propSelect.title : '选择用户' }}
+        {{ propSelect.title.length > 1 ? propSelect.title : '选择按钮' }}
       </div>
     </template>
     <div>
 
       <div class="tableList-area">
         <div class="toolBanner">
-          用户名、姓名:
-          <el-input v-model="tableList.searchKeyWords.user_name" placeholder="关键词" class="keyWordsInput"/>
+          按钮名称:
+          <el-input v-model="tableList.searchKeyWords.button_name" placeholder="关键词" class="keyWordsInput"/>
           <el-button type="primary" @click="fSearch" icon="Search">查询</el-button>
         </div>
 
@@ -21,10 +21,11 @@
           <TableHeader1/>
           <!--    ↓↓↓↓   业务字段  ↓↓↓↓   -->
 
-          <el-table-column prop="user_name" label="用户名" sortable show-overflow-tooltip/>
-          <el-table-column prop="real_name" label="姓名" sortable show-overflow-tooltip/>
-          <el-table-column prop="phone" label="联系方式" sortable show-overflow-tooltip/>
-          <!--          <el-table-column prop="status" label="状态" sortable show-overflow-tooltip :formatter="fFormatter"/>-->
+          <el-table-column prop="cn_name" label="按钮名" sortable show-overflow-tooltip/>
+          <el-table-column prop="en_name" label="英文编码" sortable show-overflow-tooltip/>
+          <el-table-column prop="color" label="按钮颜色" sortable show-overflow-tooltip/>
+          <el-table-column prop="allow_method" label="允许请求方式" sortable show-overflow-tooltip/>
+
           <!--     ↑↑↑↑   业务字段  ↑↑↑↑   -->
 
           <TableHeader2/>
@@ -50,10 +51,10 @@ import {reactive, toRefs} from 'vue'
 import TableHeader1 from './table_header1.vue'
 import TableHeader2 from './table_header2.vue'
 import Paging from '@/components/common/paging.vue'
-import {list} from '@/api/system-setting/user'
+import {list} from  '@/api/system-setting/button'
 
 export default {
-  name: 'SelectUser',
+  name: 'SelectButton',
   components: {
     TableHeader1,
     TableHeader2,
@@ -73,7 +74,7 @@ export default {
       tableList: {
         // 查询相关的关键词
         searchKeyWords: {
-          user_name: '',
+          button_name: '',
           page: 1,
           limit: 20
         },
@@ -81,12 +82,6 @@ export default {
         data: [],
         buttonGroupIsShow: false,
         // 本页面可展示的按钮列表全部先定义
-        buttonList: {
-          insert: 'insert',
-          delete: 'delete',
-          update: 'update',
-          select: 'select',
-        },
         style: {
           width: '100%',
           height: '450px'
