@@ -64,7 +64,7 @@ li .is-active {
     background-color: #2d8cf0 !important;
     color: white;
 }
-/*菜单热点背景颜色*/
+/*菜单热点背景颜色  */
 li.el-menu-item:hover{
     background-color: #38404a;
 }
