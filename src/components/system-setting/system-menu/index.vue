@@ -3,7 +3,7 @@
 
     <template v-slot:left>
       <el-scrollbar :style="leftTreeContainerFixHeight" :height="leftTreeContainerFixHeight.height">
-        <el-tree :expand-on-click-node="false" node-key="id" :current-node-key="0" :default-expanded-keys="[0]" empty-text="暂无数据"
+        <el-tree :expand-on-click-node="false" node-key="id" :current-node-key="0" empty-text="暂无数据" :default-expanded-keys="[0]"
                  :props="leftTree.props" :load="fASyncData" lazy :highlight-current="true" ref="leftTreeRef" @node-click="fLeftTreeCurrentChange"/>
       </el-scrollbar>
     </template>
@@ -171,22 +171,23 @@ export default {
               children: []
             }]
         )
+      } else{
+        // 左侧树鼠标点击箭头加载下一级
+        getSubListByFid(curNodeId).then(res => {
+          stateData.leftTree.data = res.data.data
+          if (node.level === 0 && stateData.leftTree.data.length > 0) {
+            stateData.leftTree.curItemIsLeaf = (stateData.leftTree.data[0]).is_leaf
+            stateData.leftTree.curItemId = (stateData.leftTree.data[0]).id
+            stateData.leftTree.curItemTitle = (stateData.leftTree.data[0]).title
+            stateData.tableList.searchKeyWords.fid = stateData.leftTree.curItemId
+          }
+          return resolve(
+              stateData.leftTree.data
+          )
+        }).catch(errRes => {
+          return resolve([])
+        })
       }
-      // 左侧树鼠标点击箭头加载下一级
-      getSubListByFid(curNodeId).then(res => {
-        stateData.leftTree.data = res.data.data
-        if (node.level === 0 && stateData.leftTree.data.length > 0) {
-          stateData.leftTree.curItemIsLeaf = (stateData.leftTree.data[0]).is_leaf
-          stateData.leftTree.curItemId = (stateData.leftTree.data[0]).id
-          stateData.leftTree.curItemTitle = (stateData.leftTree.data[0]).title
-          stateData.tableList.searchKeyWords.fid = stateData.leftTree.curItemId
-        }
-        return resolve(
-            stateData.leftTree.data
-        )
-      }).catch(errRes => {
-        return resolve([])
-      })
     }
     // 树形节点选中、改变事件
     const fLeftTreeCurrentChange = (curItem, node, event) => {
@@ -198,10 +199,10 @@ export default {
       }
     }
     // 监听左侧树选中节点值改变后触发右侧数据刷新
-    watch(() => stateData.leftTree, (newItem, oldItem) => {
-      if (newItem.curItemIsLeaf === false && newItem.curItemId >= 0 && oldItem !== undefined) {
+    watch(() => stateData.leftTree.curItemId, (newItemId, oldItemId) => {
+      if (stateData.leftTree.curItemIsLeaf === false && newItemId >= 0 && oldItemId !== undefined) {
         fSearch()
-      } else if (newItem.curItemIsLeaf) {
+      } else if (stateData.leftTree.curItemIsLeaf) {
         stateData.tableList.data = []
       }
     }, {deep: true, immediate: true})
