@@ -6,6 +6,7 @@ export const useMenuStore = defineStore({
     state: () => {
         return {
             menu: {
+                defaultActive: '/',
                 // 当前菜单,该值为默认值
                 currentMenu: {
                     id: '',  // 最新打开的菜单id
@@ -35,8 +36,27 @@ export const useMenuStore = defineStore({
         */
         initMenuList(menuList) {
             this.menu.list = menuList
+            this.menu.defaultActive = this.getDefaultActiveMenuIndex(this.menu.list)
         },
 
+        /*
+        *  计算默认激活的菜单index，也就是路由 path
+        *  菜单最大计算到三级深度即可，
+        */
+        getDefaultActiveMenuIndex(menuList = [], defaultPath = '') {
+
+            let tmpPath = '/'
+            if (menuList.length > 0) {
+                tmpPath += menuList[0].name + '/'
+                if (menuList[0].children.length > 0) {
+                    tmpPath += menuList[0].children[0].name + '/'
+                    if (menuList[0].children[0].children.length > 0) {
+                        tmpPath += menuList[0].children[0].children[0].name + '/'
+                    }
+                }
+            }
+            return tmpPath.substring(0, tmpPath.length - 1)
+        },
         /*
              独立初始化 menuNavPathListArray
          */
@@ -44,6 +64,7 @@ export const useMenuStore = defineStore({
             this.tmpPath = ''
             this.menu.menuNavPathListArray = []
         },
+
         /*
         递归获取菜单导航路径链条
         @menuId 菜单id
@@ -84,7 +105,6 @@ export const useMenuStore = defineStore({
             if (result) {
                 this.menu.menuNavPathList.set(menuId, result.reverse())
             }
-
         },
 
         /*

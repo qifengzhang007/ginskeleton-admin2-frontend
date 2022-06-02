@@ -14,7 +14,7 @@
           active-text-color="#fefefe"
           :unique-opened="true"
           :collapse-transition="false"
-          default-active='/'
+          :default-active='menuStore.menu.defaultActive'
           class="el-menu-vertical-demo"
       >
         <template v-for="(item,index)  in menuStore.menu.list">
@@ -96,7 +96,6 @@ export default {
       //1.数据（变量结构之后导出
       ...toRefs(sateData),
       config,
-      //2.函数列表
       menuStore,
       headerBannerStore
     }
