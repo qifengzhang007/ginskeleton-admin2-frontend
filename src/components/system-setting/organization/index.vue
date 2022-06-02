@@ -174,10 +174,10 @@ export default {
       }
     }
     // 监听左侧树选中节点值改变后触发右侧数据刷新
-    watch(() => stateData.leftTree, (newItem, oldItem) => {
-      if (newItem.curItemIsLeaf === false && newItem.curItemId >= 0 && oldItem !== undefined) {
+    watch(() => stateData.leftTree.curItemId, (newItemId, oldItemId) => {
+      if (stateData.leftTree.curItemIsLeaf === false && newItemId >= 0 && oldItemId !== undefined) {
         fSearch()
-      } else if (newItem.curItemIsLeaf) {
+      } else if (stateData.leftTree.curItemIsLeaf) {
         stateData.tableList.data = []
       }
     }, {deep: true, immediate: true})
