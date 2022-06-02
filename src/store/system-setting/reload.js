@@ -50,7 +50,10 @@ export const useReloadStore = defineStore(
                             const routeList = routerStore.initRouteList(res.data.data.menus)
                             //3.初始化菜单列表
                             menuStore.initMenuList(res.data.data.menus)
-                           router.addRoute(routerStore.homeRouter)
+                            if (window.location.href.indexOf("blank_page") !== -1) {
+                                menuStore.setDefaultActiveMenuIndex()
+                            }
+                            router.addRoute(routerStore.homeRouter)
                             routeList.map(item => {
                                 router.addRoute(item)
                                 return true

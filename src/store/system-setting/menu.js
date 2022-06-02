@@ -36,15 +36,13 @@ export const useMenuStore = defineStore({
         */
         initMenuList(menuList) {
             this.menu.list = menuList
-            this.menu.defaultActive = this.getDefaultActiveMenuIndex(this.menu.list)
         },
 
         /*
-        *  计算默认激活的菜单index，也就是路由 path
+        * 设置默认激活的菜单index，也就是路由 path
         *  菜单最大计算到三级深度即可，
         */
-        getDefaultActiveMenuIndex(menuList = [], defaultPath = '') {
-
+        setDefaultActiveMenuIndex(menuList = [], defaultPath = '') {
             let tmpPath = '/'
             if (menuList.length > 0) {
                 tmpPath += menuList[0].name + '/'
@@ -55,7 +53,7 @@ export const useMenuStore = defineStore({
                     }
                 }
             }
-            return tmpPath.substring(0, tmpPath.length - 1)
+            this.menu.defaultActive = tmpPath.substring(0, tmpPath.length - 1)
         },
         /*
              独立初始化 menuNavPathListArray
