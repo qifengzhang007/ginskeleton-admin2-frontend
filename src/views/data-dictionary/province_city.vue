@@ -2,15 +2,9 @@
   <ProvinceCityIndex/>
 </template>
 
-<script>
+<script setup>
 import ProvinceCityIndex from '@/components/data-dictionary/province-city/index.vue'
 
-export default {
-  name: "ProvinceCity",
-  components: {
-    ProvinceCityIndex
-  }
-}
 </script>
 
 <style scoped>

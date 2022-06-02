@@ -8,16 +8,7 @@
 </template>
 
 
-<script>
-export default {
-  name: 'Index',
-  components: {},
-  setup() {
-
-
-    return {}
-  }
-}
+<script setup>
 
 </script>
 
