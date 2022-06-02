@@ -86,9 +86,9 @@
 </template>
 
 <script>
-import {reactive, toRefs} from "vue";
+import {reactive, toRefs, watch} from "vue";
 import commonFunc from '@/libs/common_func'
-import {create, edit} from '@/api/system-setting/organization'
+import {create_json, edit_json} from '@/api/system-setting/system_menu'
 import ChildrenTable from '@/components/common/children_table.vue'
 import SelectSysMenu from '@/components/common/select_sys_menu.vue'
 
@@ -111,7 +111,7 @@ export default {
       rules: {
         name: [{type: 'string', required: true, message: '菜单对应的路由名称为必填项', trigger: 'blur'}],
         title: [{type: 'string', required: true, message: '菜单名称为必填项', trigger: 'blur'}],
-        sort: [{type: 'number', min: 1, required: true, message: '排序字段为必填项', trigger: 'blur'}],
+        sort: [{type: 'integer', min: 1, required: true, message: '排序字段为必填项', trigger: 'blur'}],
       },
       propSelectSysMenu: {
         isShow: false,
@@ -121,8 +121,9 @@ export default {
 
       // 子表相关的配置
       childrenTable: {
+        action: propCreateEdit.value.curdFormData.action,
         allRows: [], // 结果存储数组
-        deletedIds: '', // 子表 被删除的id存储数组, 如果需要文本格式，deletedIds.toString() 可以快速转换
+        button_delete: '', // 子表 被删除的id存储数组, 如果需要文本格式，button_delete.toString() 可以快速转换
         //定义一行(条)记录所需要的字段
         rowField: {
           id: 0,
@@ -131,6 +132,7 @@ export default {
           button_name: '',
           request_url: '/',
           request_method: "*",
+          short_path: "",
           remark: ''
         },
         // 定义表的一行需要展示的全部字段格式
@@ -141,7 +143,7 @@ export default {
             field: 'button_name',//字段名
             componentPath: './select_button.vue',  // 只能使用相对路径，基准路径就是 ChildrenTable 子表的目录
             width: 6,//宽度,参考 elementPlus 的row、col布局，一个  row 由24个column构成
-          //  modalWidth: '900px', // 弹出框宽度
+            //  modalWidth: '900px', // 弹出框宽度
             //字段与弹出框组件字段的映射
             map: {
               fr_auth_button_cn_en_id: 'id',
@@ -181,6 +183,12 @@ export default {
             field: 'remark',
             width: 4,
           },
+          // {
+          //   name: '上传文件',
+          //   type: "upload",
+          //   field: 'short_path',
+          //   width: 2,
+          // },
           {
             name: '删除',
             type: "action",
@@ -197,7 +205,8 @@ export default {
             button_name: '新增',
             request_url: '/',
             request_method: "POST",
-            remark: ''
+            remark: '',
+            // short_path: "",
           },
           {
             id: 0,
@@ -206,7 +215,8 @@ export default {
             button_name: '删除',
             request_url: '/',
             request_method: "POST",
-            remark: ''
+            remark: '',
+            // short_path: "",
           },
           {
             id: 0,
@@ -215,7 +225,8 @@ export default {
             button_name: '修改',
             request_url: '/',
             request_method: "POST",
-            remark: ''
+            remark: '',
+            // short_path: "",
           },
           {
             id: 0,
@@ -224,11 +235,20 @@ export default {
             button_name: '查询',
             request_url: '/',
             request_method: "GET",
-            remark: ''
+            remark: '',
+            // short_path: "",
           }
         ]
       }
     })
+
+    // 监听表单属性变量变化，修改界面如果子表有数据，需要填充子表
+    watch(() => propCreateEdit.value.curdFormData, (newCurdFormData, oldCurdFormData) => {
+      stateData.childrenTable.action = newCurdFormData.action
+      if (newCurdFormData.action === 'update' && stateData.childrenTable.allRows.length === 0) {
+        stateData.childrenTable.allRows = newCurdFormData.button_list
+      }
+    }, {deep: true, immediate: true})
 
     // 文件上传组件相关的属性传递
     //@shortSavePath 文件上传以后返回的短路径，例如：/public/storage/uploaded/2022_05/0ed83dee0302f84e345674ece32d3cb5.png
@@ -242,6 +262,9 @@ export default {
       // 关闭按钮销毁变量
       commonFunc.objInit(propCreateEdit.value.curdFormData)
       commonFunc.objInit(propCreateEdit.value.curdFormData)
+
+      stateData.childrenTable.allRows = []
+      stateData.childrenTable.button_delete = ''
       done()
     }
 
@@ -262,9 +285,13 @@ export default {
       // 表单参数校验完成后提交
       stateData.formRef.validate((valid, fields) => {
         if (valid) {
+          // 主表单参数校验完成后，继续追加子表参数
+          propCreateEdit.value.curdFormData.button_list = stateData.childrenTable.allRows
+          propCreateEdit.value.curdFormData.button_delete = stateData.childrenTable.button_delete
+
           switch (propCreateEdit.value.curdFormData.action) {
             case 'insert':
-              create(propCreateEdit.value.curdFormData).then(res => {
+              create_json(propCreateEdit.value.curdFormData).then(res => {
                 if (res.data.code === 200) {
                   commonFunc.Curd.SuccessTips(res.data.msg)
                   // 刷新主界面数据
@@ -275,7 +302,7 @@ export default {
               })
               break;
             case 'update':
-              edit(propCreateEdit.value.curdFormData).then(res => {
+              edit_json(propCreateEdit.value.curdFormData).then(res => {
                 if (res.data.code === 200) {
                   commonFunc.Curd.SuccessTips(res.data.msg)
                   // 刷新主界面数据

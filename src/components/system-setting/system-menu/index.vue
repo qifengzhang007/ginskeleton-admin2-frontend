@@ -3,7 +3,7 @@
 
     <template v-slot:left>
       <el-scrollbar :style="leftTreeContainerFixHeight" :height="leftTreeContainerFixHeight.height">
-        <el-tree :expand-on-click-node="false" node-key="id" :current-node-key="0" :default-expanded-keys="[0]"  empty-text="暂无数据"
+        <el-tree :expand-on-click-node="false" node-key="id" :current-node-key="0" :default-expanded-keys="[0]" empty-text="暂无数据"
                  :props="leftTree.props" :load="fASyncData" lazy :highlight-current="true" ref="leftTreeRef" @node-click="fLeftTreeCurrentChange"/>
       </el-scrollbar>
     </template>
@@ -63,7 +63,7 @@ import Paging from '@/components/common/paging.vue'
 import {useRouter} from "vue-router";
 import TableHeader1 from '@/components/common/table_header1.vue'
 import TableHeader2 from '@/components/common/table_header2.vue'
-import {destroy, getSubListByFid, list} from '@/api/system-setting/system_menu'
+import {destroy, getSubListByFid, list, menu_mount_auth_button} from '@/api/system-setting/system_menu'
 import CreateEdit from './create_edit.vue'
 
 export default {
@@ -135,7 +135,10 @@ export default {
           ftitle: '',
           title: '',
           status: 1,
+          sort: 1,
           remark: '',
+          button_list: [],   // 子表数据
+          deleted_ids: '',   // 子表在修改时可能被删除的ids
         }
       },
       // 删除数据时，传递给子组件的属性变量，数据格式如下：
@@ -240,9 +243,20 @@ export default {
           delete stateData.curdCreateEdit.curdFormData['id']  // 去除新增无关的字段 id
           break;
         case 'update':
-          const selectedArray = stateData.tableRef.getSelectionRows()
-          if (commonFunc.Curd.EditCheck(selectedArray.length === 1)) {
-            stateData.curdCreateEdit.curdFormData = Object.assign({}, selectedArray[0])
+          const selectedRows = stateData.tableRef.getSelectionRows()
+          if (commonFunc.Curd.EditCheck(selectedRows.length === 1)) {
+            let tmpObj = selectedRows[0]
+            tmpObj.button_list = []
+            stateData.curdCreateEdit.curdFormData = Object.assign({}, tmpObj)
+            //  修改数据时，加载子表界面数据
+            menu_mount_auth_button(selectedRows[0].id).then(res => {
+              if (res.data.data !== null) {
+                stateData.curdCreateEdit.curdFormData.button_list = res.data.data
+              } else {
+                stateData.curdCreateEdit.curdFormData.button_list = []
+              }
+            })
+
             if (stateData.curdCreateEdit.curdFormData.ftitle === undefined || stateData.curdCreateEdit.curdFormData.ftitle === '') {
               stateData.curdCreateEdit.curdFormData.ftitle = stateData.leftTree.curItemTitle
             }

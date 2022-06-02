@@ -58,10 +58,8 @@
             <!--  渲染 uploadFile  框-->
             <template v-if="rowFieldFormat.type==='upload' ">
               <el-col :span="rowFieldFormat.width">
-                <el-input type="text" size="small" readonly v-model="propChildrenTable.allRows[dataRowIndex][rowFieldFormat.field]">
-                  <template #append>
-                    <el-button icon="Search" size="small"/>
-                  </template>
+                <el-input type="text" hidden size="small" readonly v-model="propChildrenTable.allRows[dataRowIndex][rowFieldFormat.field]">
+
                 </el-input>
               </el-col>
             </template>
@@ -85,10 +83,14 @@
 </template>
 
 <script>
-import {defineAsyncComponent, reactive, ref, shallowRef, toRefs, watch} from "vue";
+import {defineAsyncComponent, reactive, shallowRef, toRefs, watch} from "vue";
+// import UploadFile from '@/components/common/upload_file.vue'
 
 export default {
   name: "ChildrenTable",
+  components: {
+    // UploadFile
+  },
   props: {
     propChildrenTable: Object
   },
@@ -108,9 +110,9 @@ export default {
       },
     })
 
-    watch(() => propChildrenTable.value.allRows, (newAllRows, oldAllRows) => {
-      if (newAllRows.length === 0) {
-        propChildrenTable.value.allRows = propChildrenTable.value.defaultListForCreate
+    watch(() => propChildrenTable, (newPropChildrenTable, oldPropChildrenTable) => {
+      if (newPropChildrenTable.value.action === 'insert') {
+        propChildrenTable.value.allRows = newPropChildrenTable.value.defaultListForCreate
       }
     }, {deep: true, immediate: true})
 
@@ -124,7 +126,7 @@ export default {
       const tmpId = propChildrenTable.value.allRows[dataRowIndex].id
       if (tmpId > 0) {
         stateData.tmpDelIds.push(tmpId)
-        propChildrenTable.value.deletedIds = stateData.tmpDelIds.toString()
+        propChildrenTable.value.button_delete = stateData.tmpDelIds.toString()
       }
       propChildrenTable.value.allRows.splice(dataRowIndex, 1)
     }
@@ -141,7 +143,7 @@ export default {
       stateData.propSelect.isShow = true
 
     }
-
+    // 更新当前行字段映射
     const fUpdateSelectMapField = (selectedItem) => {
       const dataRowIndex = stateData.selectedRowIndex
       const selectedField = stateData.selectedRowField
@@ -154,9 +156,24 @@ export default {
         }
       }
     }
-
+    // 公共选择组件确认后的回调
     const fSelectedCallback = (selectedItem) => {
       fUpdateSelectMapField(selectedItem)
+    }
+    //文件上传完成后的回调
+    const fUpdateUploadField = (dataRowIndex, selectedField) => {
+      stateData.selectedRowIndex = dataRowIndex
+      stateData.selectedRowField = selectedField
+
+    }
+    const fUploadCallback = (shortSavePath, fullSavePath) => {
+      stateData.selectedRowIndex = dataRowIndex
+      stateData.selectedRowField = selectedField
+
+    }
+    //
+    const fDivTest = () => {
+      console.log("fDivTest")
     }
 
     return {
@@ -164,8 +181,10 @@ export default {
       propChildrenTable,
       dynamicComponent,
 
+      fDivTest,
       fSelectedCallback,
       fSelectComponent,
+      fUploadCallback,
       fCreate,
       fDelete
     }

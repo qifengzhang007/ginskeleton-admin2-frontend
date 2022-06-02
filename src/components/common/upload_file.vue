@@ -66,8 +66,8 @@ export default {
 
 <style scoped>
 .avatar-uploader {
-  width: 60px;
-  height: 60px;
+  width: 50px;
+  height: 50px;
   display: block;
 }
 
@@ -88,8 +88,8 @@ export default {
 .el-icon.avatar-uploader-icon {
   font-size: 28px;
   color: #8c939d;
-  width: 58px;
-  height: 58px;
+  width: 48px;
+  height: 48px;
   text-align: center;
 }
 </style>

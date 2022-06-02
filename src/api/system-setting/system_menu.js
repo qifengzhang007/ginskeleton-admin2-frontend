@@ -10,12 +10,12 @@ export const list = (params) => {
 }
 //新增
 export const create_json = (json) => {
-    return axios.raw_post('/system_menu/create',json)
+    return axios.post_raw('/system_menu/create',json)
 }
 
 //修改
 export const edit_json = (json) => {
-    return axios.raw_post('/system_menu/edit',json)
+    return axios.post_raw('/system_menu/edit',json)
 }
 
 //删除
