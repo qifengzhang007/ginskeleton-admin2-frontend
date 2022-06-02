@@ -108,7 +108,7 @@ export const useMenuStore = defineStore({
         },
 
         /*
-        设置菜单导航路径
+        获取菜单导航路径
         @menuId 菜单id
         @menuNavPathName 菜单导航路径名称
         */
@@ -116,5 +116,6 @@ export const useMenuStore = defineStore({
             this.setMenuNavPathList(menuId)
             return this.menu.menuNavPathList.get(menuId)
         },
+
     }
 })

@@ -65,11 +65,13 @@ export const useTabStore = defineStore({
                 this.tabs.list.push(tepItem)
                 // 如果菜单对应的tab存在，则激活
             }
+
             this.syncChangeRouter(menuPath, actionFrom)
             this.activeTab(menuId)
 
             const menuStore = useMenuStore()
             menuStore.setMenuNavPathList(menuId)
+            menuStore.menu.defaultActive=menuPath
         },
 
         /* 删除 tab 导航按钮
@@ -142,6 +144,7 @@ export const useTabStore = defineStore({
         */
         closeAllTabs() {
             this.tabs.list = []
+            useMenuStore().menu.defaultActive=''
             commonFunc.objInit(this.tabs.curMenuItem)
             this.syncChangeRouter('/blank_page', 'tab')
         },
