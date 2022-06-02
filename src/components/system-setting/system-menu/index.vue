@@ -137,8 +137,8 @@ export default {
           status: 1,
           sort: 1,
           remark: '',
-          button_list: [],   // 子表数据
-          deleted_ids: '',   // 子表在修改时可能被删除的ids
+          button_array: [],   // 子表数据
+          button_delete: '',   // 子表在修改时可能被删除的按钮ids
         }
       },
       // 删除数据时，传递给子组件的属性变量，数据格式如下：

@@ -43,7 +43,7 @@
             </el-col>
             <el-col :span="11">
               <el-form-item label="排序" prop="sort">
-                <el-input type="number" clearable v-model="propCreateEdit.curdFormData.sort" placeholder="设置菜单的展示顺序,系统会降序展示"/>
+                <el-input type="number" clearable v-model.number="propCreateEdit.curdFormData.sort" placeholder="设置菜单的展示顺序,系统会降序展示"/>
               </el-form-item>
             </el-col>
           </el-row>
@@ -111,7 +111,7 @@ export default {
       rules: {
         name: [{type: 'string', required: true, message: '菜单对应的路由名称为必填项', trigger: 'blur'}],
         title: [{type: 'string', required: true, message: '菜单名称为必填项', trigger: 'blur'}],
-        sort: [{type: 'integer', min: 1, required: true, message: '排序字段为必填项', trigger: 'blur'}],
+        sort: [{type: 'number',  required: true, message: '排序字段为必填项', trigger: 'blur'}],
       },
       propSelectSysMenu: {
         isShow: false,
@@ -123,7 +123,7 @@ export default {
       childrenTable: {
         action: propCreateEdit.value.curdFormData.action,
         allRows: [], // 结果存储数组
-        button_delete: '', // 子表 被删除的id存储数组, 如果需要文本格式，button_delete.toString() 可以快速转换
+        deletedButtonIds: '', // 子表 被删除的id存储数组, 如果需要文本格式，deletedButtonIds.toString() 可以快速转换
         //定义一行(条)记录所需要的字段
         rowField: {
           id: 0,
@@ -264,7 +264,7 @@ export default {
       commonFunc.objInit(propCreateEdit.value.curdFormData)
 
       stateData.childrenTable.allRows = []
-      stateData.childrenTable.button_delete = ''
+      stateData.childrenTable.deletedButtonIds = ''
       done()
     }
 
@@ -286,8 +286,8 @@ export default {
       stateData.formRef.validate((valid, fields) => {
         if (valid) {
           // 主表单参数校验完成后，继续追加子表参数
-          propCreateEdit.value.curdFormData.button_list = stateData.childrenTable.allRows
-          propCreateEdit.value.curdFormData.button_delete = stateData.childrenTable.button_delete
+          propCreateEdit.value.curdFormData.button_array = stateData.childrenTable.allRows
+          propCreateEdit.value.curdFormData.button_delete = stateData.childrenTable.deletedButtonIds
 
           switch (propCreateEdit.value.curdFormData.action) {
             case 'insert':

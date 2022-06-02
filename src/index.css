@@ -64,6 +64,10 @@ li .is-active {
     background-color: #2d8cf0 !important;
     color: white;
 }
+/*菜单热点背景颜色*/
+li.el-menu-item:hover{
+    background-color: #38404a;
+}
 
 /*所有的table表头统一加一个淡淡的灰色背景*/
 table.el-table__header > thead > tr > th.el-table__cell {
