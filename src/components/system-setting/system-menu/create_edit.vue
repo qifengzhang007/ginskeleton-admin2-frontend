@@ -141,7 +141,7 @@ export default {
             type: "dialog",//类型{弹出框}
             field: 'button_name',//字段名
             componentPath: './select_button.vue',  // 只能使用相对路径，基准路径就是 ChildrenTable 子表的目录
-            width: 3,//宽度,参考 elementPlus 的row、col布局，一个  row 由24个column构成
+            width: 4,//宽度,参考 elementPlus 的row、col布局，一个  row 由24个column构成
             //  modalWidth: '900px', // 弹出框宽度
             //字段与弹出框组件字段的映射
             map: {
@@ -154,7 +154,7 @@ export default {
             name: '接口地址',
             type: "string",
             field: 'request_url',
-            width: 6,
+            width: 9,
           },
           {
             name: '接口允许请求方式',
@@ -180,7 +180,7 @@ export default {
             name: '备注',
             type: "string",
             field: 'remark',
-            width: 4,
+            width: 5,
           },
           // {
           //   name: '上传文件',
