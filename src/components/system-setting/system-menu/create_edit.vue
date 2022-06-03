@@ -132,7 +132,6 @@ export default {
           button_name: '',
           request_url: '/',
           request_method: "*",
-          short_path: "",
           remark: ''
         },
         // 定义表的一行需要展示的全部字段格式
@@ -183,12 +182,12 @@ export default {
             field: 'remark',
             width: 4,
           },
-          {
-            name: '上传文件',
-            type: "upload",
-            field: 'short_path',
-            width: 5,
-          },
+          // {
+          //   name: '上传文件',
+          //   type: "upload",
+          //   field: 'short_path',
+          //   width: 5,
+          // },
           {
             name: '删除',
             type: "action",
@@ -206,7 +205,6 @@ export default {
             request_url: '/',
             request_method: "POST",
             remark: '',
-            short_path: "",
           },
           {
             id: 0,
@@ -216,7 +214,6 @@ export default {
             request_url: '/',
             request_method: "POST",
             remark: '',
-            short_path: "",
           },
           {
             id: 0,
@@ -226,7 +223,6 @@ export default {
             request_url: '/',
             request_method: "POST",
             remark: '',
-            short_path: "",
           },
           {
             id: 0,
@@ -236,7 +232,6 @@ export default {
             request_url: '/',
             request_method: "GET",
             remark: '',
-            short_path: "",
           }
         ]
       }
