@@ -26,14 +26,18 @@
             <TableHeader1/>
             <!--    ↓↓↓↓   业务字段  ↓↓↓↓   -->
 
-            <el-table-column prop="title" label="菜单名称" width="160" sortable show-overflow-tooltip/>
-            <el-table-column prop="icon" label="图标" width="120" sortable show-overflow-tooltip/>
+            <el-table-column prop="title" label="菜单名称" width="120" sortable show-overflow-tooltip/>
+            <el-table-column prop="icon" label="图标" width="80" sortable show-overflow-tooltip/>
             <el-table-column prop="name" label="路由名称" width="180" sortable show-overflow-tooltip/>
             <el-table-column prop="component" label="视图组件路径" width="280" sortable show-overflow-tooltip/>
-            <el-table-column prop="sort" label="排序" width="120" sortable show-overflow-tooltip/>
-
+            <el-table-column prop="sort" label="排序" width="80" sortable show-overflow-tooltip/>
+            <el-table-column prop="button_list" label="菜单对应页面按钮" width="280" sortable show-overflow-tooltip>
+              <template #default="scope">
+                <el-button size="small" plain :color="item.button_color"   :key="scope.$index+'_'+index"   v-for="(item,index)  in scope.row.button_list"  @click.stop="" >{{item.button_name}}</el-button>
+              </template>
+            </el-table-column>
             <!--     ↑↑↑↑   业务字段  ↑↑↑↑   -->
-            <el-table-column prop="status" label="状态" width="120" sortable show-overflow-tooltip :formatter="fFormatter"/>
+            <el-table-column prop="status" label="状态" width="80" sortable show-overflow-tooltip :formatter="fFormatter"/>
             <el-table-column prop="remark" label="备注" sortable show-overflow-tooltip/>
           </el-table>
         </div>

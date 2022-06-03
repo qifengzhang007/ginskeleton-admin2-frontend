@@ -187,11 +187,14 @@ span.tree-node * {
 span.el-tree__empty-text {
     font-size: 12px;
 }
-
+/*表单尾部追加的图标确保均匀分布*/
 div.el-input-group__append,div.el-input-group__prepend{
     display: flex;
     justify-content: space-around;
     padding:0 10px;
+}
+.el-button--small{
+    padding: 4px 4px;
 }
 a {
     text-decoration: none;
