@@ -9,12 +9,12 @@ export const list = (params) => {
     return axios.get('/system_menu/list',params)
 }
 //新增
-export const create_json = (json) => {
+export const createByJson = (json) => {
     return axios.post_raw('/system_menu/create',json)
 }
 
 //修改
-export const edit_json = (json) => {
+export const editByJson = (json) => {
     return axios.post_raw('/system_menu/edit',json)
 }
 

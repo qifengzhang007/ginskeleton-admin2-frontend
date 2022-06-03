@@ -58,7 +58,25 @@
             <!--  渲染 uploadFile  框-->
             <template v-if="rowFieldFormat.type==='upload' ">
               <el-col :span="rowFieldFormat.width">
-                <el-input type="text" hidden size="small" readonly v-model="propChildrenTable.allRows[dataRowIndex][rowFieldFormat.field]">
+                <el-input type="text" size="small" readonly v-model="propChildrenTable.allRows[dataRowIndex][rowFieldFormat.field]">
+
+                  <template #append>
+                    <el-upload
+                        :show-file-list="false"
+                        :action="actionUrl"
+                        :headers="headers"
+                        :on-success="fSuccess"
+                        :on-error="fError"
+                    >
+                      <template #trigger>
+                        <Upload style="width: 16px; height: 16px;" @click="fUpdateUploadField(dataRowIndex,rowFieldFormat.field)"/>
+                      </template>
+                      <span style="display: inline-block;width: 10px"></span>
+                      <el-link :underline="false" download="" target="_blank" title="点击下载文件" :href="fGetFileFullPath(propChildrenTable.allRows[dataRowIndex][rowFieldFormat.field])">
+                        <ArrowDown style="width: 14px; height: 14px;"/>
+                      </el-link>
+                    </el-upload>
+                  </template>
 
                 </el-input>
               </el-col>
@@ -84,7 +102,8 @@
 
 <script>
 import {defineAsyncComponent, reactive, shallowRef, toRefs, watch} from "vue";
-// import UploadFile from '@/components/common/upload_file.vue'
+import {getToken} from '@/libs/util'
+import commonFunc from '@/libs/common_func'
 
 export default {
   name: "ChildrenTable",
@@ -105,9 +124,16 @@ export default {
       tmpDelIds: [],
       propSelect: {
         isShow: false,
-        title: "选择用户",
+        title: "",
         mode: 'one'  // 数据选择模式： one=单选（选择后返回的结果只有一条），more(允许选择多条数据)，选择结果是一个数组
       },
+
+      //表单内嵌文件上传
+      actionUrl: commonFunc.getApiUrlPre() + '/upload/files',
+      headers: {
+        Authorization: 'Bearer ' + getToken()
+      },
+
     })
 
     watch(() => propChildrenTable, (newPropChildrenTable, oldPropChildrenTable) => {
@@ -136,12 +162,11 @@ export default {
       stateData.selectedRowIndex = dataRowIndex
       stateData.selectedRowField = selectedField
 
-      dynamicComponent.value = defineAsyncComponent(() => import( componentPath))
+      dynamicComponent.value = defineAsyncComponent(() => import( /* @vite-ignore */ componentPath))
 
       // stateData.propSelect.title = "选择模块"
       stateData.propSelect.mode = "one"  //  目前子表只允许单条选择
       stateData.propSelect.isShow = true
-
     }
     // 更新当前行字段映射
     const fUpdateSelectMapField = (selectedItem) => {
@@ -160,20 +185,34 @@ export default {
     const fSelectedCallback = (selectedItem) => {
       fUpdateSelectMapField(selectedItem)
     }
-    //文件上传完成后的回调
+
+    //文件上传前收集鼠标点击行索引、字段名参数
     const fUpdateUploadField = (dataRowIndex, selectedField) => {
       stateData.selectedRowIndex = dataRowIndex
       stateData.selectedRowField = selectedField
-
     }
-    const fUploadCallback = (shortSavePath, fullSavePath) => {
-      stateData.selectedRowIndex = dataRowIndex
-      stateData.selectedRowField = selectedField
 
+    // 上传成功后的回调
+    // @res 上传成功返回的结果
+    // @uploadFile 被上传的文件路径信息
+    const fSuccess = (res, uploadFile) => {
+      if (res.code === 200) {
+        propChildrenTable.value.allRows[stateData.selectedRowIndex][stateData.selectedRowField] = res.data.path
+      } else {
+        commonFunc.Curd.FailTips("文件上传失败：" + res.msg)
+      }
     }
-    //
-    const fDivTest = () => {
-      console.log("fDivTest")
+    //上传失败后的回调
+    // @errRes 上传失败返回的结果
+    // @uploadFile 被上传的文件路径信息
+    const fError = (errRes, uploadFile) => {
+      const err = JSON.parse(errRes.message)
+      commonFunc.Curd.FailTips("文件上传失败：" + err.msg)
+    }
+
+    // 获取附件完整路径：
+    const fGetFileFullPath = (shortPath) => {
+      return shortPath.length > 10 ? commonFunc.getServerIp() + shortPath : ''
     }
 
     return {
@@ -181,10 +220,12 @@ export default {
       propChildrenTable,
       dynamicComponent,
 
-      fDivTest,
+      fGetFileFullPath,
       fSelectedCallback,
       fSelectComponent,
-      fUploadCallback,
+      fUpdateUploadField,
+      fSuccess,
+      fError,
       fCreate,
       fDelete
     }

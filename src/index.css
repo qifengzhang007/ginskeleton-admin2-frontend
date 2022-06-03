@@ -64,8 +64,9 @@ li .is-active {
     background-color: #2d8cf0 !important;
     color: white;
 }
+
 /*菜单热点背景颜色  */
-li.el-menu-item:hover{
+li.el-menu-item:hover {
     background-color: #38404a;
 }
 
@@ -81,22 +82,24 @@ span.el-dialog__title {
 
 /*消息提示样式统一规定在右侧展示*/
 .elMessageStyle {
-    left:calc(100% - 120px);
+    left: calc(100% - 120px);
     min-width: 240px;
     text-align: center;
 }
-div.elMessageStyle.el-message--success{
-    border: solid  1px  rgba(66,160,66,0.5);
+
+div.elMessageStyle.el-message--success {
+    border: solid 1px rgba(66, 160, 66, 0.5);
 }
-div.elMessageStyle.el-message--error{
-    border: solid  1px rgba(231, 18, 18, 0.5);
+
+div.elMessageStyle.el-message--error {
+    border: solid 1px rgba(231, 18, 18, 0.5);
 }
 
 /*drawer 抽屉组件头高度统一减小*/
 header.el-drawer__header {
     margin: 4px 20px;
     display: flex;
-    vertical-align: middle;
+    align-items: center;
     padding: 4px 0 12px 0;
     border-bottom: solid 1px #f1f1f1;
 }
@@ -114,6 +117,7 @@ div.el-drawer__body {
 
 div.el-drawer__body * {
     font-size: 12px;
+    vertical-align: middle;
 }
 
 /*抽屉footer区域填充样式*/
@@ -150,6 +154,7 @@ div.el-dialog__body {
 .tableList-area {
     padding-left: 4px;
 }
+
 .toolBanner {
     display: flex;
     align-items: center;
@@ -178,10 +183,16 @@ span.tree-node * {
 .tree-node-title {
     padding-left: 6px;
 }
-span.el-tree__empty-text{
+
+span.el-tree__empty-text {
     font-size: 12px;
 }
 
+div.el-input-group__append,div.el-input-group__prepend{
+    display: flex;
+    justify-content: space-around;
+    padding:0 10px;
+}
 a {
     text-decoration: none;
 }

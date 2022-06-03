@@ -29,6 +29,7 @@ export default ({ mode }) =>  defineConfig({
       dts: path.resolve(pathSrc, 'auto-imports.d.ts'),
     }),
     Components({
+      directoryAsNamespace: true,
       resolvers: [
           ElementPlusResolver(),
       ],

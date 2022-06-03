@@ -88,9 +88,9 @@
 <script>
 import {reactive, toRefs, watch} from "vue";
 import commonFunc from '@/libs/common_func'
-import {create_json, edit_json} from '@/api/system-setting/system_menu'
 import ChildrenTable from '@/components/common/children_table.vue'
 import SelectSysMenu from '@/components/common/select_sys_menu.vue'
+import {createByJson, editByJson} from "../../../api/system-setting/system_menu";
 
 export default {
   name: "CreateEdit",
@@ -111,7 +111,7 @@ export default {
       rules: {
         name: [{type: 'string', required: true, message: '菜单对应的路由名称为必填项', trigger: 'blur'}],
         title: [{type: 'string', required: true, message: '菜单名称为必填项', trigger: 'blur'}],
-        sort: [{type: 'number',  required: true, message: '排序字段为必填项', trigger: 'blur'}],
+        sort: [{type: 'number', required: true, message: '排序字段为必填项', trigger: 'blur'}],
       },
       propSelectSysMenu: {
         isShow: false,
@@ -142,7 +142,7 @@ export default {
             type: "dialog",//类型{弹出框}
             field: 'button_name',//字段名
             componentPath: './select_button.vue',  // 只能使用相对路径，基准路径就是 ChildrenTable 子表的目录
-            width: 6,//宽度,参考 elementPlus 的row、col布局，一个  row 由24个column构成
+            width: 3,//宽度,参考 elementPlus 的row、col布局，一个  row 由24个column构成
             //  modalWidth: '900px', // 弹出框宽度
             //字段与弹出框组件字段的映射
             map: {
@@ -161,7 +161,7 @@ export default {
             name: '接口允许请求方式',
             type: "selectOption",
             field: 'request_method',
-            width: 6,
+            width: 4,
             options: [
               {
                 label: "*",
@@ -183,12 +183,12 @@ export default {
             field: 'remark',
             width: 4,
           },
-          // {
-          //   name: '上传文件',
-          //   type: "upload",
-          //   field: 'short_path',
-          //   width: 2,
-          // },
+          {
+            name: '上传文件',
+            type: "upload",
+            field: 'short_path',
+            width: 5,
+          },
           {
             name: '删除',
             type: "action",
@@ -206,7 +206,7 @@ export default {
             request_url: '/',
             request_method: "POST",
             remark: '',
-            // short_path: "",
+            short_path: "",
           },
           {
             id: 0,
@@ -216,7 +216,7 @@ export default {
             request_url: '/',
             request_method: "POST",
             remark: '',
-            // short_path: "",
+            short_path: "",
           },
           {
             id: 0,
@@ -226,7 +226,7 @@ export default {
             request_url: '/',
             request_method: "POST",
             remark: '',
-            // short_path: "",
+            short_path: "",
           },
           {
             id: 0,
@@ -236,7 +236,7 @@ export default {
             request_url: '/',
             request_method: "GET",
             remark: '',
-            // short_path: "",
+            short_path: "",
           }
         ]
       }
@@ -291,7 +291,7 @@ export default {
 
           switch (propCreateEdit.value.curdFormData.action) {
             case 'insert':
-              create_json(propCreateEdit.value.curdFormData).then(res => {
+              createByJson(propCreateEdit.value.curdFormData).then(res => {
                 if (res.data.code === 200) {
                   commonFunc.Curd.SuccessTips(res.data.msg)
                   // 刷新主界面数据
@@ -302,7 +302,7 @@ export default {
               })
               break;
             case 'update':
-              edit_json(propCreateEdit.value.curdFormData).then(res => {
+              editByJson(propCreateEdit.value.curdFormData).then(res => {
                 if (res.data.code === 200) {
                   commonFunc.Curd.SuccessTips(res.data.msg)
                   // 刷新主界面数据

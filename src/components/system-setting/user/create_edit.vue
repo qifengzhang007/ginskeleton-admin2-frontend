@@ -171,9 +171,4 @@ export default {
   text-align: center;
 }
 
-.blank-area {
-  display: inline-block;
-  width: 40px;
-}
-
 </style>
