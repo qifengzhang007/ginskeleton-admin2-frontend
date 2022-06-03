@@ -250,9 +250,7 @@ export default {
         case 'update':
           const selectedRows = stateData.tableRef.getSelectionRows()
           if (commonFunc.Curd.EditCheck(selectedRows.length === 1)) {
-            let tmpObj = selectedRows[0]
-            tmpObj.button_list = []
-            stateData.curdCreateEdit.curdFormData = Object.assign({}, tmpObj)
+            stateData.curdCreateEdit.curdFormData = Object.assign({}, selectedRows[0])
             //  修改数据时，加载子表界面数据
             menu_mount_auth_button(selectedRows[0].id).then(res => {
               if (res.data.data !== null) {

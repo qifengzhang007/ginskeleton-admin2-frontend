@@ -239,8 +239,10 @@ export default {
     // 监听表单属性变量变化，修改界面如果子表有数据，需要填充子表
     watch(() => propCreateEdit.value.curdFormData, (newCurdFormData, oldCurdFormData) => {
       stateData.childrenTable.action = newCurdFormData.action
-      if (newCurdFormData.action === 'update' && stateData.childrenTable.allRows.length === 0) {
+      let tmpCount=0
+      if (tmpCount===0 && newCurdFormData.action === 'update' ) {
         stateData.childrenTable.allRows = newCurdFormData.button_list
+        tmpCount++
       }
     }, {deep: true, immediate: true})
 
