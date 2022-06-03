@@ -19,7 +19,7 @@
           <el-row justify="space-between">
             <el-col :span="11">
               <el-form-item label="按钮颜色">
-                <el-input v-model="propCreateEdit.curdFormData.color" placeholder="" style="width: 90%"/>
+                <el-input v-model="propCreateEdit.curdFormData.color" placeholder="这里的颜色只用于后台菜单展示，不作用于前端" style="width: 90%"/>
                 <el-color-picker v-model="propCreateEdit.curdFormData.color"/>
               </el-form-item>
             </el-col>

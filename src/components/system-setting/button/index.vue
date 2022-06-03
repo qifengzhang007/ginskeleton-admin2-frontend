@@ -18,7 +18,11 @@
 
         <el-table-column prop="cn_name" label="按钮名" sortable show-overflow-tooltip/>
         <el-table-column prop="en_name" label="英文编码" sortable show-overflow-tooltip/>
-        <el-table-column prop="color" label="按钮颜色" sortable show-overflow-tooltip/>
+        <el-table-column prop="color" width="100"  align="center" label="按钮颜色" sortable show-overflow-tooltip>
+          <template #default="scope">
+            <span :style="{display:'inline-block' , backgroundColor:scope.row.color, width:'20px',height:'20px'}"/>
+          </template>
+        </el-table-column>
         <el-table-column prop="allow_method" label="允许请求方式" sortable show-overflow-tooltip/>
 
         <!--     ↑↑↑↑   业务字段  ↑↑↑↑   -->
