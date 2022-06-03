@@ -1,7 +1,8 @@
 <template>
   <div>
-    <el-drawer v-model="propCreateEdit.isShow" :before-close="fClose" :close-on-click-modal="false" direction="rtl" :title="propCreateEdit.drawerTitle" size="55%">
+    <el-drawer v-model="propCreateEdit.isShow" :before-close="fClose" :close-on-click-modal="false" direction="rtl" :title="propCreateEdit.drawerTitle" :size="drawerSize">
       <template #default>
+        <SeekbarForDrawer @fSeekBarCallback="fSeekBarCallback"/>
         <el-form ref="formRef" :model="propCreateEdit.curdFormData" :rules="rules" label-position="left" label-width="110px">
           <el-row justify="space-between">
             <el-col :span="11">
@@ -62,12 +63,14 @@
 <script>
 import {reactive, toRefs} from "vue";
 import commonFunc from '@/libs/common_func'
+import SeekbarForDrawer from '@/components/common/seekbar_for_drawer.vue'
 import {create, edit} from '@/api/data-dictionary/province_city'
 import SelectProvinceCity  from '@/components/common/select_province_city.vue'
 
 export default {
   name: "CreateEdit",
   components: {
+    SeekbarForDrawer,
     SelectProvinceCity
   },
   props: {
@@ -78,6 +81,7 @@ export default {
     const {propCreateEdit} = toRefs(props)
 
     const stateData = reactive({
+      drawerSize:'55%',
       formRef: {},
       selectStatus: commonFunc.SelectStatus,
       rules: {
@@ -105,6 +109,11 @@ export default {
       commonFunc.objInit(propCreateEdit.value.curdFormData)
       commonFunc.objInit(propCreateEdit.value.curdFormData)
       done()
+    }
+
+    // 抽屉拖动事件回调，
+    const fSeekBarCallback = (endWidth) => {
+      stateData.drawerSize = endWidth
     }
 
     const fConfirm = () => {
@@ -157,6 +166,7 @@ export default {
       ...toRefs(stateData),
       propCreateEdit,
 
+      fSeekBarCallback,
       fUploadCallback,
       fClose,
       fConfirm,

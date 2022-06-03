@@ -1,7 +1,8 @@
 <template>
   <div>
-    <el-drawer v-model="propCreateEdit.isShow" :before-close="fClose" :close-on-click-modal="false" direction="rtl" :title="propCreateEdit.drawerTitle" size="55%">
+    <el-drawer v-model="propCreateEdit.isShow" :before-close="fClose" :close-on-click-modal="false" direction="rtl" :title="propCreateEdit.drawerTitle" :size="drawerSize">
       <template #default>
+        <SeekbarForDrawer @fSeekBarCallback="fSeekBarCallback"/>
         <el-form ref="formRef" :inline-message="true" :model="propCreateEdit.curdFormData" :rules="rules" label-position="left" label-width="110px">
           <el-row justify="space-between">
             <el-col :span="11">
@@ -88,6 +89,7 @@
 <script>
 import {reactive, toRefs, watch} from "vue";
 import commonFunc from '@/libs/common_func'
+import SeekbarForDrawer from '@/components/common/seekbar_for_drawer.vue'
 import ChildrenTable from '@/components/common/children_table.vue'
 import SelectSysMenu from '@/components/common/select_sys_menu.vue'
 import {createByJson, editByJson} from "../../../api/system-setting/system_menu";
@@ -95,8 +97,9 @@ import {createByJson, editByJson} from "../../../api/system-setting/system_menu"
 export default {
   name: "CreateEdit",
   components: {
+    SeekbarForDrawer,
     SelectSysMenu,
-    ChildrenTable
+    ChildrenTable,
   },
   props: {
     propCreateEdit: Object,
@@ -106,6 +109,7 @@ export default {
     const {propCreateEdit} = toRefs(props)
 
     const stateData = reactive({
+      drawerSize: '55%',
       formRef: {},
       selectStatus: commonFunc.SelectStatus,
       rules: {
@@ -276,6 +280,10 @@ export default {
         propCreateEdit.value.curdFormData.ftitle = row.title
       }
     }
+    // 抽屉拖动事件回调，
+    const fSeekBarCallback = (endWidth) => {
+      stateData.drawerSize = endWidth
+    }
 
     const fConfirm = () => {
       // 表单参数校验完成后提交
@@ -319,6 +327,7 @@ export default {
       ...toRefs(stateData),
       propCreateEdit,
 
+      fSeekBarCallback,
       fUploadCallback,
       fSelectSysMenu,
       fSelectedSysMenuCallback,

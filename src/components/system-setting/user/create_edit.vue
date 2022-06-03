@@ -1,7 +1,8 @@
 <template>
   <div>
-    <el-drawer v-model="propCreateEdit.isShow" :before-close="fClose" :close-on-click-modal="false" direction="rtl" :title="propCreateEdit.drawerTitle" size="55%">
+    <el-drawer v-model="propCreateEdit.isShow" :before-close="fClose" :close-on-click-modal="false" direction="rtl" :title="propCreateEdit.drawerTitle" :size="drawerSize">
       <template #default>
+        <SeekbarForDrawer @fSeekBarCallback="fSeekBarCallback"/>
         <el-form ref="formRef" :inline-message="true" :model="propCreateEdit.curdFormData" :rules="rules" label-position="left" label-width="110px">
           <el-row justify="space-between">
             <el-col :span="11">
@@ -78,15 +79,19 @@
 <script>
 import {reactive, toRefs} from "vue";
 import commonFunc from '@/libs/common_func'
+import SeekbarForDrawer from '@/components/common/seekbar_for_drawer.vue'
 import {create, edit} from '@/api/system-setting/user'
 import UploadFile from '@/components/common/upload_file.vue'
 import Image from '@/components/common/image.vue'
 
+
 export default {
   name: "CreateEdit",
   components: {
+    SeekbarForDrawer,
     UploadFile,
-    Image
+    Image,
+
   },
   props: {
     propCreateEdit: Object,
@@ -96,6 +101,7 @@ export default {
     const {propCreateEdit} = toRefs(props)
 
     const stateData = reactive({
+      drawerSize: '55%',
       formRef: {},
       selectStatus: commonFunc.SelectStatus,
       rules: {
@@ -110,6 +116,11 @@ export default {
     //@fullSavePath 文件上传以后返回的全路径，例如：http://127.0.0.1:20201/public/storage/uploaded/2022_05/0ed83dee0302f84e345674ece32d3cb5.png
     const fUploadCallback = (shortSavePath, fullSavePath) => {
       propCreateEdit.value.curdFormData.avatar = shortSavePath
+    }
+
+    // 抽屉拖动事件回调，
+    const fSeekBarCallback = (endWidth) => {
+      stateData.drawerSize = endWidth
     }
 
     // 抽屉界面相关的操作
@@ -157,6 +168,7 @@ export default {
       ...toRefs(stateData),
       propCreateEdit,
 
+      fSeekBarCallback,
       fUploadCallback,
       fClose,
       fConfirm

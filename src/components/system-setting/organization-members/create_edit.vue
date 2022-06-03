@@ -1,7 +1,8 @@
 <template>
   <div>
-    <el-drawer v-model="propCreateEdit.isShow" :before-close="fClose" :close-on-click-modal="false" direction="rtl" :title="propCreateEdit.drawerTitle" size="55%">
+    <el-drawer v-model="propCreateEdit.isShow" :before-close="fClose" :close-on-click-modal="false" direction="rtl" :title="propCreateEdit.drawerTitle" :size="drawerSize">
       <template #default>
+        <SeekbarForDrawer @fSeekBarCallback="fSeekBarCallback"/>
         <el-form ref="formRef" :inline-message="true" :model="propCreateEdit.curdFormData" :rules="rules" label-position="left" label-width="110px">
           <el-row justify="space-between">
             <el-col :span="11">
@@ -65,6 +66,7 @@
 <script>
 import {reactive, toRefs} from "vue";
 import commonFunc from '@/libs/common_func'
+import SeekbarForDrawer from '@/components/common/seekbar_for_drawer.vue'
 import {create, edit} from '@/api/system-setting/org_post_members'
 import SelectUser from '@/components/common/select_user.vue'
 import SelectOrgPost from '@/components/common/select_org_post.vue'
@@ -72,6 +74,7 @@ import SelectOrgPost from '@/components/common/select_org_post.vue'
 export default {
   name: "CreateEdit",
   components: {
+    SeekbarForDrawer,
     SelectUser,
     SelectOrgPost
   },
@@ -82,8 +85,9 @@ export default {
   setup(props, context) {
     const {propCreateEdit} = toRefs(props)
     const formCreateEdit = Object.assign({}, propCreateEdit.value)
-// console.log("属性副本：",formCreateEdit)
+
     const stateData = reactive({
+      drawerSize:'55%',
       formRef: {},
       selectStatus: commonFunc.SelectStatus,
       rules: {
@@ -116,6 +120,12 @@ export default {
       commonFunc.objInit(propCreateEdit.value.curdFormData)
       done()
     }
+
+    // 抽屉拖动事件回调，
+    const fSeekBarCallback = (endWidth) => {
+      stateData.drawerSize = endWidth
+    }
+
 // 确认事件
     const fConfirm = () => {
       console.log("action:", propCreateEdit.value.curdFormData.action)
@@ -185,6 +195,7 @@ export default {
       propCreateEdit,
       formCreateEdit,
 
+      fSeekBarCallback,
       fUploadCallback,
       fClose,
       fConfirm,
