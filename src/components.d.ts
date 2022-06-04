@@ -32,6 +32,8 @@ declare module '@vue/runtime-core' {
     ElCol: typeof import('element-plus/es')['ElCol']
     ElColorPicker: typeof import('element-plus/es')['ElColorPicker']
     ElConfigProvider: typeof import('element-plus/es')['ElConfigProvider']
+    ElDescriptions: typeof import('element-plus/es')['ElDescriptions']
+    ElDescriptionsItem: typeof import('element-plus/es')['ElDescriptionsItem']
     ElDialog: typeof import('element-plus/es')['ElDialog']
     ElDrawer: typeof import('element-plus/es')['ElDrawer']
     ElDropdown: typeof import('element-plus/es')['ElDropdown']
@@ -47,6 +49,7 @@ declare module '@vue/runtime-core' {
     ElMenuItem: typeof import('element-plus/es')['ElMenuItem']
     ElOption: typeof import('element-plus/es')['ElOption']
     ElPagination: typeof import('element-plus/es')['ElPagination']
+    ElResult: typeof import('element-plus/es')['ElResult']
     ElRow: typeof import('element-plus/es')['ElRow']
     ElScrollbar: typeof import('element-plus/es')['ElScrollbar']
     ElSelect: typeof import('element-plus/es')['ElSelect']
@@ -76,6 +79,7 @@ declare module '@vue/runtime-core' {
     SystemSettingSystemMenuCreate_edit: typeof import('./components/system-setting/system-menu/create_edit.vue')['default']
     SystemSettingUser: typeof import('./components/system-setting/user/index.vue')['default']
     SystemSettingUserCreate_edit: typeof import('./components/system-setting/user/create_edit.vue')['default']
+    SystemSettingUserProfile: typeof import('./components/system-setting/user/profile.vue')['default']
   }
 }
 

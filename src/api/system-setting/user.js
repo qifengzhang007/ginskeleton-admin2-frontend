@@ -27,12 +27,12 @@ export const getUserInfo = () => {
 }
 
 // 获取个人基本信息
-export const personal_info = (params) => {
-  return axios.get('/users/personal_info', params)
+export const personalInfo = () => {
+  return axios.get('/users/personal_info')
 }
 
 // 编辑个人基本信息
-export const personal_edit = (params) => {
+export const personalEdit = (params) => {
   return axios.post('/users/personal_edit', params)
 }
 

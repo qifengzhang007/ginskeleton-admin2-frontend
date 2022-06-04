@@ -2,7 +2,7 @@
   <div class="header-banner">
     <div class="header-banner-left">
       <span class="collapse">
-          <el-icon >
+          <el-icon>
                    <component @click="layoutStore.collapseExpandLeftMenu" :is="layoutStore.layout.leftMenuIsShow?'ArrowLeft':'ArrowRight'"/>
           </el-icon>
       </span>
@@ -27,16 +27,16 @@
     </span>
         <template #dropdown>
           <el-dropdown-menu>
-            <el-dropdown-item command="loginOut">退出登陆</el-dropdown-item>
-            <el-dropdown-item divided command="edit">编辑信息</el-dropdown-item>
+            <el-dropdown-item  command="edit">编辑信息</el-dropdown-item>
+            <el-dropdown-item divided command="loginOut">退出登陆</el-dropdown-item>
           </el-dropdown-menu>
         </template>
       </el-dropdown>
 
     </div>
-
+    <!--引入个人资料编辑组件-->
+    <Profile :propCreateEdit="curdCreateEdit"/>
   </div>
-
 </template>
 
 <script>
@@ -47,17 +47,38 @@ import {useRouteStore} from '@/store/system-setting/route'
 import {useUserStore} from '@/store/system-setting/user'
 import screenfull from 'screenfull'
 import {reactive, toRefs} from 'vue'
+import {personalInfo} from '@/api/system-setting/user'
+import Profile from '@/components/system-setting/user/profile.vue'
+import commonFunc from '@/libs/common_func'
 
 export default {
   name: "HeaderBanner",
-  components: {},
+  components: {
+    Profile
+  },
   setup() {
     const layoutStore = useLayoutStore()
 
     const stateData = reactive({
       fullScreen: {
         Status: 0,
-      }
+      },
+      //  修改时，传递给子组件的属性变量，
+      curdCreateEdit: {
+        isShow: false,
+        drawerTitle: '',
+        curdFormData: {
+          action: '',
+          id: 0,
+          real_name: '',
+          user_name: '',
+          pass: '',
+          phone: '',
+          avatar: '',
+          status: 1,
+          remark: '',
+        }
+      },
     })
 
     const menuStore = useMenuStore()
@@ -65,14 +86,23 @@ export default {
     const routerStore = useRouteStore()
     const userStore = useUserStore()
 
-
     const handleCommand = (command) => {
       switch (command) {
         case 'loginOut':
           routerStore.getRoute.push('/login')
           break
         case 'edit':
-          console.log('编辑个人信息')
+          personalInfo().then(res => {
+            if (res.data.code === 200) {
+              stateData.curdCreateEdit.isShow = true
+              stateData.curdCreateEdit.drawerTitle = "编辑信息"
+              stateData.curdCreateEdit.curdFormData.action = "update"
+              stateData.curdCreateEdit.curdFormData = Object.assign({}, res.data.data)
+              stateData.curdCreateEdit.curdFormData.pass='####*****####'  // 密码使用功能掩码代替
+            }
+          }).catch(errRes => {
+            commonFunc.Curd.FailTips("获取个人信息出错：" + errRes.response.data.msg)
+          })
           break
       }
     }
@@ -110,7 +140,8 @@ export default {
   text-align: center;
   margin-right: 6px;
 }
-i.el-icon:hover{
+
+i.el-icon:hover {
   color: #2d8cf0;
 }
 
