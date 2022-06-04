@@ -71,11 +71,19 @@ export default {
           leftDom.style.width = (leftDomWidth + xOffset) + 'px'
           rightDom.style.width = (rightDomWidth - xOffset) + 'px'
 
+          // 限制左侧最小宽度为50px
           if (leftDom.offsetWidth < 50) {
             leftDom.style.width = '50px'
             rightDom.style.width = (leftRightTotalWidth-50)+'px'
             document.onmouseup()
           }
+          // 限制右侧最小宽度为50px
+          if (rightDom.offsetWidth < 50) {
+            rightDom.style.width = '50px'
+            leftDom.style.width = (leftRightTotalWidth-50)+'px'
+            document.onmouseup()
+          }
+
         }
       })
 
