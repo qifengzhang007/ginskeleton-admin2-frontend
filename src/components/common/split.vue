@@ -16,6 +16,7 @@
 </template>
 
 <script>
+import commonFunc from '@/libs/common_func'
 import {onMounted, reactive, toRefs} from "vue";
 
 export default {
@@ -54,6 +55,8 @@ export default {
       splitLineEle.addEventListener("mousedown", (event) => {
         const leftDomWidth = leftDom.offsetWidth
         const rightDomWidth = rightDom.offsetWidth
+        const leftRightTotalWidth=leftDomWidth+rightDomWidth
+
         const x1 = event.clientX
 
         // 注册鼠标放开事件
@@ -70,6 +73,7 @@ export default {
 
           if (leftDom.offsetWidth < 50) {
             leftDom.style.width = '50px'
+            rightDom.style.width = (leftRightTotalWidth-50)+'px'
             document.onmouseup()
           }
         }
