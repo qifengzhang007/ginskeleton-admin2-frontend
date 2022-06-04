@@ -3,12 +3,12 @@
 
     <div v-if="userStore.user.token.isValid">
       <!--    左侧菜单区域-->
-      <div id="layout-left">
+      <div id="layout-left" :style="layoutLeft" v-show="layoutStore.layout.leftMenuIsShow">
         <LeftMenu/>
       </div>
 
       <!--    右侧区域：banner + tabs + content 区域 -->
-      <div id="layout-right">
+      <div id="layout-right" :style="layoutRight">
         <HeaderBanner/>
         <Tabs/>
         <div id="layout-content">
@@ -43,12 +43,14 @@ import HeaderBanner from '@/components/system-setting/layout/header_banner.vue'
 import Tabs from '@/components/system-setting/layout/tabs.vue'
 import LeftMenu from '@/components/system-setting/layout/left_menu.vue'
 import {useRouter} from 'vue-router'
+import {useLayoutStore} from "@/store/system-setting/layout";
 import {useUserStore} from "@/store/system-setting/user";
 import {useTabStore} from "@/store/system-setting/tabs";
 import {useRouteStore} from "@/store/system-setting/route";
 import {useReloadStore} from "@/store/system-setting/reload";
 import config from '@/config/index';
 import {getToken} from '@/libs/util';
+import {reactive, toRefs, watch} from "vue";
 
 export default {
   name: "Main",
@@ -59,9 +61,40 @@ export default {
   },
   setup() {
     const userStore = useUserStore()     // 实例化
+
+    //页面布局相关
+    const layoutStore = useLayoutStore()
+    const stateData = reactive({
+      layoutLeft: {
+        float: 'left',
+        top: 0,
+        display: 'inline-block',
+        minHeight: '100vh',
+        width: `${layoutStore.getLeftMenuWidth>0?layoutStore.getLeftMenuWidth+'px':0} !important`,
+        backgroundColor: '#1d1e23'
+      },
+      layoutRight: {
+        float: 'right',
+        top: 0,
+        display: 'inline-block',
+        width: `calc(100% - ${layoutStore.getLeftMenuWidth>0?layoutStore.getLeftMenuWidth+'px':0})  !important`,
+        minHeight: '100vh'
+      }
+    })
+
+    // 监听布局变化
+    watch(() => layoutStore.layout, (newVal, oldVal) => {
+      if(newVal.leftMenuWidth===0){
+        stateData.layoutLeft.width=`0 !important`
+        stateData.layoutRight.width=`calc(100% + ${newVal.leftMenuWidth}px) !important`
+      }else{
+        stateData.layoutLeft.width=`${newVal.leftMenuWidth}px !important`
+        stateData.layoutRight.width=`calc(100% - ${newVal.leftMenuWidth}px) !important`
+      }
+    },{deep:true,immediate:true})
+    // 路由相关
     const reloadStore = useReloadStore()     // 实例化
     const tabsStore = useTabStore()
-
     const router = useRouter()
     let routerStore = useRouteStore()
     routerStore.setRoute(router)
@@ -101,8 +134,9 @@ export default {
       routerGuard()
     }
 
-
     return {
+      ...toRefs(stateData),
+      layoutStore,
       userStore
     }
   }
@@ -115,20 +149,9 @@ export default {
 }
 
 #layout-left {
-  float: left;
-  top: 0;
-  display: inline-block;
-  min-height: 100vh;
-  width: 255px !important;
-  background-color: #1d1e23;
 }
 
 #layout-right {
-  float: right;
-  top: 0;
-  display: inline-block;
-  width: calc(100% - 255px);
-  min-height: 100vh;
 }
 
 #layout-content {

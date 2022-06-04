@@ -1,7 +1,11 @@
 <template>
   <div class="header-banner">
     <div class="header-banner-left">
-      <span class="collapse">       <el-icon><Fold/></el-icon>    </span>
+      <span class="collapse">
+          <el-icon >
+                   <component @click="layoutStore.collapseExpandLeftMenu" :is="layoutStore.layout.leftMenuIsShow?'ArrowLeft':'ArrowRight'"/>
+          </el-icon>
+      </span>
       <span class="menu-nav">
         <el-breadcrumb separator-icon="ArrowRight">
     <el-breadcrumb-item :to="{ path: '/' }">  <el-icon :size="16" style="vertical-align: middle">    <HomeFilled/>    </el-icon> <span style="vertical-align: middle;color: #858585">首页</span></el-breadcrumb-item>
@@ -36,6 +40,7 @@
 </template>
 
 <script>
+import {useLayoutStore} from "@/store/system-setting/layout";
 import {useMenuStore} from '@/store/system-setting/menu'
 import {useTabStore} from '@/store/system-setting/tabs'
 import {useRouteStore} from '@/store/system-setting/route'
@@ -47,19 +52,18 @@ export default {
   name: "HeaderBanner",
   components: {},
   setup() {
+    const layoutStore = useLayoutStore()
 
     const stateData = reactive({
       fullScreen: {
         Status: 0,
       }
-
     })
 
     const menuStore = useMenuStore()
     const tabsStore = useTabStore()
     const routerStore = useRouteStore()
     const userStore = useUserStore()
-    // const headerBannerStore = useHeaderBannerStore()
 
 
     const handleCommand = (command) => {
@@ -84,7 +88,8 @@ export default {
 
     return {
       ...toRefs(stateData),
-      // headerBannerStore,
+
+      layoutStore,
       tabsStore,
       menuStore,
       userStore,
@@ -104,6 +109,9 @@ export default {
   width: 80px;
   text-align: center;
   margin-right: 6px;
+}
+i.el-icon:hover{
+  color: #2d8cf0;
 }
 
 .header-banner {
