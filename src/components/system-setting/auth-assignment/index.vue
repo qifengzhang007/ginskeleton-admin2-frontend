@@ -11,6 +11,7 @@
       <Split :splitRatio="40">
         <template v-slot:left>
           <el-scrollbar :style="leftTreeContainerFixHeight" :height="leftTreeContainerFixHeight.height">
+            <div class="auth-list-title">已分配权限列表</div>
             <el-tree :expand-on-click-node="false" :highlight-current="true" node-key="system_menu_id" :current-node-key="1" show-checkbox  empty-text="暂无数据"
                      ref="assignedAuthRef" :props="leftTree.props" :data="assignedAuth.data" :default-expanded-keys="assignedAuth.needExpandedKeys">
               <template #default="{ node, data }">
@@ -44,6 +45,7 @@
 
             <template v-slot:right>
               <el-scrollbar :style="leftTreeContainerFixHeight" :height="leftTreeContainerFixHeight.height">
+                <div class="auth-list-title">待分配权限列表</div>
                 <el-tree :expand-on-click-node="false" :highlight-current="true" node-key="system_menu_id" :current-node-key="1" show-checkbox  empty-text="暂无数据"
                          ref="allAuthRef" :props="leftTree.props" :data="allAuth.data" :default-expanded-keys="allAuth.needExpandedKeys">
                   <template #default="{ node, data }">
@@ -309,4 +311,5 @@ export default {
   margin-left: 4px;
   margin-right: 10px;
 }
+
 </style>

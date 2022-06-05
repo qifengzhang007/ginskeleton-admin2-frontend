@@ -33,6 +33,7 @@
 
     <template v-slot:right>
       <el-scrollbar :style="leftTreeContainerFixHeight" :height="leftTreeContainerFixHeight.height">
+        <div class="auth-list-title">已分配权限列表</div>
         <el-tree :expand-on-click-node="false" :highlight-current="true" node-key="id" :current-node-key="1"  empty-text="暂无数据"
                  :props="rightTree.props" :data="rightTree.data" :default-expanded-keys="rightTree.needExpandedKeys">
           <template #default="{ node, data }">

@@ -200,3 +200,9 @@ div.el-input-group__append,div.el-input-group__prepend{
 a {
     text-decoration: none;
 }
+.auth-list-title{
+    width: 100%;
+    border-bottom: 1px solid #f1f1f1;
+    margin: 5px 7px;
+    padding-bottom: 4px;
+}
