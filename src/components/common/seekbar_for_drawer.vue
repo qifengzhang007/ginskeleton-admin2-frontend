@@ -12,6 +12,7 @@ export default {
     const fMouseDown = (event) => {
       const p = document.getElementById('seekbar').parentNode
       const startWidth = p.offsetWidth
+      document.onselectstart =()=>false
       let endWidth = 0
 
       const x1 = event.clientX
@@ -23,9 +24,11 @@ export default {
       document.onmouseup = function (e) {
         document.onmousemove = null;
         document.onmouseup = null;
+        document.onselectstart =()=>true
         // 这里获取拖动后产生的最终宽度： endWidth ， 向上回调即可
         context.emit('fSeekBarCallback', endWidth)
       }
+      return false
     }
 
     return {
@@ -44,7 +47,7 @@ export default {
   width: 6px;
   height: 100vh;
   border: solid 1px lightgray;
-  background: url("../../assets/images/split_flag.png") no-repeat  center ;
+  background: url("../../assets/images/split_flag.png") no-repeat center;
   cursor: w-resize;
   border-radius: 4px;
 }
