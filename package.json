@@ -1,6 +1,6 @@
 {
-  "name": "vue3-admin",
-  "version": "0.0.0",
+  "name": "ginskeleton-admin2-frontend",
+  "version": "v2.0.00",
   "scripts": {
     "dev": "vite",
     "build": "vite build"
