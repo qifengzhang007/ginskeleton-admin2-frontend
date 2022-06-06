@@ -8,7 +8,7 @@
           <el-button type="primary" @click="fSearch" icon="Search" v-if="tableList.buttonList.select">查询</el-button>
           <el-button type="success" @click="fCreateEdit('insert')" icon="Plus" v-if="tableList.buttonList.insert">新增</el-button>
           <el-button type="primary" @click="fCreateEdit('update')" icon="Edit" v-if="tableList.buttonList.update">修改</el-button>
-          <el-button type="danger" @click="fDelete('delete')" icon="curdDelete" v-if="tableList.buttonList.delete">删除</el-button>
+          <el-button type="danger" @click="fDelete('delete')" icon="Delete" v-if="tableList.buttonList.delete">删除</el-button>
         </el-button-group>
       </div>
 
