@@ -251,8 +251,8 @@ export default {
       checkedNodes.every((item, index) => {
         finalArray[index] = new Promise((resolve, reject) => {
           const sendData = {
-            post_mount_has_menu_id: item.post_mount_has_menu_id,
-            post_mount_has_menu_button_id: item.post_mount_has_menu_button_id,
+            post_mount_has_menu_id: item.auth_post_mount_has_menu_id,
+            post_mount_has_menu_button_id: item.system_menu_id,
             node_type: item.node_type
           }
           delMenuAuthFromOrg(sendData).then(res => {
