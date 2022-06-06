@@ -12,7 +12,7 @@
         <template v-slot:left>
           <el-scrollbar :style="leftTreeContainerFixHeight" :height="leftTreeContainerFixHeight.height">
             <div class="auth-list-title">已分配权限列表</div>
-            <el-tree :expand-on-click-node="false" :highlight-current="true" node-key="system_menu_id" :current-node-key="1" show-checkbox  empty-text="暂无数据"
+            <el-tree :expand-on-click-node="false" :highlight-current="true" node-key="system_menu_id" :current-node-key="1" show-checkbox empty-text="暂无数据"
                      ref="assignedAuthRef" :props="leftTree.props" :data="assignedAuth.data" :default-expanded-keys="assignedAuth.needExpandedKeys">
               <template #default="{ node, data }">
           <span class="tree-node">
@@ -46,7 +46,7 @@
             <template v-slot:right>
               <el-scrollbar :style="leftTreeContainerFixHeight" :height="leftTreeContainerFixHeight.height">
                 <div class="auth-list-title">待分配权限列表</div>
-                <el-tree :expand-on-click-node="false" :highlight-current="true" node-key="system_menu_id" :current-node-key="1" show-checkbox  empty-text="暂无数据"
+                <el-tree :expand-on-click-node="false" :highlight-current="true" node-key="system_menu_id" :current-node-key="1" show-checkbox empty-text="暂无数据"
                          ref="allAuthRef" :props="leftTree.props" :data="allAuth.data" :default-expanded-keys="allAuth.needExpandedKeys">
                   <template #default="{ node, data }">
           <span class="tree-node">
@@ -220,7 +220,7 @@ export default {
             org_post_id: stateData.leftTree.curItemId,
             system_menu_id: item.system_menu_id,
             system_menu_fid: item.system_menu_fid,
-            button_id: item.button_id,
+            button_id: item.system_menu_id,
             node_type: item.node_type
           }
           assignMenuToOrg(sendData).then(res => {
