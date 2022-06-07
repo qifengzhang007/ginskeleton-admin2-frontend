@@ -20,7 +20,7 @@ class HttpRequest {
     }
 
     /*
-     description 请求拦截器
+      请求拦截器
      @instance axios 对象实例
      @url 请求的url
      */
@@ -34,7 +34,7 @@ class HttpRequest {
         })
 
         /*
-         description 响应拦截器
+          响应拦截器
          */
         instance.interceptors.response.use(res => {
             const {data, status} = res
@@ -69,9 +69,9 @@ class HttpRequest {
     }
 
     /*
-    description 封装axios的post请求
-      @options axios接受的配置参数
-     */
+    封装axios的post请求
+    @options axios接受的配置参数
+    */
     request(options) {
         const instance = axios.create()
         options = Object.assign(this.getInsideConfig(), options)

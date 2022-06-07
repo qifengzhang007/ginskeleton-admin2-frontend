@@ -15,11 +15,11 @@ export default {
      * @description api请求基础路径
      */
     baseUrl: {
-        // npm run dev 有效
+        // npm run dev 开发环境有效
         devServerIp: 'http://127.0.0.1:22001',
         devApiPre: 'http://127.0.0.1:22001/admin',
 
-        // npm run build 有效
+        // npm run build 编译后有效
         proServerIp: 'http://139.196.101.31:22001',
         proApiPre: 'http://139.196.101.31:22001/admin',
     },

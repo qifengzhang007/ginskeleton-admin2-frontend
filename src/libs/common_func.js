@@ -53,9 +53,11 @@ export default {
     PageSizeOptions: [5, 20, 50, 100, 200, 500],
     // CURD 相关的公共函数
     Curd: {
-        // 新增数据前的检查
-        // @condition 修改数据时的验证条件，如果不满足条件就提示
-        // @duration  提示文本持续毫秒
+        /*
+        新增数据前的检查
+        @condition 修改数据时的验证条件，如果不满足条件就提示
+        @duration  提示文本持续毫秒
+        */
         CreateCheck(condition, duration = 2000) {
             if (!condition) {
                 ElMessage({
@@ -70,10 +72,13 @@ export default {
             }
             return true
         },
-        // 修改数据前的检查
-        // 参数列表参见 CreateCheck 函数
-        // @condition 修改数据时的验证条件，如果不满足条件就提示
-        // @duration  提示文本持续毫秒
+
+        /*
+        修改数据前的检查
+        参数列表参见 CreateCheck 函数
+        @condition 修改数据时的验证条件，如果不满足条件就提示
+        @duration  提示文本持续毫秒
+        */
         EditCheck(condition, duration = 2000) {
             if (!condition) {
                 ElMessage({
@@ -88,9 +93,12 @@ export default {
             }
             return true
         },
-        // 删除数据前的校验（适用于多条数据删除动作）
-        // @condition  删除多条数据时的验证条件，如果不满足条件就提示
-        // @duration  提示文本持续毫秒
+
+        /*
+        删除数据前的校验（适用于多条数据删除动作）
+        @condition  删除多条数据时的验证条件，如果不满足条件就提示
+        @duration  提示文本持续毫秒
+         */
         DestroyCheckForMoreItem(condition, duration = 2000) {
             if (!condition) {
                 ElMessage({
@@ -105,9 +113,12 @@ export default {
             }
             return true
         },
-        // 删除数据前的校验（适用于单条数据删除动作）
-        // @condition  删除单条数据时的验证条件，如果不满足条件就提示
-        // @duration  提示文本持续毫秒
+
+        /*
+        删除数据前的校验（适用于单条数据删除动作）
+        @condition  删除单条数据时的验证条件，如果不满足条件就提示
+        @duration  提示文本持续毫秒
+        */
         DestroyCheckForOneItem(condition, duration = 2000) {
             if (!condition) {
                 ElMessage({
@@ -121,9 +132,12 @@ export default {
             }
             return true
         },
-        // 成功时的提示
-        // @msg  提示文本
-        // @duration  提示文本持续毫秒
+
+        /*
+         成功时的提示
+         @msg  提示文本
+         @duration  提示文本持续毫秒
+         */
         SuccessTips(msg = '成功', duration = 1500) {
             ElMessage({
                 message: msg,
@@ -134,9 +148,12 @@ export default {
                 customClass: "elMessageStyle"
             })
         },
-        // 失败时的提示
-        // @msg  提示文本
-        // @duration  提示文本持续毫秒
+
+        /*
+        失败时的提示
+        @msg  提示文本
+        @duration  提示文本持续毫秒
+        */
         FailTips(msg = '失败', duration = 3000) {
             ElMessage({
                 message: msg,
@@ -149,9 +166,12 @@ export default {
         },
 
     },
-    // 获取数组中字段的拼接值
-    // 示例： 参数一：  数组，参数二，数组中的键1，参数三，数组中的键2  ...  依次类推
-    // 获取的结果是一个对象，需要通过  obj.键1 、obj.键2  ... 一次类推获取处理后的值
+
+    /*
+    获取数组中字段的拼接值
+    示例： 参数一：  数组，参数二，数组中的键1，参数三，数组中的键2  ...  依次类推
+    获取的结果是一个对象，需要通过  obj.键1 、obj.键2  ... 一次类推获取处理后的值
+    */
     GetArrayColumnConcatVals() {
         let res = {}
         if (arguments.length >= 2) {
@@ -166,7 +186,10 @@ export default {
         }
         return res
     },
-    // 将一个对象的值进行初始化为0值(相关数据类型的系统默认值)
+
+    /*
+    将一个对象的值进行初始化为0值(相关数据类型的系统默认值)
+    */
     objInit(obj) {
         for (let key in obj) {
             switch (typeof obj[key]) {
@@ -191,9 +214,12 @@ export default {
         return obj;
     },
 
-    // 计算权限分析界面需要展开的节点
-    // @treeArray 用户已有权限的原始数据数组
-    // @resArray 接受结果的数组，需要用户传入一个空数组接受结果
+
+    /*
+    计算权限分析界面需要展开的节点
+    @treeArray 用户已有权限的原始数据数组
+    @resArray 接受结果的数组，需要用户传入一个空数组接受结果
+    */
     getNeedExpandTreeNodeForAnalysis(treeArray = [], resArray = []) {
         for (let i = 0; i < treeArray.length; i++) {
             if (treeArray[i].children) {
@@ -204,9 +230,12 @@ export default {
             }
         }
     },
-    // 计算已分配的权限列表界面需要展开的节点
-    // @treeArray 用户已有权限的原始数据数组
-    // @resArray 接受结果的数组，需要用户传入一个空数组接受结果
+
+    /*
+    计算已分配的权限列表界面需要展开的节点
+    @treeArray 用户已有权限的原始数据数组
+    @resArray 接受结果的数组，需要用户传入一个空数组接受结果
+    */
     getNeedExpandTreeNodeForAssignedAuth(treeArray = [], resArray = []) {
         for (let i = 0; i < treeArray.length; i++) {
             if (treeArray[i].children) {

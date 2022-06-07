@@ -8,6 +8,12 @@ const captchaClient = new HttpRequest(commonFunc.getServerIp())
 
 export default {
     name: "axios",
+
+    /*
+    *get方式提交数据
+    * @request_uri 请求的短地址
+    * @form_data 参数
+    */
     get(request_uri, params) {
         return httpClient.request({
             url: request_uri,
@@ -16,6 +22,12 @@ export default {
             timeout: config.requestTimeout || 5000
         })
     },
+
+    /*
+    * post form 表单方式提交数据
+    * @request_uri 请求的短地址
+    * @form_data 参数
+    */
     post(request_uri, form_data) {
         return httpClient.request({
             url: request_uri,
@@ -24,7 +36,12 @@ export default {
             timeout: config.requestTimeout || 5000
         })
     },
-    // 提交原生 json 格式数据，以 post 方式提交数据（服务端需要允许post方式提交的raw json )
+
+    /*
+    * 提交原生 json 格式数据，以 post 方式提交数据（服务端需要允许post方式提交的raw json )
+    * @request_uri 请求的短地址
+    * @json 参数
+    */
     post_raw(request_uri, json) {
         return httpClient.request({
             //baseURL: '',   //  将前缀设置为空，request_uri 参数可以指定任何站点的完整地址
