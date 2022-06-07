@@ -26,7 +26,9 @@ export default {
         document.onmouseup = null;
         document.onselectstart =()=>true
         // 这里获取拖动后产生的最终宽度： endWidth ， 向上回调即可
-        context.emit('fSeekBarCallback', endWidth)
+        if(endWidth!==0){
+          context.emit('fSeekBarCallback', endWidth)
+        }
       }
       return false
     }
