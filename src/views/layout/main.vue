@@ -15,10 +15,7 @@
           <router-view v-slot="{ Component, route }">
             <transition :name="route.meta.transition || 'fade'" mode="out-in">
               <keep-alive>
-                <component
-                    :is="Component"
-                    :key="route.meta.usePathKey ? route.path : undefined"
-                />
+                <component :is="Component" :key="route.meta.usePathKey ? route.path : undefined"/>
               </keep-alive>
             </transition>
           </router-view>
@@ -70,28 +67,28 @@ export default {
         top: 0,
         display: 'inline-block',
         minHeight: '100vh',
-        width: `${layoutStore.getLeftMenuWidth>0?layoutStore.getLeftMenuWidth+'px':0} !important`,
+        width: `${layoutStore.getLeftMenuWidth > 0 ? layoutStore.getLeftMenuWidth + 'px' : 0} !important`,
         backgroundColor: '#1d1e23'
       },
       layoutRight: {
         float: 'right',
         top: 0,
         display: 'inline-block',
-        width: `calc(100% - ${layoutStore.getLeftMenuWidth>0?layoutStore.getLeftMenuWidth+'px':0})  !important`,
+        width: `calc(100% - ${layoutStore.getLeftMenuWidth > 0 ? layoutStore.getLeftMenuWidth + 'px' : 0})  !important`,
         minHeight: '100vh'
       }
     })
 
     // 监听布局变化
     watch(() => layoutStore.layout, (newVal, oldVal) => {
-      if(newVal.leftMenuWidth===0){
-        stateData.layoutLeft.width=`0 !important`
-        stateData.layoutRight.width=`calc(100% + ${newVal.leftMenuWidth}px) !important`
-      }else{
-        stateData.layoutLeft.width=`${newVal.leftMenuWidth}px !important`
-        stateData.layoutRight.width=`calc(100% - ${newVal.leftMenuWidth}px) !important`
+      if (newVal.leftMenuWidth === 0) {
+        stateData.layoutLeft.width = `0 !important`
+        stateData.layoutRight.width = `calc(100% + ${newVal.leftMenuWidth}px) !important`
+      } else {
+        stateData.layoutLeft.width = `${newVal.leftMenuWidth}px !important`
+        stateData.layoutRight.width = `calc(100% - ${newVal.leftMenuWidth}px) !important`
       }
-    },{deep:true,immediate:true})
+    }, {deep: true, immediate: true})
     // 路由相关
     const reloadStore = useReloadStore()     // 实例化
     const tabsStore = useTabStore()
@@ -156,8 +153,8 @@ export default {
 
 #layout-content {
   display: block;
-  padding: 4px 4px;
+  padding: 4px;
   overflow: hidden;
-  height: calc(100vh - 64px - 42px - 2px);
+  height: calc(100vh - 108px);
 }
 </style>
