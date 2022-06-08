@@ -19,7 +19,7 @@
 
           <el-row justify="space-between">
             <el-col :span="11">
-              <el-form-item label="按钮颜色">
+              <el-form-item label="按钮颜色" prop="color">
                 <el-input v-model="propCreateEdit.curdFormData.color" placeholder="这里的颜色只用于后台菜单展示，不作用于前端" style="width: 90%"/>
                 <el-color-picker v-model="propCreateEdit.curdFormData.color"/>
               </el-form-item>
@@ -89,6 +89,7 @@ export default {
       rules: {
         cn_name: [{type: 'string', required: true, message: '按钮名为必填项', trigger: 'blur'}],
         en_name: [{type: 'string', required: true, message: '按钮英文编码为必填项', trigger: 'blur'}],
+        color: [{type: 'string', required: true, message: '按钮颜色为必填项', trigger: 'blur'}],
         allow_method: [{type: 'string', required: true, message: '请求方式为必填项', trigger: 'blur'}],
       },
     })
