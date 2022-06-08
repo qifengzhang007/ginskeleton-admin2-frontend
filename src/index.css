@@ -21,10 +21,13 @@ body, * {
     border-bottom: 1px solid #404141;
 }
 
-
+.el-sub-menu .el-sub-menu__icon-arrow{
+    right:-90px !important;
+}
 /*菜单标题的样式*/
 .el-sub-menu__title {
     font-size: 13px !important;
+    width:225px !important;
     height: 40px !important;
     line-height: 40px !important;
     vertical-align: middle !important;
