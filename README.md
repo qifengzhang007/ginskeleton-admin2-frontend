@@ -4,3 +4,7 @@
 
 ###  [在线文档](https://www.yuque.com/xiaofensinixidaouxiang/qmanaq/qmucb4)
 > 文档包含了最主要的使用功能说明、界面效果图、演示地址等.
+
+### 更新日志
+**v2.0.00  2022-06-05**
+- 1.全新的 GinSkeleton-Admin2 版本发布.
