@@ -30,7 +30,7 @@ export const show_button = (hasButtonList, curButtonList) => {
 
 // 为组织机构（部门、岗位）分配菜单、按钮权限
 export const assignMenuToOrg = (data) => {
-    return axios.post('/system_menu/assgin_to_org', data)
+    return axios.post_raw('/system_menu/assgin_to_org', data)
 }
 
 // 删除已分配权限给组织机构的菜单、按钮权限
