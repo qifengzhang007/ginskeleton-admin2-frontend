@@ -78,8 +78,8 @@ export default {
 }
 
 .dialog-content {
-  display:flex;
-  align-items: center;
+  display: block;
+  vertical-align: middle;
   min-height: 60px;
 }
 
