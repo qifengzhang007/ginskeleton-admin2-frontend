@@ -64,7 +64,7 @@ li.el-sub-menu.menu-level2 div {
 
 /*二级背景鼠标热点样式*/
 div.el-sub-menu__title:hover {
-    background-color: #38404a !important;
+    background-color: #20242a !important;
     color: #d0d0d6  !important;
 }
 /*一级背景鼠标热点样式*/
