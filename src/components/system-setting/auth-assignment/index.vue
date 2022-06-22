@@ -12,7 +12,7 @@
         <template v-slot:left>
           <el-scrollbar :style="leftTreeContainerFixHeight" :height="leftTreeContainerFixHeight.height">
             <div class="auth-list-title">已分配权限列表</div>
-            <el-tree :expand-on-click-node="false" :highlight-current="true" node-key="system_menu_id" :current-node-key="1" show-checkbox empty-text="暂无数据"
+            <el-tree :expand-on-click-node="false" :highlight-current="true" node-key="system_menu_button_id" :current-node-key="1" show-checkbox empty-text="暂无数据"
                      ref="assignedAuthRef" :props="leftTree.props" :data="assignedAuth.data" :default-expanded-keys="assignedAuth.needExpandedKeys">
               <template #default="{ node, data }">
           <span class="tree-node">
@@ -46,7 +46,7 @@
             <template v-slot:right>
               <el-scrollbar :style="leftTreeContainerFixHeight" :height="leftTreeContainerFixHeight.height">
                 <div class="auth-list-title">待分配权限列表</div>
-                <el-tree :expand-on-click-node="false" :highlight-current="true" node-key="system_menu_id" :current-node-key="1" show-checkbox empty-text="暂无数据"
+                <el-tree :expand-on-click-node="false" :highlight-current="true" node-key="system_menu_button_id" :current-node-key="1" show-checkbox empty-text="暂无数据"
                          ref="allAuthRef" :props="leftTree.props" :data="allAuth.data" :default-expanded-keys="allAuth.needExpandedKeys">
                   <template #default="{ node, data }">
           <span class="tree-node">
@@ -212,30 +212,33 @@ export default {
         commonFunc.Curd.FailTips("请勾选需要分配的权限节点")
         return
       }
-      // 涉及到多个接口请求，使用promise，全部请求结束做统一提示
-      let finalArray = []
+      // 收集参数、一次性发送
+      let menuList = []
+      let buttonList = []
+
       checkedNodes.every((item, index) => {
-        finalArray[index] = new Promise((resolve, reject) => {
-          const sendData = {
-            org_post_id: stateData.leftTree.curItemId,
-            system_menu_id: item.system_menu_id,
-            system_menu_fid: item.system_menu_fid,
-            button_id: item.system_menu_id,
-            node_type: item.node_type
+        if (item.node_type === 'menu') {
+          if (!menuList.some((item2, index) => item2.system_menu_button_id === item.system_menu_button_id)) {
+            menuList.push({node_type: 'menu', org_post_id: stateData.leftTree.curItemId, system_menu_button_id: item.system_menu_button_id, system_menu_fid: -1})
           }
-          assignMenuToOrg(sendData).then(res => {
-            resolve(true)
-          }).catch(res => {
-            reject(false)
-          })
-        })
+        } else if (item.node_type === 'button') {
+          buttonList.push({node_type: 'button', org_post_id: stateData.leftTree.curItemId, system_menu_button_id: item.system_menu_button_id, system_menu_fid: item.system_menu_fid})
+          if (!menuList.some((item3, index) => item3.system_menu_button_id === item.system_menu_fid)) {
+            menuList.push({node_type: 'menu', org_post_id: stateData.leftTree.curItemId, system_menu_button_id: item.system_menu_fid, system_menu_fid: -1})
+          }
+        }
         return true
       })
-      Promise.all(finalArray).then(finalRes => {
+
+      const authAssignSendParams = {
+        menu_list: menuList,
+        button_list: buttonList
+      }
+      assignMenuToOrg(authAssignSendParams).then(res => {
         commonFunc.Curd.SuccessTips('权限分配成功')
         getAssignedAuthList(stateData.leftTree.curItemId)
-      }).catch(res => {
-        commonFunc.Curd.FailTips('个别请求失败')
+      }).catch(errRes => {
+        commonFunc.Curd.FailTips('权限分配失败' + errRes.response.data.msg)
       })
     }
 
@@ -252,7 +255,7 @@ export default {
         finalArray[index] = new Promise((resolve, reject) => {
           const sendData = {
             post_mount_has_menu_id: item.auth_post_mount_has_menu_id,
-            post_mount_has_menu_button_id: item.system_menu_id,
+            post_mount_has_menu_button_id: item.system_menu_button_id,
             node_type: item.node_type
           }
           delMenuAuthFromOrg(sendData).then(res => {

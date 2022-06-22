@@ -134,6 +134,8 @@ export default {
         Authorization: 'Bearer ' + getToken()
       },
 
+      // 同目录的公共组件存储起来，方便后续被其他页面动态引用
+      selectComponents:import.meta.glob("./select*.vue")
     })
 
     watch(() => propChildrenTable, (newPropChildrenTable, oldPropChildrenTable) => {
@@ -161,8 +163,7 @@ export default {
     const fSelectComponent = (dataRowIndex, selectedField, componentPath) => {
       stateData.selectedRowIndex = dataRowIndex
       stateData.selectedRowField = selectedField
-
-      dynamicComponent.value = defineAsyncComponent(() => import( /* @vite-ignore */ componentPath))
+      dynamicComponent.value = defineAsyncComponent(stateData.selectComponents[componentPath])
 
       // stateData.propSelect.title = "选择模块"
       stateData.propSelect.mode = "one"  //  目前子表只允许单条选择

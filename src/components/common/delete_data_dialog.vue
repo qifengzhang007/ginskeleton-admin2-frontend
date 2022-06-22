@@ -78,6 +78,8 @@ export default {
 }
 
 .dialog-content {
+  display: block;
+  vertical-align: middle;
   min-height: 60px;
 }
 
