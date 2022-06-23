@@ -30,7 +30,7 @@
           </template>
         </el-input>
 
-        <img @click="getCaptcha" style="width:130px;height:30px;float:left;margin-left:20px"
+        <img  v-show="captcha.captchaFullUrl.length>0" @click="getCaptcha" style="width:130px;height:30px;float:left;margin-left:20px"
              :src="captcha.captchaFullUrl" alt="获取验证码出错">
       </el-form-item>
 
