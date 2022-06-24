@@ -57,7 +57,7 @@
 <script>
 import Split from '@/components/common/split.vue'
 import commonFunc from '@/libs/common_func'
-import {reactive, toRefs, watch} from "vue";
+import {reactive, toRefs} from "vue";
 import {show_button, view_button_list} from '@/api/system-setting/auth'
 import DeleteDataDialog from '@/components/common/delete_data_dialog.vue'
 import Paging from '@/components/common/paging.vue'
@@ -176,38 +176,23 @@ export default {
       })
     }
     // 树形节点选中、改变事件
+    //  elementPus 此处有不完善的地方，前面样式相关代码处理相关bug：https://github.com/element-plus/element-plus/issues/8009
     const fLeftTreeCurrentChange = (curItem, node, event) => {
-// console.log(curItem)
-// console.log( stateData.leftTreeRef)
-// stateData.leftTreeRef.setCheckedNodes([{id:0,title:""}])
-// stateData.leftTreeRef.setCurrentNode(null)
-// stateData.leftTreeRef.setChecked(6,true,false)
-// if(curItem.id===stateData.leftTree.curNodeKey){
-//
-// }
-//       stateData.leftTree.tmpId =stateData.leftTree.tmpId=== curItem.id?0:curItem.id
-//       // console.log("stateData.leftTree.curNodeKey", stateData.leftTree.curNodeKey)
-//       // stateData.leftTree.curNodeKey = 6
-//       return
-      if (curItem.id > 0 && stateData.leftTree.curItemId !== curItem.id) {
+      const ele = event.refs.node$
+      if (ele.classList.contains('is-current')) {
+        ele.classList.remove('is-current')
+        ele.blur()
+        stateData.leftTree.curItemId = 0
+        stateData.leftTree.curItemTitle= ''
+      } else {
+        ele.classList.add('is-current')
         stateData.leftTree.curItemId = curItem.id
-        stateData.leftTree.curItemTitle = curItem.title
-        stateData.tableList.searchKeyWords.org_post_id = stateData.leftTree.curItemId
+        stateData.leftTree.curItemTitle= curItem.title
       }
+      stateData.tableList.searchKeyWords.org_post_id=stateData.leftTree.curItemId
+      fSearch()
     }
 
-    // const customNodeClass = (data, node) => {
-    //   if (data.isPenultimate) {
-    //     return 'is-penultimate'
-    //   }
-    //   return null
-    // }
-
-    watch(() => stateData.leftTree.curItemId, (newItemId, oldItemId) => {
-      if (newItemId > 0 && oldItemId !== undefined) {
-        fSearch()
-      }
-    })
     // 右侧内容区域
     //界面元素鉴权后显示
     const btnElementAuth = () => {
