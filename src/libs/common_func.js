@@ -5,17 +5,17 @@ import config from '@/config/index'
 
 export default {
     name: 'commonFunc',
-// 获取当前环境名称：dev=开发环境；pro=编译后环境
+    // 获取当前环境名称：dev=开发环境；pro=编译后环境
     getEnvName() {
         return process.env.NODE_ENV === 'development' ? 'dev' : 'pro'
     },
     // 获取配置项中的服务器ip（也可能是域名）
     getServerIp() {
-        return this.getEnvName() === 'dev' ? config.baseUrl.devServerIp : config.baseUrl.proServerIp
+        return import.meta.env.VITE_SERVER_URL
     },
     // 获取配置项中的接口服务前缀
     getApiUrlPre() {
-        return this.getEnvName() === 'dev' ? config.baseUrl.devApiPre : config.baseUrl.proApiPre
+        return import.meta.env.VITE_API_URL
     },
     // 获取浏览器宽度
     GetBrowserWidth() {
@@ -35,8 +35,8 @@ export default {
     },
     // 组件select options 使用
     SelectStatus: [
-        {value: 1, label: '启用'},
-        {value: 0, label: '禁用'}
+        { value: 1, label: '启用' },
+        { value: 0, label: '禁用' }
     ],
     // table数据中 status 为 0、1 映射为中文
     StatusMap: {
