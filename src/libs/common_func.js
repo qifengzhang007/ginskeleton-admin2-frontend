@@ -11,11 +11,11 @@ export default {
     },
     // 获取配置项中的服务器ip（也可能是域名）
     getServerIp() {
-        return import.meta.env.VITE_SERVER_URL
+        return  config[import.meta.env.MODE].serverIp
     },
-    // 获取配置项中的接口服务前缀
+    // 获取配置项中的接口地址前缀
     getApiUrlPre() {
-        return import.meta.env.VITE_API_URL
+        return  config[import.meta.env.MODE].apiPre
     },
     // 获取浏览器宽度
     GetBrowserWidth() {

@@ -3,8 +3,8 @@
   "version": "v2.0.00",
   "scripts": {
     "dev": "vite --mode dev",
-    "build:dev": "vite build --mode dev",
-    "build:prod": "vite build --mode prod"
+    "build": "vite build --mode pro",
+    "build:dev": "vite build --mode dev"
   },
   "dependencies": {
     "@element-plus/icons-vue": "^2.0.4",

@@ -12,18 +12,21 @@ export default {
     },
 
     /*
-     * @description api请求基础路径
-     */
-    baseUrl: {
-        // npm run dev 开发环境有效
-        devServerIp: 'http://127.0.0.1:22001',
-        devApiPre: 'http://127.0.0.1:22001/admin',
-
-        // npm run build 编译后有效
-        proServerIp: 'http://139.196.101.31:22001',
-        proApiPre: 'http://139.196.101.31:22001/admin',
+    *  npm run dev ;
+    * npm  run  build:dev   开发调试、以及打包开发环境时有效
+    */
+    dev:{
+        serverIp: 'http://127.0.0.1:22001',   // 服务器ip
+        apiPre: 'http://127.0.0.1:22001/admin',   // 接口前缀
     },
 
+    /*
+    *  npm run build  生产环境有效
+    */
+    pro:{
+        serverIp: 'http://139.196.101.31:22001',
+        apiPre: 'http://139.196.101.31:22001/admin',
+    },
     //  ==============↓↓↓   后面的设置基本上无需改动   ↓↓↓======
 
     /*
