@@ -2,8 +2,9 @@
   "name": "ginskeleton-admin2-frontend",
   "version": "v2.0.00",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build"
+    "dev": "vite --mode dev",
+    "build:dev": "vite build --mode dev",
+    "build:prod": "vite build --mode prod"
   },
   "dependencies": {
     "@element-plus/icons-vue": "^2.0.4",
