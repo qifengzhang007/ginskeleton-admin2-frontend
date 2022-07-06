@@ -79,7 +79,7 @@ export default {
       leftTreeContainerFixHeight: {
         overflowY: "auto",
         overflowX: "hidden",
-        height: (commonFunc.GetBrowserHeight() - 115) + 'px',
+        height: (commonFunc.GetBrowserHeight() - 140) + 'px',
         marginTop: "6px",
       },
       leftTree: {

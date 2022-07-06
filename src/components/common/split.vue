@@ -41,7 +41,8 @@ export default {
       splitRightArea: {
         display: 'inline-block',
         width: `calc(${100 - splitRatio.value - 1}%)`,
-        height: '100vh'
+        height: '100vh',
+        paddingLeft:'6px',
       }
     })
 
@@ -99,11 +100,13 @@ export default {
 <style scoped>
 
 .split-vertical-line {
+  position: absolute;
+  top:120px;
   display: inline-block;
   width: 6px;
   border-left: 1px solid #e1e1e1;
   border-right: 1px solid #e1e1e1;
-  height: 100vh;
+  height: calc(100vh - 140px);
   cursor: w-resize;
 }
 

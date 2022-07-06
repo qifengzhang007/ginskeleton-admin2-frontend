@@ -79,7 +79,7 @@ export default {
       leftTreeContainerFixHeight: {
         overflowY: "auto",
         overflowX: "hidden",
-        height: (commonFunc.GetBrowserHeight() - 115) + 'px',
+        height: (commonFunc.GetBrowserHeight() - 140) + 'px',
         marginTop: "6px",
       },
       rightTree: {
@@ -115,7 +115,7 @@ export default {
           select: 'select',
         },
         style: {
-          width: '100%',
+          width: `calc(100% - 20px)`,
           height: commonFunc.TableHeight(),
         }
       },

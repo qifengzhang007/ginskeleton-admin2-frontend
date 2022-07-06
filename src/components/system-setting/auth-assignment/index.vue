@@ -36,7 +36,7 @@
 
           <Split :splitRatio="15">
             <template v-slot:left>
-              <div v-show="assignAuthEle.buttonWarp" :style="assignAuthEle.style">
+              <div id="test2222" v-show="assignAuthEle.buttonWarp" :style="assignAuthEle.style">
                 <el-button type="primary" @click="fAssignAuth" icon="ArrowLeft" v-if="assignAuthEle.buttonList.insert">分配</el-button>
                 <div style="height: 10px"></div>
                 <el-button type="danger" @click="fDestroyAuth" icon="ArrowRight" v-if="assignAuthEle.buttonList.delete">删除</el-button>
@@ -100,9 +100,10 @@ export default {
     const stateData = reactive({
       // 左侧树形列表相关的变量
       leftTreeContainerFixHeight: {
+        position:'absolute',
         overflowY: "auto",
         overflowX: "hidden",
-        height: (commonFunc.GetBrowserHeight() - 115) + 'px',
+        height: (commonFunc.GetBrowserHeight() - 140) + 'px',
         marginTop: "6px",
       },
       leftTree: {
@@ -132,8 +133,12 @@ export default {
           delete: 'delete'
         },
         style: {
-          textAlign: 'center',
-          marginTop: parseInt((commonFunc.GetBrowserHeight() - 110) / 2 - 35) + 'px'
+          height: '80px',
+          display:'flex',
+          flexDirection:"column",
+          position:'absolute',
+          marginLeft:'20px',
+          top:'50%'
         }
       }
 
