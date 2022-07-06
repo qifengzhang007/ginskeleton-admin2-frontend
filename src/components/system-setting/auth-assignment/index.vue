@@ -10,8 +10,8 @@
     <template v-slot:right>
       <Split :splitRatio="40">
         <template v-slot:left>
+          <div class="auth-list-title">已分配权限列表</div>
           <el-scrollbar :style="leftTreeContainerFixHeight" :height="leftTreeContainerFixHeight.height">
-            <div class="auth-list-title">已分配权限列表</div>
             <el-tree :expand-on-click-node="false" :highlight-current="true" node-key="system_menu_button_id" :current-node-key="1" show-checkbox empty-text="暂无数据"
                      ref="assignedAuthRef" :props="leftTree.props" :data="assignedAuth.data" :default-expanded-keys="assignedAuth.needExpandedKeys">
               <template #default="{ node, data }">
@@ -36,16 +36,18 @@
 
           <Split :splitRatio="15">
             <template v-slot:left>
-              <div id="test2222" v-show="assignAuthEle.buttonWarp" :style="assignAuthEle.style">
-                <el-button type="primary" @click="fAssignAuth" icon="ArrowLeft" v-if="assignAuthEle.buttonList.insert">分配</el-button>
-                <div style="height: 10px"></div>
-                <el-button type="danger" @click="fDestroyAuth" icon="ArrowRight" v-if="assignAuthEle.buttonList.delete">删除</el-button>
-              </div>
+              <el-scrollbar :style="leftTreeContainerFixHeight" :height="leftTreeContainerFixHeight.height">
+              <span v-show="assignAuthEle.buttonWarp" :style="assignAuthEle.style">
+                    <el-button type="primary" @click="fAssignAuth" icon="ArrowLeft" v-if="assignAuthEle.buttonList.insert">分配</el-button>
+                     <div style="height: 10px"></div>
+                    <el-button type="danger" @click="fDestroyAuth" icon="ArrowRight" v-if="assignAuthEle.buttonList.delete">删除</el-button>
+              </span>
+              </el-scrollbar>
             </template>
 
             <template v-slot:right>
+              <div class="auth-list-title">待分配权限列表</div>
               <el-scrollbar :style="leftTreeContainerFixHeight" :height="leftTreeContainerFixHeight.height">
-                <div class="auth-list-title">待分配权限列表</div>
                 <el-tree :expand-on-click-node="false" :highlight-current="true" node-key="system_menu_button_id" :current-node-key="1" show-checkbox empty-text="暂无数据"
                          ref="allAuthRef" :props="leftTree.props" :data="allAuth.data" :default-expanded-keys="allAuth.needExpandedKeys">
                   <template #default="{ node, data }">
@@ -100,11 +102,9 @@ export default {
     const stateData = reactive({
       // 左侧树形列表相关的变量
       leftTreeContainerFixHeight: {
-        position:'absolute',
-        overflowY: "auto",
         overflowX: "hidden",
         height: (commonFunc.GetBrowserHeight() - 140) + 'px',
-        marginTop: "6px",
+        marginTop: "6px"
       },
       leftTree: {
         props: {
@@ -133,12 +133,11 @@ export default {
           delete: 'delete'
         },
         style: {
-          height: '80px',
-          display:'flex',
-          flexDirection:"column",
-          position:'absolute',
-          marginLeft:'20px',
-          top:'50%'
+          display: 'flex',
+          flexFlow: 'column wrap',
+          placeContent: 'center',
+          alignItems: 'center',
+          marginTop: parseInt((commonFunc.GetBrowserHeight() - 110) / 2 - 106) + 'px'
         }
       }
 
