@@ -228,3 +228,8 @@ a {
     margin: 5px 7px;
     padding-bottom: 4px;
 }
+
+/*抽屉界面横向滚动条隐藏*/
+div.el-drawer__body *{
+    overflow-x: hidden;
+}
