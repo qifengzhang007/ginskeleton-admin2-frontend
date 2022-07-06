@@ -2,13 +2,14 @@
   "name": "ginskeleton-admin2-frontend",
   "version": "v2.0.00",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build"
+    "dev": "vite --mode dev",
+    "build": "vite build --mode pro",
+    "build:dev": "vite build --mode dev"
   },
   "dependencies": {
     "@element-plus/icons-vue": "^2.0.4",
     "axios": "^0.27.2",
-    "element-plus": "^2.2.5",
+    "element-plus": "^2.2.6",
     "js-cookie": "^3.0.1",
     "pinia": "^2.0.14",
     "pinia-plugin-persist": "^1.0.0",

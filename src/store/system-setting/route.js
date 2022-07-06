@@ -100,7 +100,7 @@ export const useRouteStore = defineStore({
         初始化路由列表
          */
         initRouteList(menuList) {
-            this.routeViews = import.meta.glob("@/views/*/*.vue")
+            this.routeViews = import.meta.glob("@/views/**/*.vue")
             this.routeList = this.menuListConvertRouteList(menuList)
             // 初始化默认打开的第一页面
             if (this.routeList.length > 0) {
