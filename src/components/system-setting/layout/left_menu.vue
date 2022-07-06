@@ -124,7 +124,7 @@ export default {
 }
 
 .aside {
-  width: 255px !important;
+  width: 225px !important;
   background-color: #1d1e23;
   overflow: hidden;
   overflow-y: auto;
