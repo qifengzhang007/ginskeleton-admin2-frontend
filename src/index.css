@@ -230,6 +230,6 @@ a {
 }
 
 /*抽屉界面横向滚动条隐藏*/
-div.el-drawer__body *{
+div.el-drawer div.el-drawer__body {
     overflow-x: hidden;
 }

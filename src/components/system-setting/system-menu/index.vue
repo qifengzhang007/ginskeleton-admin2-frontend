@@ -27,7 +27,7 @@
             <!--    ↓↓↓↓   业务字段  ↓↓↓↓   -->
 
             <el-table-column prop="title" label="菜单名称" width="120" sortable show-overflow-tooltip/>
-            <el-table-column prop="icon" label="图标" width="80" sortable show-overflow-tooltip/>
+            <el-table-column prop="icon" label="图标" width="110" sortable show-overflow-tooltip/>
             <el-table-column prop="name" label="路由名称" width="180" sortable show-overflow-tooltip/>
             <el-table-column prop="component" label="视图组件路径" width="280" sortable show-overflow-tooltip/>
             <el-table-column prop="sort" label="排序" width="80" sortable show-overflow-tooltip/>
