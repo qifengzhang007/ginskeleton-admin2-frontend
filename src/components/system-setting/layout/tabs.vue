@@ -219,10 +219,13 @@ li.scroll-tabs:last-child {
 .tabTitle {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: left;
   width: 90px;
   text-align: center;
-  /*font-size: 13px;*/
+  padding-left: 6px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .close-icon {
