@@ -138,7 +138,7 @@ export default {
          @msg  提示文本
          @duration  提示文本持续毫秒
          */
-        SuccessTips(msg = '成功', duration = 1500) {
+        SuccessTips(msg = '成功', duration = 800) {
             ElMessage({
                 message: msg,
                 type: 'success',
