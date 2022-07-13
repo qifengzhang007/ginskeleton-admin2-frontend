@@ -5,6 +5,9 @@ node_modules
 /tests/e2e/videos/
 /tests/e2e/screenshots/
 
+/src/auto-imports.d.ts
+/src/components.d.ts
+
 # local env files
 .env.local
 .env.*.local

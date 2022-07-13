@@ -107,13 +107,6 @@ export default {
 
     })
 
-    // 文件上传组件相关的属性传递
-    //@shortSavePath 文件上传以后返回的短路径，例如：/public/storage/uploaded/2022_05/0ed83dee0302f84e345674ece32d3cb5.png
-    //@fullSavePath 文件上传以后返回的全路径，例如：http://127.0.0.1:20201/public/storage/uploaded/2022_05/0ed83dee0302f84e345674ece32d3cb5.png
-    const fUploadCallback = (shortSavePath, fullSavePath) => {
-      propCreateEdit.value.curdFormData.avatar = shortSavePath
-    }
-
     // 抽屉界面相关的操作
     const fClose = (done) => {
       // 关闭按钮销毁变量
@@ -196,7 +189,6 @@ export default {
       formCreateEdit,
 
       fSeekBarCallback,
-      fUploadCallback,
       fClose,
       fConfirm,
       fSelectOrgPost,
