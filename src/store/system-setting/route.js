@@ -67,7 +67,7 @@ export const useRouteStore = defineStore({
                 }
                 tmpRouter.name =routerName===''? itemRouter.name:routerName
                 tmpRouter.path = routerPath===''?'/'+itemRouter.name:routerPath
-                tmpRouter.component = this.routeViews[`../../${itemRouter.component.endsWith('.vue') ? itemRouter.component : itemRouter.component + ".vue"}`]
+                tmpRouter.component = this.routeViews[`/src/${itemRouter.component.endsWith('.vue') ? itemRouter.component : itemRouter.component + ".vue"}`]
                 tmpRouter.meta.icon = itemRouter.icon
                 tmpRouter.meta.title = itemRouter.title
                 tmpRouter.meta.id = itemRouter.id
