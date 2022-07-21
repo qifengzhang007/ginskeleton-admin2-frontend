@@ -127,7 +127,7 @@ export default {
       childrenTable: {
         action: propCreateEdit.value.curdFormData.action,
         allRows: [], // 结果存储数组
-        deletedButtonIds: '', // 子表 被删除的id存储数组, 如果需要文本格式，deletedButtonIds.toString() 可以快速转换
+        deleted_ids: '', // 子表 被删除的id存储数组,返回文本格式：1,2,3
         //定义一行(条)记录所需要的字段
         rowField: {
           id: 0,
@@ -258,7 +258,7 @@ export default {
       commonFunc.objInit(propCreateEdit.value.curdFormData)
 
       stateData.childrenTable.allRows = []
-      stateData.childrenTable.deletedButtonIds = ''
+      stateData.childrenTable.deleted_ids = ''
       done()
     }
 
@@ -285,7 +285,7 @@ export default {
         if (valid) {
           // 主表单参数校验完成后，继续追加子表参数
           propCreateEdit.value.curdFormData.button_array = stateData.childrenTable.allRows
-          propCreateEdit.value.curdFormData.button_delete = stateData.childrenTable.deletedButtonIds
+          propCreateEdit.value.curdFormData.button_delete = stateData.childrenTable.deleted_ids
 
           switch (propCreateEdit.value.curdFormData.action) {
             case 'insert':

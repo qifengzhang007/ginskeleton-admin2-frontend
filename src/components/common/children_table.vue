@@ -154,7 +154,7 @@ export default {
       const tmpId = propChildrenTable.value.allRows[dataRowIndex].id
       if (tmpId > 0) {
         stateData.tmpDelIds.push(tmpId)
-        propChildrenTable.value.button_delete = stateData.tmpDelIds.toString()
+        propChildrenTable.value.deleted_ids = stateData.tmpDelIds.toString()
       }
       propChildrenTable.value.allRows.splice(dataRowIndex, 1)
     }
