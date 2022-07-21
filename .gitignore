@@ -7,7 +7,7 @@ node_modules
 
 /src/auto-imports.d.ts
 /src/components.d.ts
-
+./package-lock.json
 # local env files
 .env.local
 .env.*.local
