@@ -255,7 +255,6 @@ export default {
     const fClose = (done) => {
       // 关闭按钮销毁变量
       commonFunc.objInit(propCreateEdit.value.curdFormData)
-      commonFunc.objInit(propCreateEdit.value.curdFormData)
 
       stateData.childrenTable.allRows = []
       stateData.childrenTable.deleted_ids = ''
