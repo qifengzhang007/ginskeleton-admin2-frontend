@@ -19,21 +19,25 @@
             <!--  渲染 text input 框-->
             <template v-if="rowFieldFormat.type==='string'  ||  rowFieldFormat.type==='text'  ">
               <el-col :span="rowFieldFormat.width">
-                <el-input type="text" size="small" v-model="propChildrenTable.allRows[dataRowIndex][rowFieldFormat.field]" placeholder=""/>
+                <el-input type="text" size="small" v-model="propChildrenTable.allRows[dataRowIndex][rowFieldFormat.field]" placeholder=""
+                          :readonly="rowFieldFormat.readonly" v-show="rowFieldFormat.isShow"/>
               </el-col>
             </template>
 
             <!--  渲染 number input 框-->
             <template v-if="rowFieldFormat.type==='number' ">
               <el-col :span="rowFieldFormat.width">
-                <el-input type="number" size="small" v-model="propChildrenTable.allRows[dataRowIndex][rowFieldFormat.field]" placeholder=""/>
+                <el-input type="number" size="small" v-model.number="propChildrenTable.allRows[dataRowIndex][rowFieldFormat.field]" placeholder=""
+                          :readonly="rowFieldFormat.readonly" v-show="rowFieldFormat.isShow" />
               </el-col>
             </template>
 
             <!--  渲染 select-option 框-->
             <template v-if="rowFieldFormat.type==='selectOption' ">
               <el-col :span="rowFieldFormat.width">
-                <el-select class="m-2" placeholder="" size="small" v-model="propChildrenTable.allRows[dataRowIndex][rowFieldFormat.field]">
+                <el-select class="m-2" placeholder="" size="small" v-model="propChildrenTable.allRows[dataRowIndex][rowFieldFormat.field]"
+                           :readonly="rowFieldFormat.readonly" v-show="rowFieldFormat.isShow" >
+
                   <el-option
                       v-for="option in rowFieldFormat.options"
                       :key="option.value"
@@ -47,7 +51,9 @@
             <!--  渲染 dialog  框-->
             <template v-if="rowFieldFormat.type==='dialog' ">
               <el-col :span="rowFieldFormat.width">
-                <el-input type="text" size="small" readonly v-model="propChildrenTable.allRows[dataRowIndex][rowFieldFormat.field]">
+                <el-input type="text" size="small" readonly v-model="propChildrenTable.allRows[dataRowIndex][rowFieldFormat.field]"
+                          :readonly="rowFieldFormat.readonly" v-show="rowFieldFormat.isShow">
+
                   <template #append>
                     <el-button icon="Search" size="small" @click="fSelectComponent(dataRowIndex,rowFieldFormat.field,rowFieldFormat.componentPath)"/>
                   </template>
@@ -58,8 +64,8 @@
             <!--  渲染 uploadFile  框-->
             <template v-if="rowFieldFormat.type==='upload' ">
               <el-col :span="rowFieldFormat.width">
-                <el-input type="text" size="small" readonly v-model="propChildrenTable.allRows[dataRowIndex][rowFieldFormat.field]">
-
+                <el-input type="text" size="small" readonly v-model="propChildrenTable.allRows[dataRowIndex][rowFieldFormat.field]"
+                          :readonly="rowFieldFormat.readonly" v-show="rowFieldFormat.isShow">
                   <template #append>
                     <el-upload
                         :show-file-list="false"

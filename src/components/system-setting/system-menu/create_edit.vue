@@ -151,13 +151,17 @@ export default {
               fr_auth_button_cn_en_id: 'id',
               button_name: 'cn_name',
               request_method: 'allow_method'
-            }
+            },
+            isShow:true,
+            readonly:false
           },
           {
             name: '接口地址',
             type: "string",
             field: 'request_url',
             width: 9,
+            isShow:true,
+            readonly:false
           },
           {
             name: '接口允许请求方式',
@@ -177,13 +181,17 @@ export default {
                 label: "POST",
                 value: "POST",
               },
-            ]
+            ],
+            isShow:true,
+            readonly:false
           },
           {
             name: '备注',
             type: "string",
             field: 'remark',
             width: 5,
+            isShow:true,
+            readonly:false
           },
           // {
           //   name: '上传文件',
