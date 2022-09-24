@@ -15,7 +15,7 @@
         <div class="tableList-area">
           <div class="toolBanner">
             用户名:
-            <el-input v-model="tableList.searchKeyWords.user_name" placeholder="关键词" class="keyWordsInput"/>
+            <el-input clearable v-model="tableList.searchKeyWords.user_name" placeholder="关键词" class="keyWordsInput"/>
             <el-button-group v-if="tableList.buttonGroupIsShow">
               <el-button type="primary" @click="fSearch" icon="Search" v-if="tableList.buttonList.select">查询</el-button>
               <el-button type="success" @click="fCreateEdit('insert')" icon="Plus" v-if="tableList.buttonList.insert">新增</el-button>

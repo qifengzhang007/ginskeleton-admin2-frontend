@@ -3,7 +3,7 @@
     <div class="tableList-area">
       <div class="toolBanner">
         按钮名称:
-        <el-input v-model="tableList.searchKeyWords.button_name" placeholder="关键词" class="keyWordsInput"/>
+        <el-input clearable v-model="tableList.searchKeyWords.button_name" placeholder="关键词" class="keyWordsInput"/>
         <el-button-group v-if="tableList.buttonGroupIsShow">
           <el-button type="primary" @click="fSearch" icon="Search" v-if="tableList.buttonList.select">查询</el-button>
           <el-button type="success" @click="fCreateEdit('insert')" icon="Plus" v-if="tableList.buttonList.insert">新增</el-button>
@@ -18,7 +18,7 @@
 
         <el-table-column prop="cn_name" label="按钮名" sortable show-overflow-tooltip/>
         <el-table-column prop="en_name" label="英文编码" sortable show-overflow-tooltip/>
-        <el-table-column prop="color" width="100"  align="center" label="按钮颜色" sortable show-overflow-tooltip>
+        <el-table-column prop="color" width="100" align="center" label="按钮颜色" sortable show-overflow-tooltip>
           <template #default="scope">
             <span :style="{display:'inline-block' , backgroundColor:scope.row.color, width:'20px',height:'20px'}"/>
           </template>

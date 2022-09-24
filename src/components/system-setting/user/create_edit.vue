@@ -20,7 +20,7 @@
           <el-row justify="space-between">
             <el-col :span="11">
               <el-form-item label="密码" prop="pass">
-                <el-input type="password" v-model="propCreateEdit.curdFormData.pass" placeholder="" show-password/>
+                <el-input clearable type="password" v-model="propCreateEdit.curdFormData.pass" placeholder="" show-password/>
               </el-form-item>
             </el-col>
             <el-col :span="11">

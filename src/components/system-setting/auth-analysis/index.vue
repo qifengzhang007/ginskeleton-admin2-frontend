@@ -5,7 +5,7 @@
         <div class="tableList-area">
           <div class="toolBanner">
             用户姓名:
-            <el-input v-model="tableList.searchKeyWords.title" placeholder="关键词" class="keyWordsInput"/>
+            <el-input clearable v-model="tableList.searchKeyWords.title" placeholder="关键词" class="keyWordsInput"/>
             <el-button-group v-if="tableList.buttonGroupIsShow">
               <el-button type="primary" @click="fSearch" icon="Search" v-if="tableList.buttonList.select">查询</el-button>
             </el-button-group>
@@ -34,7 +34,7 @@
     <template v-slot:right>
       <el-scrollbar :style="leftTreeContainerFixHeight" :height="leftTreeContainerFixHeight.height">
         <div class="auth-list-title">已分配权限列表</div>
-        <el-tree :expand-on-click-node="false" :highlight-current="true" node-key="id" :current-node-key="1"  empty-text="暂无数据"
+        <el-tree :expand-on-click-node="false" :highlight-current="true" node-key="id" :current-node-key="1" empty-text="暂无数据"
                  :props="rightTree.props" :data="rightTree.data" :default-expanded-keys="rightTree.needExpandedKeys">
           <template #default="{ node, data }">
           <span class="tree-node">
