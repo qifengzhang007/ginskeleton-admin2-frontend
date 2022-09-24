@@ -2,6 +2,7 @@
   <div class="children-table-container">
     <div class="children-tool-bar">
       <el-button type="primary" icon="Plus" size="small" @click="fCreate">新增</el-button>
+      <el-button type="primary" icon="DocumentCopy" size="small" @click="fCopy">复制最后一条</el-button>
     </div>
     <!--  渲染 表头-->
     <el-row class="children-table-header" :gutter="6">
@@ -28,7 +29,15 @@
             <template v-if="rowFieldFormat.type==='number' ">
               <el-col :span="rowFieldFormat.width">
                 <el-input type="number" size="small" v-model.number="propChildrenTable.allRows[dataRowIndex][rowFieldFormat.field]" placeholder=""
-                          :readonly="rowFieldFormat.readonly" v-show="rowFieldFormat.isShow" />
+                          :readonly="rowFieldFormat.readonly" v-show="rowFieldFormat.isShow"/>
+              </el-col>
+            </template>
+
+            <!--  渲染 date 框-->
+            <template v-if="rowFieldFormat.type==='date' ">
+              <el-col :span="rowFieldFormat.width">
+                <el-date-picker type="date" size="small" v-model="propChildrenTable.allRows[dataRowIndex][rowFieldFormat.field]" placeholder=""
+                                :readonly="rowFieldFormat.readonly" v-show="rowFieldFormat.isShow" @change="fDateChange($event,dataRowIndex,rowFieldFormat.field)"/>
               </el-col>
             </template>
 
@@ -36,7 +45,7 @@
             <template v-if="rowFieldFormat.type==='selectOption' ">
               <el-col :span="rowFieldFormat.width">
                 <el-select class="m-2" placeholder="" size="small" v-model="propChildrenTable.allRows[dataRowIndex][rowFieldFormat.field]"
-                           :readonly="rowFieldFormat.readonly" v-show="rowFieldFormat.isShow" >
+                           :readonly="rowFieldFormat.readonly" v-show="rowFieldFormat.isShow">
 
                   <el-option
                       v-for="option in rowFieldFormat.options"
@@ -141,7 +150,7 @@ export default {
       },
 
       // 同目录的公共组件存储起来，方便后续被其他页面动态引用
-      selectComponents:import.meta.glob("./select*.vue")
+      selectComponents: import.meta.glob("./select*.vue")
     })
 
     watch(() => propChildrenTable, (newPropChildrenTable, oldPropChildrenTable) => {
@@ -154,6 +163,14 @@ export default {
     const fCreate = () => {
       const blankRow = Object.assign({}, propChildrenTable.value.rowField)
       propChildrenTable.value.allRows.push(blankRow)
+    }
+    // 复制最后一行
+    const fCopy = () => {
+      if (propChildrenTable.value.allRows.length > 0) {
+        // 重新定义变量接受，否则复制出来的数据都会指向同一个指针
+        let tmpItem = Object.assign({}, propChildrenTable.value.allRows[propChildrenTable.value.allRows.length - 1])
+        propChildrenTable.value.allRows.push(tmpItem)
+      }
     }
     // 删除一行事件
     const fDelete = (dataRowIndex) => {
@@ -222,6 +239,14 @@ export default {
       return shortPath.length > 10 ? commonFunc.getServerIp() + shortPath : ''
     }
 
+    // 日期改变时通过change事件修改绑定的变量为文本型
+    const fDateChange = (defaultDate, rowIndex, FieldName) => {
+      console.log("日期改变了：" + defaultDate, rowIndex, FieldName)
+      if (propChildrenTable.value.allRows.length > 0) {
+        (propChildrenTable.value.allRows[rowIndex])[FieldName] = strDate
+      }
+    }
+
     return {
       ...toRefs(stateData),
       propChildrenTable,
@@ -234,7 +259,9 @@ export default {
       fSuccess,
       fError,
       fCreate,
-      fDelete
+      fCopy,
+      fDelete,
+      fDateChange
     }
   }
 }
