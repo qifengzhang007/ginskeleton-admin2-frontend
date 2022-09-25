@@ -13,9 +13,11 @@
     </el-row>
 
     <el-row :gutter="6" v-for="(dataRow,dataRowIndex)  in propChildrenTable.allRows" :key="dataRowIndex" class="children-table-body">
+      <template v-for="(rowFieldFormat,rowFieldIndex)  in propChildrenTable.rowFieldFormat">
+
       <template v-for="(dataFieldValue,dataFieldKey) in dataRow">
 
-        <template v-for="(rowFieldFormat,rowFieldIndex)  in propChildrenTable.rowFieldFormat">
+
           <template v-if="dataFieldKey===rowFieldFormat.field">
             <!--  渲染 text input 框-->
             <template v-if="rowFieldFormat.type==='string'  ||  rowFieldFormat.type==='text'  ">
