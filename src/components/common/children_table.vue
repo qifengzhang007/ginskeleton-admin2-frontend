@@ -7,7 +7,7 @@
     <!--  渲染 表头-->
     <el-row class="children-table-header" :gutter="6">
       <el-col v-for="(item,index) in propChildrenTable.rowFieldFormat" :span="item.width?item.width:4" :key="index">
-        <div>{{ item.name }}</div>
+        <div v-show="item.isShow">{{ item.name }}</div>
       </el-col>
 
     </el-row>
@@ -20,7 +20,7 @@
             <!--  渲染 text input 框-->
             <template v-if="rowFieldFormat.type==='string'  ||  rowFieldFormat.type==='text'  ">
               <el-col :span="rowFieldFormat.width">
-                <el-input type="text" size="small" v-model="propChildrenTable.allRows[dataRowIndex][rowFieldFormat.field]" placeholder=""
+                <el-input type="text" size="small" clearable v-model="propChildrenTable.allRows[dataRowIndex][rowFieldFormat.field]" placeholder=""
                           :readonly="rowFieldFormat.readonly" v-show="rowFieldFormat.isShow"/>
               </el-col>
             </template>
@@ -28,17 +28,19 @@
             <!--  渲染 number input 框-->
             <template v-if="rowFieldFormat.type==='number' ">
               <el-col :span="rowFieldFormat.width">
-                <el-input type="number" size="small" v-model.number="propChildrenTable.allRows[dataRowIndex][rowFieldFormat.field]" placeholder=""
+                <el-input type="number" size="small" clearable v-model.number="propChildrenTable.allRows[dataRowIndex][rowFieldFormat.field]" placeholder=""
                           :readonly="rowFieldFormat.readonly" v-show="rowFieldFormat.isShow"/>
               </el-col>
             </template>
 
             <!--  渲染 date 框-->
             <template v-if="rowFieldFormat.type==='date' ">
-              <el-col :span="rowFieldFormat.width">
-                <el-date-picker type="date" size="small" v-model="propChildrenTable.allRows[dataRowIndex][rowFieldFormat.field]" placeholder=""
-                                :readonly="rowFieldFormat.readonly" v-show="rowFieldFormat.isShow" @change="fDateChange($event,dataRowIndex,rowFieldFormat.field)"/>
-              </el-col>
+              <div v-show="rowFieldFormat.isShow">
+                <el-col :span="rowFieldFormat.width">
+                  <el-date-picker type="date" size="small" clearable v-model="propChildrenTable.allRows[dataRowIndex][rowFieldFormat.field]" placeholder=""
+                                  :readonly="rowFieldFormat.readonly" @change="fDateChange($event,dataRowIndex,rowFieldFormat.field)"/>
+                </el-col>
+              </div>
             </template>
 
             <!--  渲染 select-option 框-->
@@ -73,7 +75,7 @@
             <!--  渲染 uploadFile  框-->
             <template v-if="rowFieldFormat.type==='upload' ">
               <el-col :span="rowFieldFormat.width">
-                <el-input type="text" size="small" readonly v-model="propChildrenTable.allRows[dataRowIndex][rowFieldFormat.field]"
+                <el-input type="text" size="small" readonly clearable v-model="propChildrenTable.allRows[dataRowIndex][rowFieldFormat.field]"
                           :readonly="rowFieldFormat.readonly" v-show="rowFieldFormat.isShow">
                   <template #append>
                     <el-upload
@@ -241,9 +243,8 @@ export default {
 
     // 日期改变时通过change事件修改绑定的变量为文本型
     const fDateChange = (defaultDate, rowIndex, FieldName) => {
-      console.log("日期改变了：" + defaultDate, rowIndex, FieldName)
       if (propChildrenTable.value.allRows.length > 0) {
-        (propChildrenTable.value.allRows[rowIndex])[FieldName] = strDate
+        (propChildrenTable.value.allRows[rowIndex])[FieldName] = commonFunc.DateFormat(defaultDate)
       }
     }
 
