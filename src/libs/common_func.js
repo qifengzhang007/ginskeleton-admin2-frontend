@@ -245,6 +245,46 @@ export default {
                 resArray.push(treeArray[i].system_menu_button_id)
             }
         }
-    }
+    },
+
+    /*
+    获取当前日期，yyyy-mm-dd  格式
+    @baseDay 被格式化化的日期，默认是当天时间，参数格式支持 UTC 、中国标准时间Wed Sep 21 2022 00:00:00 GMT+0800 (中国标准时间) 、timestamp 、yyyy-mm-dd 等
+    */
+    DateFormat(baseDay="") {
+        var date = new Date();
+        if(baseDay){
+            date=new Date(baseDay)
+        }
+
+        var seperator1 = "-";
+        var year = date.getFullYear();
+        var month = date.getMonth() + 1;
+        var strDate = date.getDate();
+        if (month >= 1 && month <= 9) {
+            month = "0" + month;
+        }
+        if (strDate >= 0 && strDate <= 9) {
+            strDate = "0" + strDate;
+        }
+        return year + seperator1 + month + seperator1 + strDate;
+    },
+
+    /*
+    基于基准日期进行时间增减
+    @days 增减天数， 10 为当前向后推移10 ；-10 向前推移10天
+    @baseDay 基准日期，默认为当天，否则就是开发者指定的日期
+    */
+    DateAdd(days, baseDay = '') {
+        let cur_date = new Date();
+        if (baseDay !== '') {
+            cur_date = new Date(baseDay);
+        }
+        cur_date.setDate(cur_date.getDate() + days);
+        const m = cur_date.getMonth() + 1;
+        const d = cur_date.getDate();
+        return cur_date.getFullYear() + '-' + (m > 9 ? m : ('0' + m)) + '-' + (d > 9 ? d : ('0' + d));
+    },
+
 
 }
