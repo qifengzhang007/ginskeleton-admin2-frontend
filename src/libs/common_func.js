@@ -277,7 +277,7 @@ export default {
     */
     DateAdd(days, baseDay = '') {
         let cur_date = new Date();
-        if (baseDay !== '') {
+        if (baseDay) {
             cur_date = new Date(baseDay);
         }
         cur_date.setDate(cur_date.getDate() + days);
