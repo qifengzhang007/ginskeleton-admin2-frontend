@@ -4,6 +4,8 @@ import router from './router/index'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import './index.css'
 import store from "./store/system-setting/index";
+import ElementPlus from 'element-plus'
+import zhCn from 'element-plus/es/locale/lang/zh-cn'
 
 const app = createApp(App)
 
@@ -14,5 +16,8 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
 
 app.use(store)
 app.use(router)
+app.use(ElementPlus, {
+    locale: zhCn,
+})
 
 app.mount('#app')
