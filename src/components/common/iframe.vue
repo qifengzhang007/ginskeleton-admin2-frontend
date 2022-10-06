@@ -1,5 +1,5 @@
 <template>
-  <iframe id="iframeId" ref="iframeRef"  seamless border="0" frameborder="0" width="100%" :height="height" :src="propIframe.url"  class="iframe"></iframe>
+  <iframe id="iframeId" ref="iframeRef" seamless allowtransparency="true" border="0" width="100%" :height="height" :src="propIframe.url" class="iframe"></iframe>
 </template>
 
 <script>
@@ -16,16 +16,14 @@ export default {
 
     const stateData = reactive({
       iframeRef: null,
-      height: (commonFunc.GetBrowserHeight()-142)+'px'
+      height: (commonFunc.GetBrowserHeight() - 142) + 'px'
     })
-
-    console.log("body-height", stateData.height)
 
     const fObjConvUrlParams = (obj) => {
       let arr = [];
       for (const p in obj)
         if (obj.hasOwnProperty(p)) {
-          arr.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+          arr.push(p+ "=" + obj[p]);
         }
       return arr.join("&");
     }
@@ -47,13 +45,13 @@ export default {
 <style scoped>
 
 .iframe {
-  left: 10px;
+  border: none;
   right: 10px;
-  top: 20px;
   bottom: 0;
   width: 100%;
   background: #fff;
   overflow: auto;
+  margin: 4px 4px 0 4px;
 }
 
 </style>
