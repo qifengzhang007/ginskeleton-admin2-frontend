@@ -1,5 +1,5 @@
 <template>
-  <iframe id="iframeId" ref="iframeRef" seamless allowtransparency="true" border="0" width="100%" :height="height" :src="propIframe.url" class="iframe"></iframe>
+  <iframe id="iframeId" ref="iframeRef" seamless allowtransparency="true" border="0" width="100%" :height="height" :src="propIframe.url" class="iframe" onpageshow="fOnload"></iframe>
 </template>
 
 <script>
@@ -23,7 +23,7 @@ export default {
       let arr = [];
       for (const p in obj)
         if (obj.hasOwnProperty(p)) {
-          arr.push(p+ "=" + obj[p]);
+          arr.push(p + "=" + obj[p]);
         }
       return arr.join("&");
     }
@@ -31,12 +31,16 @@ export default {
     const fReloadPage = () => {
       document.getElementById('iframeId').src = propIframe.value.url + "?" + fObjConvUrlParams(propIframe.value.params)
     }
+    const fOnload = () => {
+      // alert("文档加载完成触发！！！！")
+    }
 
     return {
       ...toRefs(stateData),
       propIframe,
 
-      fReloadPage
+      fReloadPage,
+      fOnload
     }
   }
 }
