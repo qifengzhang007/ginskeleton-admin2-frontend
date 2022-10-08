@@ -15,7 +15,7 @@
     <el-row :gutter="6" v-for="(dataRow,dataRowIndex)  in propChildrenTable.allRows" :key="dataRowIndex" class="children-table-body">
       <template v-for="(rowFieldFormat,rowFieldIndex)  in propChildrenTable.rowFieldFormat">
 
-      <template v-for="(dataFieldValue,dataFieldKey) in dataRow">
+        <template v-for="(dataFieldValue,dataFieldKey) in dataRow">
 
 
           <template v-if="dataFieldKey===rowFieldFormat.field">
@@ -173,6 +173,10 @@ export default {
       if (propChildrenTable.value.allRows.length > 0) {
         // 重新定义变量接受，否则复制出来的数据都会指向同一个指针
         let tmpItem = Object.assign({}, propChildrenTable.value.allRows[propChildrenTable.value.allRows.length - 1])
+        if (tmpItem.id > 0) {
+          // 将复制出来的数据id设置为0，这样才能作为新数据插入数据库
+          tmpItem.id = 0
+        }
         propChildrenTable.value.allRows.push(tmpItem)
       }
     }
