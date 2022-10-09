@@ -12,13 +12,22 @@
         <HeaderBanner/>
         <Tabs/>
         <div id="layout-content">
+          <!--    router-view 组件渲染本站的路由对应的页面 -->
           <router-view v-slot="{ Component, route }">
-            <transition :name="route.meta.transition || 'fade'" mode="out-in">
-              <keep-alive>
-                <component :is="Component" :key="route.meta.usePathKey ? route.path : undefined"/>
-              </keep-alive>
-            </transition>
+            <template v-if="!route.meta.isOutPage">
+              <transition :name="route.meta.transition || 'fade'" mode="out-in">
+                <keep-alive>
+                  <component :is="Component" :key="route.meta.usePathKey ? route.path : undefined"/>
+                </keep-alive>
+              </transition>
+            </template>
           </router-view>
+
+          <!--    如果是外部网页需要使用 iframe 组件渲染到本系统 -->
+          <div v-for="(item,index)   in outPageRouteList" v-show="curRoute.path===item.path">
+            <component :key="item.name" :is="item.name"/>
+          </div>
+
         </div>
       </div>
 
@@ -76,7 +85,10 @@ export default {
         display: 'inline-block',
         width: `calc(100% - ${layoutStore.getLeftMenuWidth > 0 ? layoutStore.getLeftMenuWidth + 'px' : 0})  !important`,
         minHeight: '100vh'
-      }
+      },
+      // 可能的外部页面路由
+      outPageRouteList:[],
+      curRoute:{}
     })
 
     // 监听布局变化
@@ -89,12 +101,34 @@ export default {
         stateData.layoutRight.width = `calc(100% - ${newVal.leftMenuWidth}px) !important`
       }
     }, {deep: true, immediate: true})
+
     // 路由相关
     const reloadStore = useReloadStore()     // 实例化
     const tabsStore = useTabStore()
     const router = useRouter()
     let routerStore = useRouteStore()
     routerStore.setRoute(router)
+
+
+    // 监听用户登录成功时，处理需要使用iframe渲染外部站点路由
+    watch(() => userStore.user.token.isValid, (newVal, oldVal) => {
+      if (newVal) {
+        console.log("用户登录成功了！！！")
+        stateData.outPageRouteList=routerStore.getOutPageRouteList()
+        console.log("临时存储的outPage：",  stateData.outPageRouteList)
+        console.log("getCurMenuItem：", tabsStore.getCurMenuItem())
+
+      }
+    }, {deep: true, immediate: true})
+
+    // 监听菜单点击时实时变化的路由
+    watch(() => tabsStore.tabs.curMenuItem, (newVal, oldVal) => {
+      if (newVal) {
+        stateData.curRoute=newVal
+        console.log("curMenuItem最新值",newVal)
+      }
+    }, {deep: true, immediate: true})
+
 
     const routerGuard = () => {
       router.beforeEach((to, from, next) => {

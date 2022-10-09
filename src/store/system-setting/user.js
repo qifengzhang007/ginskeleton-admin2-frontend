@@ -13,7 +13,7 @@ export const useUserStore = defineStore(
                 {
                     key: config.dataStore.keyPre + 'useUserStore',
                     storage: localStorage,
-                    paths: ['user']
+                    paths: ['user'] // 设置需要持久存储的键名
                 }
             ]
         },

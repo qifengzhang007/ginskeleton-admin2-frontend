@@ -31,6 +31,9 @@ export const useTabStore = defineStore({
         }
     },
     getters: {
+        /*
+        * 获取所有的tabList
+        * */
         getTabList(userId) {
             return this.tabs.list
         },
@@ -71,7 +74,7 @@ export const useTabStore = defineStore({
 
             const menuStore = useMenuStore()
             menuStore.setMenuNavPathList(menuId)
-            menuStore.menu.defaultActive=menuPath
+            menuStore.menu.defaultActive = menuPath
         },
 
         /* 删除 tab 导航按钮
@@ -144,7 +147,7 @@ export const useTabStore = defineStore({
         */
         closeAllTabs() {
             this.tabs.list = []
-            useMenuStore().menu.defaultActive=''
+            useMenuStore().menu.defaultActive = ''
             commonFunc.objInit(this.tabs.curMenuItem)
             this.syncChangeRouter('/blank_page', 'tab')
         },
@@ -154,7 +157,14 @@ export const useTabStore = defineStore({
          */
         destroy() {
             commonFunc.objInit(this.tabs)
-        }
+        },
+
+        /*
+        * 获取当前路由path
+        * */
+        getCurMenuItem() {
+            return this.tabs.curMenuItem
+        },
 
     }
 
