@@ -45,9 +45,10 @@ export const useTabStore = defineStore({
         @menuId 菜单id
         @menuIcon 菜单图标英文单词
         @menuPath 菜单对应的路由路径
+        @viewRoute路径信息
         @actionFrom 调用tab-add方法事件来源
         */
-        add(menuName, menuId, menuIcon, menuPath, actionFrom = 'menu') {
+        add(menuName, menuId, menuIcon, menuPath,viewComponentPath,isOutPage, actionFrom = 'menu') {
             if (this.tabs.curMenuItem.path === menuPath || menuName === '') return
 
             // tepItem 变量用于后面的数组方法：push，不能直接使用this.tabs.curMenuItem ，否则永远只会添加成功最一条
@@ -57,6 +58,9 @@ export const useTabStore = defineStore({
             tepItem.relaMenuId = menuId
             tepItem.icon = menuIcon
             tepItem.path = menuPath
+            // 以下两个参数主要标记被加载的页面是否为外部页面，决定个后续渲染组件究竟时使用 view-router 或者 iframe
+            tepItem.viewComponentPath = viewComponentPath
+            tepItem.isOutPage = isOutPage
 
             this.tabs.curMenuItem = Object.assign({}, tepItem)
 
@@ -99,6 +103,8 @@ export const useTabStore = defineStore({
             if (this.tabs.list.length > 0) {
                 this.tabs.curMenuItem.relaMenuId = this.tabs.list[nextTabIndex].relaMenuId
                 this.tabs.curMenuItem.path = this.tabs.list[nextTabIndex].path
+                this.tabs.curMenuItem.viewComponentPath = this.tabs.list[nextTabIndex].viewComponentPath
+                this.tabs.curMenuItem.isOutPage = this.tabs.list[nextTabIndex].isOutPage
                 this.syncChangeRouter(this.tabs.curMenuItem.path, 'tab')
             } else {
                 //关闭最后一个tab页签，直接调用全部关闭方法即可

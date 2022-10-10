@@ -8,7 +8,7 @@
 
       <ul ref="scrollBody" class="scroll-tab" :style="{left: tagBodyLeft+'px'}">
         <li class="scroll-tabs" v-for="(item,index) in tabStore.tabs.list" :key="index"
-            @click.stop="activeTab(item.name,item.relaMenuId,item.icon,item.path,'tab')"
+            @click.stop="activeTab(item.name,item.relaMenuId,item.icon,item.path,item.viewComponentPath,item.isOutPage,'tab')"
         >
           <el-icon :size="14" :class="{tabIconTxtActive:item.isActive}">
             <component v-if="item.icon.length>=2" :is="item.icon"/>
@@ -92,8 +92,8 @@ export default {
     }
 
     // tab 激活(添加)事件
-    const activeTab = (menuName, relaMenuId, menuIcon, menuPath, actionFrom) => {
-      tabStore.add(menuName, relaMenuId, menuIcon, menuPath, actionFrom)
+    const activeTab = (menuName, relaMenuId, menuIcon, menuPath, viewComponent,isOutPage,actionFrom) => {
+      tabStore.add(menuName, relaMenuId, menuIcon, menuPath, viewComponent,isOutPage,actionFrom)
     }
 
     return {

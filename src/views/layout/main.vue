@@ -21,12 +21,15 @@
                 </keep-alive>
               </transition>
             </template>
+            <template v-else>
+              <!--    如果是外部网页需要使用 iframe 组件渲染到本系统 -->
+              <div v-for="(item,index)   in outPageRouteList" v-show="curRoute.path===item.path">
+                <transition name="fade">
+                  <component :key="item.key" :is="Component"/>
+                </transition>
+              </div>
+            </template>
           </router-view>
-
-          <!--    如果是外部网页需要使用 iframe 组件渲染到本系统 -->
-          <div v-for="(item,index)   in outPageRouteList" v-show="curRoute.path===item.path">
-            <component :key="item.name" :is="item.name"/>
-          </div>
 
         </div>
       </div>
@@ -87,8 +90,8 @@ export default {
         minHeight: '100vh'
       },
       // 可能的外部页面路由
-      outPageRouteList:[],
-      curRoute:{}
+      outPageRouteList: [],
+      curRoute: {}
     })
 
     // 监听布局变化
@@ -109,26 +112,56 @@ export default {
     let routerStore = useRouteStore()
     routerStore.setRoute(router)
 
-
-    // 监听用户登录成功时，处理需要使用iframe渲染外部站点路由
-    watch(() => userStore.user.token.isValid, (newVal, oldVal) => {
-      if (newVal) {
-        console.log("用户登录成功了！！！")
-        stateData.outPageRouteList=routerStore.getOutPageRouteList()
-        console.log("临时存储的outPage：",  stateData.outPageRouteList)
-        console.log("getCurMenuItem：", tabsStore.getCurMenuItem())
-
-      }
-    }, {deep: true, immediate: true})
-
     // 监听菜单点击时实时变化的路由
     watch(() => tabsStore.tabs.curMenuItem, (newVal, oldVal) => {
       if (newVal) {
-        stateData.curRoute=newVal
-        console.log("curMenuItem最新值",newVal)
+        stateData.curRoute = newVal
+        console.log("curMenuItem最新值", newVal.viewComponentPath, "newVal",newVal)
+        const viewComponent = newVal.viewComponentPath
+        if (newVal.isOutPage) {
+
+          if (!fOutPageRouteIsSave(newVal.viewComponentPath)) {
+            fSaveOutPageRoute(newVal.viewComponentPath, newVal.path, routerStore.getViewComponent(newVal.viewComponentPath))
+
+            console.log("此时的所有动态组件", stateData.outPageRouteList)
+
+            console.log("然后根据键获取动态组件：", fGetOutPageRoute(newVal.viewComponentPath))
+
+            console.log("系统路由信息：", router.getRoutes())
+          }
+        }
       }
     }, {deep: true, immediate: true})
 
+    // 检测外部页面路由是否已经缓存
+    const fOutPageRouteIsSave = (keyName) => {
+      for (let index in stateData.outPageRouteList) {
+        if ((stateData.outPageRouteList[index]).key === keyName) {
+          return true
+        }
+      }
+      return false
+    }
+    // 如果外部页面路由没有缓存，则调用该函数进行缓存
+    const fSaveOutPageRoute = (keyName, path, value) => {
+      stateData.outPageRouteList.push(
+          {
+            key: keyName,
+            path: path,
+            value: value
+          }
+      )
+
+    }
+    //根据键获取缓存的外部页面组件
+    const fGetOutPageRoute = (keyName) => {
+      for (let index in stateData.outPageRouteList) {
+        if ((stateData.outPageRouteList[index]).key === keyName) {
+          return (stateData.outPageRouteList[index]).value
+        }
+      }
+      return null
+    }
 
     const routerGuard = () => {
       router.beforeEach((to, from, next) => {
@@ -143,7 +176,7 @@ export default {
             // 如果没有，则跳至登录页面
             next({name: config.defaultRoute.notLoginDefaultRouterName})
           } else {
-            tabsStore.add(to.meta.title, to.meta.id, to.meta.icon, to.path)
+            tabsStore.add(to.meta.title, to.meta.id, to.meta.icon, to.path, to.meta.viewComponentPath, to.meta.isOutPage)
             next()
           }
         }
@@ -168,7 +201,8 @@ export default {
     return {
       ...toRefs(stateData),
       layoutStore,
-      userStore
+      userStore,
+      fGetOutPageRoute
     }
   }
 }

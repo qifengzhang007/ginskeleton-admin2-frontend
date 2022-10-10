@@ -7,10 +7,15 @@ export const useRouteStore = defineStore({
         enabled: true,
         strategies: [
             {
-                key: config.dataStore.keyPre + 'useRouteStore',
+                key: config.dataStore.keyPre + 'outPageRouteList',
                 storage: localStorage,
                 paths: ['outPageRouteList']  // 设置需要持久存储的键名
-            }
+            },
+            {
+                key: config.dataStore.keyPre + 'routeViews',
+                storage: localStorage,
+                paths: ['routeViews']  // 设置需要持久存储的键名
+            },
         ]
     },
     state: () => {
@@ -60,18 +65,8 @@ export const useRouteStore = defineStore({
             this.route = route
         },
 
-        /*
-        将需要使用iframe渲染的外部路由专门存储起来
-        */
-        savePageRouteList() {
-            this.outPageRouteList = this.routeList.filter(item => {
-                if (item.meta.isOutPage) {
-                    return item
-                }
-            })
-        },
-        getOutPageRouteList() {
-            return this.outPageRouteList
+        getViewComponent(keyName) {
+            return this.routeViews[`/src/${keyName}`]
         },
         /*
         * description 最大支持到三级菜单即可，对于后台系统足够满足需求，性能也好，避免采用递归无穷遍历可能带来性能问题。
@@ -82,11 +77,12 @@ export const useRouteStore = defineStore({
                 let tmpRouter = {
                     name: '',
                     path: '',
-                    component: '',
+                    component: {},
                     meta: {
                         isOutPage: false,
                         icon: '',
                         title: '',
+                        viewComponentPath: '',
                         id: 0
                     }
                 }
@@ -97,6 +93,7 @@ export const useRouteStore = defineStore({
                 tmpRouter.meta.title = itemRouter.title
                 tmpRouter.meta.id = itemRouter.id
                 tmpRouter.meta.isOutPage = itemRouter.is_out_page === 1
+                tmpRouter.meta.viewComponentPath = itemRouter.component
                 routes.push(tmpRouter)
             }
             if (menuList && menuList.length > 0) {
@@ -132,9 +129,6 @@ export const useRouteStore = defineStore({
             if (this.routeList.length > 0) {
                 this.homeRouter.redirect.name = this.routeList[0].name
             }
-            // 将可能的外部页面存储起来
-            this.savePageRouteList()
-            console.log("初始化路由的地方过滤外部页面路由",this.outPageRouteList)
             return this.routeList
         }
     }
