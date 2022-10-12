@@ -21,15 +21,12 @@
                 </keep-alive>
               </transition>
             </template>
-            <template v-else>
-              <!--    如果是外部网页需要使用 iframe 组件渲染到本系统 -->
-              <div v-for="(item,index)   in outPageRouteList" v-show="curRoute.path===item.path">
-                <transition name="fade">
-                  <component :key="item.key" :is="Component"/>
-                </transition>
-              </div>
-            </template>
           </router-view>
+
+          <!--    如果是外部网页需要使用 iframe 组件渲染到本系统 -->
+          <div v-for="(item,index)   in outPageRouteList" v-show="curRoute.path===item.path">
+            <component :key="item.key" :is="item.value"/>
+          </div>
 
         </div>
       </div>
@@ -59,7 +56,7 @@ import {useRouteStore} from "@/store/system-setting/route";
 import {useReloadStore} from "@/store/system-setting/reload";
 import config from '@/config/index';
 import {getToken} from '@/libs/util';
-import {reactive, toRefs, watch} from "vue";
+import {reactive, toRefs, watch, defineAsyncComponent, markRaw} from "vue";
 
 export default {
   name: "Main",
@@ -116,18 +113,10 @@ export default {
     watch(() => tabsStore.tabs.curMenuItem, (newVal, oldVal) => {
       if (newVal) {
         stateData.curRoute = newVal
-        console.log("curMenuItem最新值", newVal.viewComponentPath, "newVal",newVal)
-        const viewComponent = newVal.viewComponentPath
+        // 如果是外部网页，就存储起来使用iframe组件渲染
         if (newVal.isOutPage) {
-
           if (!fOutPageRouteIsSave(newVal.viewComponentPath)) {
             fSaveOutPageRoute(newVal.viewComponentPath, newVal.path, routerStore.getViewComponent(newVal.viewComponentPath))
-
-            console.log("此时的所有动态组件", stateData.outPageRouteList)
-
-            console.log("然后根据键获取动态组件：", fGetOutPageRoute(newVal.viewComponentPath))
-
-            console.log("系统路由信息：", router.getRoutes())
           }
         }
       }
@@ -148,7 +137,7 @@ export default {
           {
             key: keyName,
             path: path,
-            value: value
+            value: markRaw(defineAsyncComponent(value))
           }
       )
 
