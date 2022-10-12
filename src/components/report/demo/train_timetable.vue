@@ -18,23 +18,26 @@
 
 <script>
 import commonFunc from '@/libs/common_func'
-import {useRouter} from 'vue-router'
+import {useTabStore} from "@/store/system-setting/tabs";
 import {reactive, toRefs} from 'vue'
 import {show_button, view_button_list} from '@/api/system-setting/auth'
 import Iframe from '@/components/common/iframe.vue'
-
+import ReportSet from '@/api/report-api/report'
+// import {useRouter} from 'vue-router'
 export default {
   name: "TrainTimetableIndex",
   components: {
     Iframe,
   },
   setup() {
-    const router = useRouter()
+    // const router = useRouter()
+    const tabsStore = useTabStore()
     const stateData = reactive({
       iframeRef: null,
       // iframe 属性设置
       propIframe: {
-        url: "http://49.232.145.118:8085/jmreport/view/737519583182499840",
+        iframeId: ReportSet.employees.reportId,
+        url: ReportSet.employees.reportUrl,
         // 查询参数
         params: {
           pageNo: 1,
@@ -57,7 +60,8 @@ export default {
 
     //界面元素鉴权后显示
     const btnElementAuth = () => {
-      view_button_list(router.currentRoute.value.meta.id).then(res => {
+
+      view_button_list(tabsStore.tabs.curMenuItem.relaMenuId).then(res => {
         show_button(res.data.data, stateData.tableList.buttonList)
         stateData.tableList.buttonGroupIsShow = true
         fSearch()

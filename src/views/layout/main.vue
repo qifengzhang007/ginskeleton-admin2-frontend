@@ -56,7 +56,7 @@ import {useRouteStore} from "@/store/system-setting/route";
 import {useReloadStore} from "@/store/system-setting/reload";
 import config from '@/config/index';
 import {getToken} from '@/libs/util';
-import {reactive, toRefs, watch, defineAsyncComponent, markRaw} from "vue";
+import {reactive, toRefs, watch, defineAsyncComponent, markRaw, defineComponent} from "vue";
 
 export default {
   name: "Main",
@@ -113,10 +113,10 @@ export default {
     watch(() => tabsStore.tabs.curMenuItem, (newVal, oldVal) => {
       if (newVal) {
         stateData.curRoute = newVal
-        // 如果是外部网页，就存储起来使用iframe组件渲染
+        console.log("当前MenuItem信息---：", stateData.curRoute)
         if (newVal.isOutPage) {
           if (!fOutPageRouteIsSave(newVal.viewComponentPath)) {
-            fSaveOutPageRoute(newVal.viewComponentPath, newVal.path, routerStore.getViewComponent(newVal.viewComponentPath))
+            fSaveOutPageRoute(newVal.viewComponentPath, newVal.path, defineAsyncComponent(routerStore.getViewComponent(newVal.viewComponentPath)))
           }
         }
       }
@@ -137,7 +137,7 @@ export default {
           {
             key: keyName,
             path: path,
-            value: markRaw(defineAsyncComponent(value))
+            value: markRaw(value)
           }
       )
 

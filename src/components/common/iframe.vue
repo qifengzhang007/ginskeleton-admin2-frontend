@@ -1,5 +1,6 @@
 <template>
-  <iframe id="iframeId" ref="iframeRef" seamless allowtransparency="true" border="0" width="100%" :height="height" :src="propIframe.url" class="iframe" onpageshow="fOnload"></iframe>
+  <iframe :id="propIframe.iframeId" ref="iframeRef" seamless allowtransparency="true" border="0" width="100%" :height="height" :src="propIframe.url" class="iframe"
+          onpageshow="fOnload"></iframe>
 </template>
 
 <script>
@@ -29,7 +30,11 @@ export default {
     }
 
     const fReloadPage = () => {
-      document.getElementById('iframeId').src = propIframe.value.url + "?" + fObjConvUrlParams(propIframe.value.params)
+
+      console.log("报表ID", propIframe.value.iframeId)
+      console.log("报表ID", propIframe.value.url)
+
+      document.getElementById(propIframe.value.iframeId).src = propIframe.value.url + "?" + fObjConvUrlParams(propIframe.value.params)
     }
     const fOnload = () => {
       // alert("文档加载完成触发！！！！")
