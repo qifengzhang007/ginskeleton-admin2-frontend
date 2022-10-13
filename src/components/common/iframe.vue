@@ -1,6 +1,5 @@
 <template>
-  <iframe :id="propIframe.iframeId" ref="iframeRef" seamless allowtransparency="true" border="0" width="100%" :height="height" :src="propIframe.url" class="iframe"
-          onpageshow="fOnload"></iframe>
+  <iframe :id="propIframe.iframeId" seamless allowtransparency="true" border="0" width="100%" :height="height" :src="propIframe.url" class="iframe"></iframe>
 </template>
 
 <script>
@@ -36,16 +35,12 @@ export default {
 
       document.getElementById(propIframe.value.iframeId).src = propIframe.value.url + "?" + fObjConvUrlParams(propIframe.value.params)
     }
-    const fOnload = () => {
-      // alert("文档加载完成触发！！！！")
-    }
 
     return {
       ...toRefs(stateData),
       propIframe,
 
       fReloadPage,
-      fOnload
     }
   }
 }

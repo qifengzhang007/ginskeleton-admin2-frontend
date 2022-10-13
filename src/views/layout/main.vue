@@ -113,7 +113,6 @@ export default {
     watch(() => tabsStore.tabs.curMenuItem, (newVal, oldVal) => {
       if (newVal) {
         stateData.curRoute = newVal
-        console.log("当前MenuItem信息---：", stateData.curRoute)
         if (newVal.isOutPage) {
           if (!fOutPageRouteIsSave(newVal.viewComponentPath)) {
             fSaveOutPageRoute(newVal.viewComponentPath, newVal.path, defineAsyncComponent(routerStore.getViewComponent(newVal.viewComponentPath)))

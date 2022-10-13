@@ -12,7 +12,6 @@
           <el-button type="primary" @click="fSearch" icon="Search" v-if="tableList.buttonList.select">查询</el-button>
         </el-button-group>
       </div>
-
       <Iframe :propIframe="propIframe" ref="iframeRef"/>
 
     </div>
@@ -26,7 +25,6 @@ import {show_button, view_button_list} from '@/api/system-setting/auth'
 import Iframe from '@/components/common/iframe.vue'
 import {useTabStore} from "@/store/system-setting/tabs";
 import ReportSet  from '@/api/report-api/report'
-// import {useRouter} from 'vue-router'
 
 export default {
   name: "EmployeesIndex",
@@ -34,7 +32,6 @@ export default {
     Iframe,
   },
   setup() {
-    // const router = useRouter()
     const tabsStore = useTabStore()
     const stateData = reactive({
       iframeRef: null,

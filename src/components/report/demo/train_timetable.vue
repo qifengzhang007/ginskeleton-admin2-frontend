@@ -23,21 +23,20 @@ import {reactive, toRefs} from 'vue'
 import {show_button, view_button_list} from '@/api/system-setting/auth'
 import Iframe from '@/components/common/iframe.vue'
 import ReportSet from '@/api/report-api/report'
-// import {useRouter} from 'vue-router'
+
 export default {
   name: "TrainTimetableIndex",
   components: {
     Iframe,
   },
   setup() {
-    // const router = useRouter()
     const tabsStore = useTabStore()
     const stateData = reactive({
       iframeRef: null,
       // iframe 属性设置
       propIframe: {
-        iframeId: ReportSet.employees.reportId,
-        url: ReportSet.employees.reportUrl,
+        iframeId: ReportSet.trainTimetable.reportId,
+        url: ReportSet.trainTimetable.reportUrl,
         // 查询参数
         params: {
           pageNo: 1,
@@ -60,7 +59,6 @@ export default {
 
     //界面元素鉴权后显示
     const btnElementAuth = () => {
-
       view_button_list(tabsStore.tabs.curMenuItem.relaMenuId).then(res => {
         show_button(res.data.data, stateData.tableList.buttonList)
         stateData.tableList.buttonGroupIsShow = true
@@ -74,21 +72,12 @@ export default {
     const fSearch = () => {
       stateData.iframeRef.fReloadPage()
     }
-    // 日期格式化为 yyy-mm-dd 格式，通用性更强
-    const fStartDateChange = (date) => {
-      stateData.propIframe.params.start_date = commonFunc.DateFormat(date)
-    }
-    const fEndDateChange = (date) => {
-      stateData.propIframe.params.end_date = commonFunc.DateFormat(date)
-    }
 
     // 导出变量、函数
     return {
       ...toRefs(stateData),
 
-      fSearch,
-      fStartDateChange,
-      fEndDateChange,
+      fSearch
     }
   }
 }
