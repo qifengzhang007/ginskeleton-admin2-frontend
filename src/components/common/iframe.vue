@@ -29,10 +29,6 @@ export default {
     }
 
     const fReloadPage = () => {
-
-      console.log("报表ID", propIframe.value.iframeId)
-      console.log("报表ID", propIframe.value.url)
-
       document.getElementById(propIframe.value.iframeId).src = propIframe.value.url + "?" + fObjConvUrlParams(propIframe.value.params)
     }
 
