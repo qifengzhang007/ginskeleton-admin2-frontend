@@ -30,10 +30,20 @@
             <el-table-column prop="icon" label="图标" width="110" sortable show-overflow-tooltip/>
             <el-table-column prop="name" label="路由名称" width="180" sortable show-overflow-tooltip/>
             <el-table-column prop="component" label="视图组件路径" width="280" sortable show-overflow-tooltip/>
+            <el-table-column prop="is_out_page" label="是否为外部页面" width="140" sortable show-overflow-tooltip align="center">
+              <template #default="scope">
+                <template v-if="scope.row.node_level>=2">
+                  <el-tag :type="scope.row.is_out_page?'danger':''">{{fIsOutPageFormatter(scope.row.is_out_page)}}</el-tag>
+                </template>
+                <template v-else>
+                  <el-tag>-</el-tag>
+                </template>
+              </template>
+            </el-table-column>
             <el-table-column prop="sort" label="排序" width="80" sortable show-overflow-tooltip/>
             <el-table-column prop="button_list" label="菜单对应页面按钮" width="280" sortable show-overflow-tooltip>
               <template #default="scope">
-                <el-button size="small" plain :color="item.button_color"   :key="scope.$index+'_'+index"   v-for="(item,index)  in scope.row.button_list"  @click.stop="" >{{item.button_name}}</el-button>
+                <el-button size="small" plain :color="item.button_color" :key="scope.$index+'_'+index" v-for="(item,index)  in scope.row.button_list" @click.stop="">{{ item.button_name }}</el-button>
               </template>
             </el-table-column>
             <!--     ↑↑↑↑   业务字段  ↑↑↑↑   -->
@@ -138,6 +148,8 @@ export default {
           fid: '',
           ftitle: '',
           title: '',
+          component: '',
+          is_out_page: 0,
           status: 1,
           sort: 1,
           remark: '',
@@ -175,7 +187,7 @@ export default {
               children: []
             }]
         )
-      } else{
+      } else {
         // 左侧树鼠标点击箭头加载下一级
         getSubListByFid(curNodeId).then(res => {
           stateData.leftTree.data = res.data.data
@@ -302,7 +314,14 @@ export default {
         stateData.curdDelete.serverResMsg = errResponse.response.data.msg
       })
     }
-
+    // 格式化 is_out_page字段
+    const fIsOutPageFormatter = (isOutPage) => {
+      if (isOutPage) {
+        return "是"
+      } else {
+        return "否"
+      }
+    }
     // 格式化 status 字段
     const fFormatter = (row, column) => {
       return commonFunc.StatusMap[row.status]
@@ -323,6 +342,7 @@ export default {
       fCreateEditCallback,
       fDelete,
       fDeleteCallback,
+      fIsOutPageFormatter,
       fFormatter,
       fTableRowClick
     }

@@ -11,11 +11,11 @@ export default {
     },
     // 获取配置项中的服务器ip（也可能是域名）
     getServerIp() {
-        return  config[import.meta.env.MODE].serverIp
+        return config[import.meta.env.MODE].serverIp
     },
     // 获取配置项中的接口地址前缀
     getApiUrlPre() {
-        return  config[import.meta.env.MODE].apiPre
+        return config[import.meta.env.MODE].apiPre
     },
     // 获取浏览器宽度
     GetBrowserWidth() {
@@ -35,9 +35,19 @@ export default {
     },
     // 组件select options 使用
     SelectStatus: [
-        { value: 1, label: '启用' },
-        { value: 0, label: '禁用' }
+        {value: 1, label: '启用'},
+        {value: 0, label: '禁用'}
     ],
+    // 组件是否为=需要渲染外部页面
+    IsOutPageStatus: [
+        {value: 1, label: '是'},
+        {value: 0, label: '否'}
+    ],
+    // 组件是否为=需要渲染外部页面
+    IsOutPageStatusMap: {
+        0: '否',
+        1: '是'
+    },
     // table数据中 status 为 0、1 映射为中文
     StatusMap: {
         0: '禁用',
@@ -251,10 +261,10 @@ export default {
     获取当前日期，yyyy-mm-dd  格式
     @baseDay 被格式化化的日期，默认是当天时间，参数格式支持 UTC 、中国标准时间Wed Sep 21 2022 00:00:00 GMT+0800 (中国标准时间) 、timestamp 、yyyy-mm-dd 等
     */
-    DateFormat(baseDay="") {
+    DateFormat(baseDay = "") {
         var date = new Date();
-        if(baseDay){
-            date=new Date(baseDay)
+        if (baseDay) {
+            date = new Date(baseDay)
         }
 
         var seperator1 = "-";

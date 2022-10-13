@@ -43,13 +43,20 @@
               </el-form-item>
             </el-col>
             <el-col :span="11">
-              <el-form-item label="排序" prop="sort">
-                <el-input type="number" clearable v-model.number="propCreateEdit.curdFormData.sort" placeholder="设置菜单的展示顺序,系统会降序展示"/>
+              <el-form-item label="是否为外部页面">
+                <el-select v-model="propCreateEdit.curdFormData.is_out_page" :fit-input-width="true">
+                  <el-option v-for="item in IsOutPageStatus" :key="item.value" :label="item.label" :value="item.value"/>
+                </el-select>
               </el-form-item>
             </el-col>
           </el-row>
 
           <el-row justify="space-between">
+            <el-col :span="11">
+              <el-form-item label="排序" prop="sort">
+                <el-input type="number" clearable v-model.number="propCreateEdit.curdFormData.sort" placeholder="设置菜单的展示顺序,系统会降序展示"/>
+              </el-form-item>
+            </el-col>
             <el-col :span="11">
               <el-form-item label="状态">
                 <el-select v-model="propCreateEdit.curdFormData.status" :fit-input-width="true">
@@ -112,9 +119,11 @@ export default {
       drawerSize: '55%',
       formRef: {},
       selectStatus: commonFunc.SelectStatus,
+      IsOutPageStatus: commonFunc.IsOutPageStatus,
       rules: {
         name: [{type: 'string', required: true, message: '菜单对应的路由名称为必填项', trigger: 'blur'}],
         title: [{type: 'string', required: true, message: '菜单名称为必填项', trigger: 'blur'}],
+        is_out_page: [{type: 'number', required: true, message: '是否为外部页面字段为必填项', trigger: 'blur'}],
         sort: [{type: 'number', required: true, message: '排序字段为必填项', trigger: 'blur'}],
       },
       propSelectSysMenu: {
@@ -152,16 +161,16 @@ export default {
               button_name: 'cn_name',
               request_method: 'allow_method'
             },
-            isShow:true,
-            readonly:false
+            isShow: true,
+            readonly: false
           },
           {
             name: '接口地址',
             type: "string",
             field: 'request_url',
             width: 9,
-            isShow:true,
-            readonly:false
+            isShow: true,
+            readonly: false
           },
           {
             name: '接口允许请求方式',
@@ -182,16 +191,16 @@ export default {
                 value: "POST",
               },
             ],
-            isShow:true,
-            readonly:false
+            isShow: true,
+            readonly: false
           },
           {
             name: '备注',
             type: "string",
             field: 'remark',
             width: 5,
-            isShow:true,
-            readonly:false
+            isShow: true,
+            readonly: false
           },
           // {
           //   name: '上传文件',
