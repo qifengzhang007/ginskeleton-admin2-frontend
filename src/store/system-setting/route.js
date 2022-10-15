@@ -3,28 +3,12 @@ import config from '@/config/index'
 
 export const useRouteStore = defineStore({
     id: 'useRouteStore',
-    persist: {
-        enabled: true,
-        strategies: [
-            {
-                key: config.dataStore.keyPre + 'outPageRouteList',
-                storage: localStorage,
-                paths: ['outPageRouteList']  // 设置需要持久存储的键名
-            },
-            {
-                key: config.dataStore.keyPre + 'routeViews',
-                storage: localStorage,
-                paths: ['routeViews']  // 设置需要持久存储的键名
-            },
-        ]
-    },
     state: () => {
         return {
             // 全局路由对象
             route: {},
             // 全局路由列表，从后端接口转换而来
             routeList: [],
-            outPageRouteList: [], // 存储需要被iframe渲染的外部网页路由列表
             routeViews: {},
             //定义首页默认打开的页面（默认就是后台返回的第一个页面）
             homeRouter: {
