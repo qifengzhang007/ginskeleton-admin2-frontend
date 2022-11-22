@@ -17,6 +17,10 @@ export default {
     getApiUrlPre() {
         return config[import.meta.env.MODE].apiPre
     },
+    // 获取报表ip地址
+    getReportServerIp() {
+        return config[import.meta.env.MODE].reportServerIp
+    },
     // 获取浏览器宽度
     GetBrowserWidth() {
         return document.body.clientWidth

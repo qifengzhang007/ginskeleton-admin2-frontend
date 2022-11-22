@@ -18,6 +18,7 @@ export default {
     dev:{
         serverIp: 'http://127.0.0.1:22001',   // 服务器ip
         apiPre: 'http://127.0.0.1:22001/admin',   // 接口前缀
+        reportServerIp:'http://49.232.145.118:8085',  //报表系统的ip地址
     },
 
     /*
@@ -26,6 +27,7 @@ export default {
     pro:{
         serverIp: 'http://139.196.101.31:22001',
         apiPre: 'http://139.196.101.31:22001/admin',
+        reportServerIp:'http://49.232.145.118:8085',  //报表系统的ip地址
     },
     //  ==============↓↓↓   后面的设置基本上无需改动   ↓↓↓======
 
