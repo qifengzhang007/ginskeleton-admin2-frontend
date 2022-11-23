@@ -121,11 +121,9 @@ export default {
 
 // 确认事件
     const fConfirm = () => {
-      console.log("action:", propCreateEdit.value.curdFormData.action)
       // 表单参数校验完成后提交
       stateData.formRef.validate((valid, fields) => {
         if (valid) {
-          console.log("action2:", propCreateEdit.value.curdFormData.action)
           switch (propCreateEdit.value.curdFormData.action) {
             case 'insert':
               create(propCreateEdit.value.curdFormData).then(res => {
