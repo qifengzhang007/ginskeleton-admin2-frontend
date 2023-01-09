@@ -16,7 +16,9 @@ export const useTabStore = defineStore({
                     isActive: false,
                     relaMenuId: -1,  // tab 对应的菜单 id, 该值是唯一的
                     icon: '',
-                    path: ''  // tab 对应的路由路径
+                    path: '',  // tab 对应的路由路径
+                    viewComponentPath:'',
+                    isOutPage:0
                 },
                 curMenuItem: {
                     name: '',
@@ -24,6 +26,8 @@ export const useTabStore = defineStore({
                     relaMenuId: 0,
                     icon: '',
                     path: '',
+                    viewComponentPath: '',
+                    isOutPage:0
                 },
                 curPath: '',
                 list: [],

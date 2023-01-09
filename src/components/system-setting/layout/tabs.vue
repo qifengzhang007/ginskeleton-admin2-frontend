@@ -92,8 +92,8 @@ export default {
     }
 
     // tab 激活(添加)事件
-    const activeTab = (menuName, relaMenuId, menuIcon, menuPath, viewComponent,isOutPage,actionFrom) => {
-      tabStore.add(menuName, relaMenuId, menuIcon, menuPath, viewComponent,isOutPage,actionFrom)
+    const activeTab = (menuName, relaMenuId, menuIcon, menuPath,viewComponentPath,isOutPage, actionFrom) => {
+      tabStore.add(menuName, relaMenuId, menuIcon, menuPath,viewComponentPath,isOutPage, actionFrom)
     }
 
     return {
