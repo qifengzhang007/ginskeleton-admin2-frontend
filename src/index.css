@@ -21,13 +21,14 @@ body, * {
     border-bottom: 1px solid #404141;
 }
 
-.el-sub-menu .el-sub-menu__icon-arrow{
-    right:-90px !important;
+.el-sub-menu .el-sub-menu__icon-arrow {
+    right: -90px !important;
 }
+
 /*菜单标题的样式*/
 .el-sub-menu__title {
     font-size: 13px !important;
-    width:225px !important;
+    width: 225px !important;
     height: 40px !important;
     line-height: 40px !important;
     vertical-align: middle !important;
@@ -65,14 +66,15 @@ li.el-sub-menu.menu-level2 div {
 /*二级背景鼠标热点样式*/
 div.el-sub-menu__title:hover {
     background-color: #20242a !important;
-    color: #d0d0d6  !important;
+    color: #d0d0d6 !important;
 }
+
 /*一级背景鼠标热点样式*/
 li.el-sub-menu.menu-level2 div:hover {
     background-color: #20242a !important;
 }
 
-li.el-sub-menu.menu-level2 div{
+li.el-sub-menu.menu-level2 div {
     border-top: #404141 solid 1px;
 }
 

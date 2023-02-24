@@ -80,7 +80,8 @@ export default {
                     grouping: true,
                     duration: duration,
                     center: true,
-                    customClass: "elMessageStyle"
+                    customClass: "elMessageStyle",
+                    offset:30
                 })
                 return false
             }
@@ -101,7 +102,8 @@ export default {
                     grouping: true,
                     duration: duration,
                     center: true,
-                    customClass: "elMessageStyle"
+                    customClass: "elMessageStyle",
+                    offset:30
                 })
                 return false
             }
@@ -121,7 +123,8 @@ export default {
                     grouping: true,
                     duration: duration,
                     center: true,
-                    customClass: "elMessageStyle"
+                    customClass: "elMessageStyle",
+                    offset:30
                 })
                 return false
             }
@@ -140,7 +143,8 @@ export default {
                     type: 'error',
                     duration: duration,
                     center: true,
-                    customClass: "elMessageStyle"
+                    customClass: "elMessageStyle",
+                    offset:30
                 })
                 return false
             }
@@ -152,14 +156,15 @@ export default {
          @msg  提示文本
          @duration  提示文本持续毫秒
          */
-        SuccessTips(msg = '成功', duration = 500) {
+        SuccessTips(msg = '成功', duration = 1000) {
             ElMessage({
                 message: msg,
                 type: 'success',
                 grouping: true,
                 duration: duration,
                 center: true,
-                customClass: "elMessageStyle"
+                customClass: "elMessageStyle",
+                offset:30
             })
         },
 
@@ -175,7 +180,8 @@ export default {
                 grouping: true,
                 duration: duration,
                 center: true,
-                customClass: "elMessageStyle"
+                customClass: "elMessageStyle",
+                offset:30
             })
         },
 

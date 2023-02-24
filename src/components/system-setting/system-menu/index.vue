@@ -22,7 +22,8 @@
             </el-button-group>
           </div>
 
-          <el-table border :highlight-current-row="true" :style="tableList.style" :height="tableList.style.height" :data="tableList.data" ref="tableRef" @row-click="fTableRowClick">
+          <el-table border :highlight-current-row="true" :style="tableList.style" :height="tableList.style.height" :data="tableList.data" ref="tableRef"
+                    @row-click="fTableRowClick">
             <TableHeader1/>
             <!--    ↓↓↓↓   业务字段  ↓↓↓↓   -->
 
@@ -33,7 +34,7 @@
             <el-table-column prop="is_out_page" label="是否为外部页面" width="140" sortable show-overflow-tooltip align="center">
               <template #default="scope">
                 <template v-if="scope.row.node_level>=2">
-                  <el-tag :type="scope.row.is_out_page?'danger':''">{{fIsOutPageFormatter(scope.row.is_out_page)}}</el-tag>
+                  <el-tag :type="scope.row.is_out_page?'danger':''">{{ fIsOutPageFormatter(scope.row.is_out_page) }}</el-tag>
                 </template>
                 <template v-else>
                   <el-tag>-</el-tag>
@@ -43,7 +44,9 @@
             <el-table-column prop="sort" label="排序" width="80" sortable show-overflow-tooltip/>
             <el-table-column prop="button_list" label="菜单对应页面按钮" width="280" sortable show-overflow-tooltip>
               <template #default="scope">
-                <el-button size="small" plain :color="item.button_color" :key="scope.$index+'_'+index" v-for="(item,index)  in scope.row.button_list" @click.stop="">{{ item.button_name }}</el-button>
+                <el-button size="small" plain :color="item.button_color" :key="scope.$index+'_'+index" v-for="(item,index)  in scope.row.button_list" @click.stop="">
+                  {{ item.button_name }}
+                </el-button>
               </template>
             </el-table-column>
             <!--     ↑↑↑↑   业务字段  ↑↑↑↑   -->
@@ -260,7 +263,7 @@ export default {
           delete stateData.curdCreateEdit.curdFormData['id']  // 去除新增无关的字段 id
           break;
         case 'update':
-          const selectedRows = stateData.tableRef.getSelectionRows()
+          let selectedRows = stateData.tableRef.getSelectionRows()
           if (commonFunc.Curd.EditCheck(selectedRows.length === 1)) {
             stateData.curdCreateEdit.curdFormData = Object.assign({}, selectedRows[0])
             //  修改数据时，加载子表界面数据
