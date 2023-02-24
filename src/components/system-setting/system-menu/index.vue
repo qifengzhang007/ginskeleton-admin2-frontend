@@ -17,6 +17,7 @@
             <el-button-group v-if="tableList.buttonGroupIsShow">
               <el-button type="primary" @click="fSearch" icon="Search" v-if="tableList.buttonList.select">查询</el-button>
               <el-button type="success" @click="fCreateEdit('insert')" icon="Plus" v-if="tableList.buttonList.insert">新增</el-button>
+              <el-button type="success" @click="fCreateEdit('insert_by_copy')" icon="Plus" v-if="tableList.buttonList.insert">新增(通过复制)</el-button>
               <el-button type="primary" @click="fCreateEdit('update')" icon="Edit" v-if="tableList.buttonList.update">修改</el-button>
               <el-button type="danger" @click="fDelete('delete')" icon="Delete" v-if="tableList.buttonList.delete">删除</el-button>
             </el-button-group>
@@ -263,8 +264,10 @@ export default {
           delete stateData.curdCreateEdit.curdFormData['id']  // 去除新增无关的字段 id
           break;
         case 'update':
+        case "insert_by_copy":
+          console.log("action:" + action)
           let selectedRows = stateData.tableRef.getSelectionRows()
-          if (commonFunc.Curd.EditCheck(selectedRows.length === 1)) {
+          if (commonFunc.Curd.EditCheck(selectedRows.length === 1, 2000, '请选中一条数据为模板进行新增操作')) {
             stateData.curdCreateEdit.curdFormData = Object.assign({}, selectedRows[0])
             //  修改数据时，加载子表界面数据
             menu_mount_auth_button(selectedRows[0].id).then(res => {

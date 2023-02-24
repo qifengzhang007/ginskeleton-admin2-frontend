@@ -60,6 +60,7 @@ export default {
     // curd操作时顶栏显示的操作名
     CurdActionName: {
         insert: '新增',
+        insert_by_copy: '新增(通过复制)',
         update: '修改',
         delete: '删除'
     },
@@ -94,10 +95,10 @@ export default {
         @condition 修改数据时的验证条件，如果不满足条件就提示
         @duration  提示文本持续毫秒
         */
-        EditCheck(condition, duration = 2000) {
+        EditCheck(condition, duration = 2000,message='请选中一条数据进行修改！') {
             if (!condition) {
                 ElMessage({
-                    message: '请选中一条数据进行修改！',
+                    message: message,
                     type: 'error',
                     grouping: true,
                     duration: duration,

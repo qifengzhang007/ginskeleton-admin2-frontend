@@ -99,7 +99,7 @@ import commonFunc from '@/libs/common_func'
 import SeekbarForDrawer from '@/components/common/seekbar_for_drawer.vue'
 import ChildrenTable from '@/components/common/children_table.vue'
 import SelectSysMenu from '@/components/common/select_sys_menu.vue'
-import {createByJson, editByJson} from "../../../api/system-setting/system_menu";
+import {createByJson, editByJson} from "@/api/system-setting/system_menu";
 
 export default {
   name: "CreateEdit",
@@ -260,10 +260,10 @@ export default {
     // 监听表单属性变量变化，修改界面如果子表有数据，需要填充子表
     watch(() => propCreateEdit.value.curdFormData, (newCurdFormData, oldCurdFormData) => {
       stateData.childrenTable.action = newCurdFormData.action
-      let tmpCount = 0
-      if (tmpCount === 0 && newCurdFormData.action === 'update') {
+      // let tmpCount = 0
+      if ((newCurdFormData.action === 'update' || newCurdFormData.action === 'insert_by_copy')) {
         stateData.childrenTable.allRows = newCurdFormData.button_list
-        tmpCount++
+        // tmpCount++
       }
     }, {deep: true, immediate: true})
 
@@ -305,6 +305,11 @@ export default {
 
           switch (propCreateEdit.value.curdFormData.action) {
             case 'insert':
+            case 'insert_by_copy':
+              // 如果是基于已有数据复制-然后新增的，那么需要全部设置id为0
+              for (let index in propCreateEdit.value.curdFormData.button_array) {
+                propCreateEdit.value.curdFormData.button_array[index].id = 0
+              }
               createByJson(propCreateEdit.value.curdFormData).then(res => {
                 if (res.data.code === 200) {
                   commonFunc.Curd.SuccessTips(res.data.msg)
