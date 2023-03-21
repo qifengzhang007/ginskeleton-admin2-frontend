@@ -7,6 +7,7 @@
       :on-success="fSuccess"
       :on-error="fError"
       :before-upload="fBeforeUpload"
+      :accept="extension?extension:'.png,.jpg,.jpeg,.bmp'"
   >
     <el-icon class="avatar-uploader-icon">
       <Plus/>
@@ -22,9 +23,13 @@ import commonFunc from '@/libs/common_func'
 export default {
   name: "UploadFile",
   components: {},
-  props: {},
+  props: {
+    extension:String
+  },
   emits: ['fUploadCallback'],
   setup(props, context) {
+    const {extension} = toRefs(props)
+
     const stateData = reactive({
       actionUrl: commonFunc.getApiUrlPre() + '/upload/files',
       headers: {
@@ -58,7 +63,8 @@ export default {
 
       fBeforeUpload,
       fSuccess,
-      fError
+      fError,
+      extension
     }
   }
 }

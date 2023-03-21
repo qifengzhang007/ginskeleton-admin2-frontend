@@ -45,7 +45,7 @@
           <el-row justify="space-between">
             <el-col :span="11">
               <el-form-item label="上传头像">
-                <UploadFile @fUploadCallback="fUploadCallback"/>
+                <UploadFile @fUploadCallback="fUploadCallback" extension=".png,.jpg,.jpeg"/>
               </el-form-item>
             </el-col>
             <el-col :span="11">
