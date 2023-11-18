@@ -1,5 +1,4 @@
 import {defineStore} from 'pinia'
-import config from '@/config/index'
 
 export const useRouteStore = defineStore({
     id: 'useRouteStore',
