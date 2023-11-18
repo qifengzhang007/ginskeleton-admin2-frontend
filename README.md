@@ -1,5 +1,5 @@
 ### GinSkeleton-Admin2 (前端部分)
-> 基于 vue3.x + vite2.x + javascript + elementPlus + pinia + vue-router4.x + axios 等最新技术栈构建的全新后台管理系统.  
+> 基于 vue3.x + vite5.x+ javascript + elementPlus + pinia + vue-router4.x + axios 等最新技术栈构建的全新后台管理系统.
 
 
 ###  [在线文档](https://www.yuque.com/xiaofensinixidaouxiang/qmanaq/qmucb4)
