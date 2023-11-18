@@ -154,7 +154,7 @@ export default {
       },
 
       // 同目录的公共组件存储起来，方便后续被其他页面动态引用
-      selectComponents: import.meta.glob("./select*.vue")
+      selectComponents: import.meta.glob(["./select*.vue",'!**/select_sys_menu.vue'])
     })
 
     watch(() => propChildrenTable, (newPropChildrenTable, oldPropChildrenTable) => {
