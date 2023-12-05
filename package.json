@@ -1,6 +1,7 @@
 {
   "name": "ginskeleton-admin2-frontend",
   "version": "v2.0.00",
+  "type":"module",
   "scripts": {
     "dev": "vite --mode dev",
     "build": "vite build --mode pro",
@@ -9,6 +10,7 @@
   "dependencies": {
     "@element-plus/icons-vue": "^2.1.0",
     "axios": "^1.6.2",
+    "default-passive-events": "^2.0.0",
     "element-plus": "^2.4.2",
     "js-cookie": "^3.0.5",
     "pinia": "^2.1.7",
