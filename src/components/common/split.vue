@@ -34,11 +34,13 @@ export default {
 
     const stateData = reactive({
       splitLeftArea: {
+        verticalAlign:'top',
         display: 'inline-block',
         width: `calc(${splitRatio.value}%)`,
         height: '100vh'
       },
       splitRightArea: {
+        verticalAlign:'top',
         display: 'inline-block',
         width: `calc(${100 - splitRatio.value - 1}%)`,
         height: '100vh',
@@ -100,8 +102,9 @@ export default {
 <style scoped>
 
 .split-vertical-line {
-  position: absolute;
-  top:120px;
+//position: absolute;
+//top:120px;
+  vertical-align: top;
   display: inline-block;
   width: 6px;
   border-left: 1px solid #e1e1e1;
