@@ -102,8 +102,6 @@ export default {
 <style scoped>
 
 .split-vertical-line {
-//position: absolute;
-//top:120px;
   vertical-align: top;
   display: inline-block;
   width: 6px;
