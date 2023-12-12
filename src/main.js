@@ -6,6 +6,7 @@ import './index.css'
 import store from "./store/system-setting/index";
 import ElementPlus from 'element-plus'
 import zhCn from 'element-plus/es/locale/lang/zh-cn'
+import 'default-passive-events'
 
 const app = createApp(App)
 
