@@ -307,5 +307,31 @@ export default {
         return cur_date.getFullYear() + '-' + (m > 9 ? m : ('0' + m)) + '-' + (d > 9 ? d : ('0' + d));
     },
 
+    /*
+    获取当前日期，yyyy-mm-dd  H:i:s 格式 , 结果实例： 2023-12-22 10:32:00
+    @baseDay 被格式化化的日期，默认是当天时间，参数格式支持 UTC 、中国标准时间Wed Sep 21 2022 00:00:00 GMT+0800 (中国标准时间) 、timestamp 、yyyy-mm-dd 等
+    */
+    DatetimeFormat(baseDay = "") {
+        var date = new Date();
+        if (baseDay) {
+            date = new Date(baseDay)
+        }
+
+        //  设置最终输出的日期格式
+        let options = {
+            hour12: false,
+            timeZone: 'Asia/Shanghai',
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+        };
+
+        // 格式化为yyyy-mm-dd H:i:s格式
+        return date.toLocaleString('zh-CN', options).replace(/\//g, '-');
+    },
+
 
 }
