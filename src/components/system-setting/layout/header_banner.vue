@@ -89,6 +89,7 @@ export default {
     const handleCommand = (command) => {
       switch (command) {
         case 'loginOut':
+          userStore.destroyUserInfo()
           routerStore.getRoute.push('/login')
           break
         case 'edit':
