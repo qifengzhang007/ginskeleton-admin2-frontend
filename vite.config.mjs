@@ -14,6 +14,9 @@ const baseUrl = {
 const pathSrc = path.resolve(__dirname, 'src')
 export default ({mode}) => defineConfig({
     base: baseUrl[mode],
+    server: {
+        host: '0.0.0.0'
+    },
     resolve: {
         alias: {
             '@': pathSrc,

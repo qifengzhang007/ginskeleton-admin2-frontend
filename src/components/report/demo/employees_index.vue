@@ -44,7 +44,7 @@ export default {
           pageNo: 1,
           pageSize: 50,
           keyword: "",
-          start_date: commonFunc.DateAdd(-365),   // 1年前
+          start_date: commonFunc.DateAdd(-365*5),   // 1年前
           end_date: commonFunc.DateFormat(),
         }
       },
