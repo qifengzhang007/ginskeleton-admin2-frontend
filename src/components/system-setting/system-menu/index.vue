@@ -35,7 +35,7 @@
             <el-table-column prop="is_out_page" label="是否为外部页面" width="140" sortable show-overflow-tooltip align="center">
               <template #default="scope">
                 <template v-if="scope.row.node_level>=2">
-                  <el-tag :type="scope.row.is_out_page?'danger':''">{{ fIsOutPageFormatter(scope.row.is_out_page) }}</el-tag>
+                  <el-tag :type="scope.row.is_out_page?'danger':'primary'">{{ fIsOutPageFormatter(scope.row.is_out_page) }}</el-tag>
                 </template>
                 <template v-else>
                   <el-tag>-</el-tag>
