@@ -1,4 +1,5 @@
 import {defineStore} from 'pinia'
+import defaultRouter from '@/router/index'
 
 export const useRouteStore = defineStore({
     id: 'useRouteStore',
@@ -29,7 +30,7 @@ export const useRouteStore = defineStore({
         获取全部路由列表，包括默认路由
         */
         getAllRouteList() {
-            return this.defaultRouteList.concat(this.routeList)
+            return defaultRouter.getRoutes().concat(this.routeList)
         },
         /*
         获取全部路由列表
@@ -107,7 +108,7 @@ export const useRouteStore = defineStore({
          */
         initRouteList(menuList) {
             // layout/main.vue 是框架本身依赖的组件，不需要后台配置组件路径动态加载，因此在静态导入时排除
-            this.routeViews = import.meta.glob(["@/views/**/*.vue",'!**/layout/main.vue'])
+            this.routeViews = import.meta.glob(["@/views/**/*.vue", '!**/layout/main.vue'])
             this.routeList = this.menuListConvertRouteList(menuList)
             // 初始化默认打开的第一页面
             if (this.routeList.length > 0) {
