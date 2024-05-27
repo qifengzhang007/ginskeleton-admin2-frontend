@@ -78,8 +78,7 @@ export default {
 
 .group-panel-area {
   padding: 2px 4px ;
-  border: solid 1px;
-  border: #e8e8e8 solid 1px;
+  border: solid 1px #e8e8e8;
 }
 
 </style>
