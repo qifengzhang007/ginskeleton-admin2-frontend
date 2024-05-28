@@ -1,6 +1,6 @@
 <template>
   <div id="layout-tab-container">
-    <div id="layout-tab-left" ref="scrollOuter" class="scroll-box" @mouseScroll.prevent="handlerScroll($event)" @mousewheel.prevent="handlerScroll($event)">
+    <div id="layout-tab-left" ref="scrollOuter" class="scroll-box" @wheel="handlerScroll($event)">
 
       <el-icon @click="arrowBtnClick(360)" class="left-btn">
         <ArrowLeft id="arrowLeft"/>
