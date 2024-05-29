@@ -9,15 +9,11 @@
       <el-col v-for="(item,index) in propChildrenTable.rowFieldFormat" :span="item.width?item.width:4" :key="index">
         <div v-show="item.isShow">{{ item.name }}</div>
       </el-col>
-
     </el-row>
 
     <el-row :gutter="6" v-for="(dataRow,dataRowIndex)  in propChildrenTable.allRows" :key="dataRowIndex" class="children-table-body">
       <template v-for="(rowFieldFormat,rowFieldIndex)  in propChildrenTable.rowFieldFormat">
-
         <template v-for="(dataFieldValue,dataFieldKey) in dataRow">
-
-
           <template v-if="dataFieldKey===rowFieldFormat.field">
             <!--  渲染 text input 框-->
             <template v-if="rowFieldFormat.type==='string'  ||  rowFieldFormat.type==='text'  ">
@@ -80,18 +76,13 @@
                 <el-input type="text" size="small" readonly clearable v-model="propChildrenTable.allRows[dataRowIndex][rowFieldFormat.field]"
                           :readonly="rowFieldFormat.readonly" v-show="rowFieldFormat.isShow">
                   <template #append>
-                    <el-upload
-                        :show-file-list="false"
-                        :action="actionUrl"
-                        :headers="headers"
-                        :on-success="fSuccess"
-                        :on-error="fError"
-                    >
+                    <el-upload :show-file-list="false" :action="actionUrl" :headers="headers" :on-success="fSuccess" :on-error="fError">
                       <template #trigger>
                         <Upload style="width: 16px; height: 16px;" @click="fUpdateUploadField(dataRowIndex,rowFieldFormat.field)"/>
                       </template>
                       <span style="display: inline-block;width: 10px"></span>
-                      <el-link :underline="false" download="" target="_blank" title="点击下载文件" :href="fGetFileFullPath(propChildrenTable.allRows[dataRowIndex][rowFieldFormat.field])">
+                      <el-link :underline="false" download="" target="_blank" title="点击下载文件"
+                               :href="fGetFileFullPath(propChildrenTable.allRows[dataRowIndex][rowFieldFormat.field])">
                         <ArrowDown style="width: 14px; height: 14px;"/>
                       </el-link>
                     </el-upload>
@@ -112,6 +103,31 @@
         <el-button icon="Close" size="small" @click="fDelete(dataRowIndex)"/>
       </el-col>
     </el-row>
+
+    <!--求和行  -->
+    <el-row :gutter="6" v-for="(dataRow,dataRowIndex)  in childrenTableLastItem" :key="dataRowIndex" class="children-table-body-sum">
+      <template v-for="(rowFieldFormat,rowFieldIndex)  in propChildrenTable.rowFieldFormat">
+        <template v-for="(dataFieldValue,dataFieldKey) in dataRow">
+          <template v-if="dataFieldKey===rowFieldFormat.field">
+            <!--  渲染 number input 框-->
+            <template v-if="rowFieldFormat.rowSum && rowFieldFormat.rowSum.calcSum ">
+              <el-col :span="rowFieldFormat.width">
+                <span style="margin-left: 6px">{{ rowFieldFormat.rowSum.label }}{{ fSum(rowFieldFormat, propChildrenTable.allRows) }}</span>
+              </el-col>
+            </template>
+            <template v-else>
+              <!--  根据指定的字段宽度占位即可-->
+              <el-col :span="rowFieldFormat.width">
+                <span style="margin-left:6px">{{ rowFieldFormat.rowSum ? rowFieldFormat.rowSum.label : '' }} </span>
+              </el-col>
+            </template>
+
+          </template>
+
+        </template>
+      </template>
+    </el-row>
+
 
     <!--引入公共组件-->
     <component :is="dynamicComponent" v-bind:propSelect="propSelect" @fSelectedCallback="fSelectedCallback"></component>
@@ -146,16 +162,29 @@ export default {
         title: "",
         mode: 'one'  // 数据选择模式： one=单选（选择后返回的结果只有一条），more(允许选择多条数据)，选择结果是一个数组
       },
-
       //表单内嵌文件上传
       actionUrl: commonFunc.getApiUrlPre() + '/upload/files',
       headers: {
         Authorization: 'Bearer ' + getToken()
       },
-
       // 同目录的公共组件存储起来，方便后续被其他页面动态引用
-      selectComponents: import.meta.glob(["./select*.vue",'!**/select_sys_menu.vue'])
+      selectComponents: import.meta.glob(["./select*.vue", '!**/select_sys_menu.vue']),
+
+      // 定义变量接受childrenTable 的最后一条数据，用于计算求和、小计使用
+      childrenTableLastItem: [propChildrenTable.value.allRows[0]]
     })
+
+    // 求和函数
+    //@rowSumProperty  求和行设置的属性(对象参数)
+    //@originData  原始被求和的原始数据
+    const fSum = (rowSumProperty, originAllData) => {
+      let tmpSum = 0.0
+      for (let index in originAllData) {
+        tmpSum += parseFloat((originAllData[index])[rowSumProperty.field])
+      }
+      // 做为一个全局变量
+      return tmpSum.toFixed(rowSumProperty.rowSum.accuracy);
+    }
 
     watch(() => propChildrenTable, (newPropChildrenTable, oldPropChildrenTable) => {
       if (newPropChildrenTable.value.action === 'insert') {
@@ -268,7 +297,8 @@ export default {
       fCreate,
       fCopy,
       fDelete,
-      fDateChange
+      fDateChange,
+      fSum
     }
   }
 }
@@ -301,6 +331,12 @@ export default {
 
 .children-table-body {
   margin: 4px 0;
+}
+
+.children-table-body-sum {
+  margin: 8px 0 0 0;
+  font-family: 'Microsoft YaHei UI Light', system-ui, sans-serif;
+  font-weight: bold;
 }
 
 </style>
