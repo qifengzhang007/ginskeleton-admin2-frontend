@@ -1,8 +1,8 @@
 <template>
   <div class="group-panel-area">
-    <div class="group-panel-head" @click="groupIconIsOpen=!groupIconIsOpen">
+    <div class="group-panel-head" @click="panelIsOpen=!panelIsOpen">
       <span class="group-icon">
-        <template v-if="groupIconIsOpen">
+        <template v-if="panelIsOpen">
          <el-icon><ArrowDown/></el-icon>
         </template>
         <template v-else>
@@ -12,7 +12,7 @@
       <span class="group-icon-line"> {{ title }}  </span>
     </div>
 
-    <div class="group-panel-content" v-show="groupIconIsOpen">
+    <div class="group-panel-content" v-show="panelIsOpen">
       <!--插槽占位，使用时会被外部内容替换-->
       <slot name="groupContent"></slot>
     </div>
@@ -31,22 +31,21 @@ export default {
       type: String,
       default: "基本分组"
     },
-    panelIsOpen: {
+    collapse: {
       type: Boolean,
       default: true
     }
   },
   setup(props, context) {
 
-    const {title, panelIsOpen} = toRefs(props)
-
+    const {title, collapse} = toRefs(props)
     const stateData = reactive({
-      groupIconIsOpen: panelIsOpen,  // 分组面板默认是否打开
+      panelIsOpen: collapse.value,  // 分组面板的图标默认是否打开
     })
 
     return {
       ...toRefs(stateData),
-      title
+      title,
     }
   }
 }
