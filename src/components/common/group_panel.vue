@@ -30,14 +30,18 @@ export default {
     title: {
       type: String,
       default: "基本分组"
+    },
+    panelIsOpen: {
+      type: Boolean,
+      default: true
     }
   },
   setup(props, context) {
 
-    const {title} = toRefs(props)
+    const {title, panelIsOpen} = toRefs(props)
 
     const stateData = reactive({
-      groupIconIsOpen: true,  // 分组面板的图标默认是否打开
+      groupIconIsOpen: panelIsOpen,  // 分组面板默认是否打开
     })
 
     return {
@@ -76,7 +80,7 @@ export default {
 }
 
 .group-panel-area {
-  padding: 2px 4px ;
+  padding: 2px 4px;
   border: solid 1px #F3F3F3FF;
   margin-bottom: 10px;
 }
