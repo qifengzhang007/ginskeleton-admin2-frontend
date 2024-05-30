@@ -38,7 +38,6 @@ export default {
 
     const stateData = reactive({
       groupIconIsOpen: true,  // 分组面板的图标默认是否打开
-
     })
 
     return {
@@ -65,7 +64,7 @@ export default {
   height: 26px;
   text-align: center;
   vertical-align: middle;
-  background: #EAF2FCFF;
+  background: #F3F3F3FF;
 }
 
 .group-icon-line {
@@ -73,12 +72,13 @@ export default {
   vertical-align: middle;
   width: calc(100% - 26px);
   height: 26px;
-  background: #EAF2FCFF;
+  background: #F3F3F3FF;
 }
 
 .group-panel-area {
   padding: 2px 4px ;
-  border: solid 1px #e8e8e8;
+  border: solid 1px #F3F3F3FF;
+  margin-bottom: 10px;
 }
 
 </style>
