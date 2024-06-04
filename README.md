@@ -7,8 +7,8 @@
 
 
 ####  更新日志
-**v2.0.19  2024-05-30**
-- [1.通用子表组件增加字段求和功能](https://www.yuque.com/xiaofensinixidaouxiang/qmanaq/opcqz0) .
-- [2.新增通用分组面板组件,方面在表单字段太多时,对界面表单字段进行分组填写](https://www.yuque.com/xiaofensinixidaouxiang/qmanaq/ytrbf20o41y7h1us)
+**v2.0.20  2024-06-04**
+- 1.通用子表组件增加字段值格式化函数,方便一行数据中的字段值格式化,可以成为计算字段.
+- 2.通用子表的使用示例参考在线文档即可.
 
 
