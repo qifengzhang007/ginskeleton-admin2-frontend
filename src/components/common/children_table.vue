@@ -11,23 +11,42 @@
       </el-col>
     </el-row>
 
-    <el-row :gutter="6" v-for="(dataRow,dataRowIndex)  in propChildrenTable.allRows" :key="dataRowIndex" class="children-table-body">
+    <el-row :gutter="4" v-for="(dataRow,dataRowIndex)  in propChildrenTable.allRows" :key="dataRowIndex" class="children-table-body">
       <template v-for="(rowFieldFormat,rowFieldIndex)  in propChildrenTable.rowFieldFormat">
         <template v-for="(dataFieldValue,dataFieldKey) in dataRow">
           <template v-if="dataFieldKey===rowFieldFormat.field">
             <!--  渲染 text input 框-->
             <template v-if="rowFieldFormat.type==='string'  ||  rowFieldFormat.type==='text'  ">
               <el-col :span="rowFieldFormat.width">
-                <el-input type="text" size="small" clearable v-model="propChildrenTable.allRows[dataRowIndex][rowFieldFormat.field]" placeholder=""
-                          :readonly="rowFieldFormat.readonly" v-show="rowFieldFormat.isShow"/>
+                <template v-if="typeof rowFieldFormat.formatter =='function'">
+                  <el-input type="text" size="small" clearable v-model="propChildrenTable.allRows[dataRowIndex][rowFieldFormat.field]" placeholder=""
+                            :readonly="rowFieldFormat.readonly" v-show="rowFieldFormat.isShow"
+                            :formatter="rowFieldFormat.formatter(propChildrenTable.allRows[dataRowIndex])"/>
+
+                </template>
+                <template v-else>
+                  <el-input type="text" size="small" clearable v-model="propChildrenTable.allRows[dataRowIndex][rowFieldFormat.field]" placeholder=""
+                            :readonly="rowFieldFormat.readonly" v-show="rowFieldFormat.isShow"/>
+
+                </template>
+
               </el-col>
             </template>
 
             <!--  渲染 number input 框-->
             <template v-if="rowFieldFormat.type==='number' ">
               <el-col :span="rowFieldFormat.width">
-                <el-input type="number" size="small" clearable v-model.number="propChildrenTable.allRows[dataRowIndex][rowFieldFormat.field]" placeholder=""
-                          :readonly="rowFieldFormat.readonly" v-show="rowFieldFormat.isShow"/>
+                <template v-if="typeof rowFieldFormat.formatter =='function'">
+                  <el-input type="number" size="small" clearable v-model.number="propChildrenTable.allRows[dataRowIndex][rowFieldFormat.field]"
+                            :readonly="rowFieldFormat.readonly" v-show="rowFieldFormat.isShow" style="max-width:140px"
+                            :formatter="rowFieldFormat.formatter(propChildrenTable.allRows[dataRowIndex])"
+                  />
+                </template>
+                <template v-else>
+                  <el-input type="number" size="small" clearable v-model.number="propChildrenTable.allRows[dataRowIndex][rowFieldFormat.field]" placeholder=""
+                            :readonly="rowFieldFormat.readonly" v-show="rowFieldFormat.isShow" style="max-width:140px"/>
+                </template>
+
               </el-col>
             </template>
 
@@ -36,7 +55,8 @@
               <div v-show="rowFieldFormat.isShow">
                 <el-col :span="rowFieldFormat.width">
                   <el-date-picker type="date" size="small" clearable v-model="propChildrenTable.allRows[dataRowIndex][rowFieldFormat.field]" placeholder=""
-                                  :readonly="rowFieldFormat.readonly" @change="fDateChange($event,dataRowIndex,rowFieldFormat.field)"/>
+                                  :readonly="rowFieldFormat.readonly" @change="fDateChange($event,dataRowIndex,rowFieldFormat.field)"
+                                  style="max-width:144px"/>
                 </el-col>
               </div>
             </template>
@@ -174,6 +194,7 @@ export default {
       childrenTableLastItem: [propChildrenTable.value.allRows[0]]
     })
 
+    // console.log("最后一行：",stateData.childrenTableLastItem)
     // 求和函数
     //@rowSumProperty  求和行设置的属性(对象参数)
     //@originData  原始被求和的原始数据
@@ -189,6 +210,12 @@ export default {
     watch(() => propChildrenTable, (newPropChildrenTable, oldPropChildrenTable) => {
       if (newPropChildrenTable.value.action === 'insert') {
         propChildrenTable.value.allRows = newPropChildrenTable.value.defaultListForCreate
+      }
+
+      if (propChildrenTable.value.allRows.length > 0) {
+        stateData.childrenTableLastItem = [propChildrenTable.value.allRows[0]]
+      } else {
+        stateData.childrenTableLastItem = []
       }
     }, {deep: true, immediate: true})
 
