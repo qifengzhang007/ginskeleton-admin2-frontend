@@ -162,7 +162,13 @@ export default {
               request_method: 'allow_method'
             },
             isShow: true,
-            readonly: false
+            readonly: false,
+            //行求和属性, 可以不设置 rowSum 行求和对象属性，组件不会报错、也不会求和
+            // rowSum:{
+            //   label:'小计:',  // 求和字段的标签名，一般只需要在第一个列设置标签即可，例如：小计. 备注： 标签的显示和求和没有关系，不求和，标签只要设置了值，也会显示
+            //   calcSum:false,  // 是否进行求和计算， false 表示不求和 ，true 表示求和
+            //   accuracy:2,   // 求和时数据的精确度，也就是保留的小数位精确度，这里的2 表示求和以后数据保留2位小数
+            // }
           },
           {
             name: '接口地址',
@@ -170,7 +176,7 @@ export default {
             field: 'request_url',
             width: 9,
             isShow: true,
-            readonly: false
+            readonly: false,
           },
           {
             name: '接口允许请求方式',
@@ -192,7 +198,7 @@ export default {
               },
             ],
             isShow: true,
-            readonly: false
+            readonly: false,
           },
           {
             name: '备注',
@@ -200,7 +206,7 @@ export default {
             field: 'remark',
             width: 5,
             isShow: true,
-            readonly: false
+            readonly: false,
           },
           // {
           //   name: '上传文件',

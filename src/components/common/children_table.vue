@@ -37,13 +37,13 @@
             <template v-if="rowFieldFormat.type==='number' ">
               <el-col :span="rowFieldFormat.width">
                 <template v-if="typeof rowFieldFormat.formatter =='function'">
-                  <el-input type="number" size="small" clearable v-model.number="propChildrenTable.allRows[dataRowIndex][rowFieldFormat.field]"
+                  <el-input-number   controls-position="right" size="small" clearable v-model.number="propChildrenTable.allRows[dataRowIndex][rowFieldFormat.field]"
                             :readonly="rowFieldFormat.readonly" v-show="rowFieldFormat.isShow" style="max-width:140px"
                             :formatter="rowFieldFormat.formatter(propChildrenTable.allRows[dataRowIndex])"
                   />
                 </template>
                 <template v-else>
-                  <el-input type="number" size="small" clearable v-model.number="propChildrenTable.allRows[dataRowIndex][rowFieldFormat.field]" placeholder=""
+                  <el-input-number   controls-position="right" size="small" clearable v-model.number="propChildrenTable.allRows[dataRowIndex][rowFieldFormat.field]" placeholder=""
                             :readonly="rowFieldFormat.readonly" v-show="rowFieldFormat.isShow" style="max-width:140px"/>
                 </template>
 
