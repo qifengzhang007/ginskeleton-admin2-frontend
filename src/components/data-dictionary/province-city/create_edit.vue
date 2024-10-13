@@ -32,7 +32,7 @@
             </el-col>
             <el-col :span="11">
               <el-form-item label="排序">
-                <el-input type="number" clearable v-model="propCreateEdit.curdFormData.sort" placeholder=""/>
+                <el-input-number   controls-position="right"   clearable v-model="propCreateEdit.curdFormData.sort" placeholder=""/>
               </el-form-item>
             </el-col>
           </el-row>
