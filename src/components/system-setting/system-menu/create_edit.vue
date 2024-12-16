@@ -54,7 +54,7 @@
           <el-row justify="space-between">
             <el-col :span="11">
               <el-form-item label="排序" prop="sort">
-                <el-input type="number" clearable v-model.number="propCreateEdit.curdFormData.sort" placeholder="设置菜单的展示顺序,系统会降序展示"/>
+                <el-input-number   controls-position="right"  clearable v-model.number="propCreateEdit.curdFormData.sort" placeholder="设置菜单的展示顺序,系统会降序展示"/>
               </el-form-item>
             </el-col>
             <el-col :span="11">

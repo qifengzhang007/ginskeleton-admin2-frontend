@@ -235,6 +235,10 @@ a {
 div.el-drawer div.el-drawer__body {
     overflow-x: hidden;
 }
-.el-input-number{
+
+.el-input-number {
     width: 98% !important;
+}
+input.el-input__inner{
+    text-align: left !important;
 }
