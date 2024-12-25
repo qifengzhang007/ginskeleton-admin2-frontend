@@ -24,13 +24,6 @@ export const getToken = () => {
 
 
 /*
-删除 token
- */
-export const removeToken = () => {
-    return Cookies.remove(config.dataStore.keyPre + config.dataStore.userTokenKey)
-}
-
-/*
 清除所有 localStorage
  */
 export const clearLocalStorageAll = () => {

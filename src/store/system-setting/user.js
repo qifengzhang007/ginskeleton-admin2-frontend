@@ -1,6 +1,6 @@
 import {defineStore} from 'pinia'
 import commonFunc from '@/libs/common_func'
-import {clearCookie, clearLocalStorageAll, removeToken} from '@/libs/util'
+import {clearCookie, clearLocalStorageAll} from '@/libs/util'
 import {useTabStore} from '@/store/system-setting/tabs'
 import config from '@/config/index'
 
@@ -72,7 +72,6 @@ export const useUserStore = defineStore(
              */
             destroyUserInfo() {
                 clearCookie()
-                removeToken()
                 clearLocalStorageAll()
                 commonFunc.objInit(this.user)
                 useTabStore().destroy()

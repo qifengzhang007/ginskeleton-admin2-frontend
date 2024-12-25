@@ -1,5 +1,5 @@
 import axios from 'axios'
-import {clearLocalStorageAll, getToken, removeToken} from '@/libs/util'
+import {clearLocalStorageAll, getToken} from '@/libs/util'
 import config from '@/config/index'
 import router from '@/router/index'
 import commonFunc from "./common_func";
@@ -49,7 +49,6 @@ class HttpRequest {
                     })
                     break
                 case 401:
-                    removeToken()
                     clearLocalStorageAll()
                     ElNotification({
                         title: '页面授权过期',
@@ -57,7 +56,7 @@ class HttpRequest {
                         type: 'error',
                     })
                     setTimeout(() => {
-                        router.push({name:config.defaultRoute.notLoginDefaultRouterName})
+                        router.push({name: config.defaultRoute.notLoginDefaultRouterName})
                     }, 1000);
                     break
                 case 405:

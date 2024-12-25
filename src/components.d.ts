@@ -8,6 +8,7 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     CommonChildren_table: typeof import('./components/common/children_table.vue')['default']
+    CommonChildren_table_plus: typeof import('./components/common/children_table_plus.vue')['default']
     CommonDelete_data_dialog: typeof import('./components/common/delete_data_dialog.vue')['default']
     CommonGroup_panel: typeof import('./components/common/group_panel.vue')['default']
     CommonIframe: typeof import('./components/common/iframe.vue')['default']
