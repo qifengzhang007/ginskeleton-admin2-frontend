@@ -10,19 +10,18 @@ import config from '@/config/index'
 设置 token
  */
 export const setToken = (token) => {
-    let seconds = 3600 * (config.dataStore.tokenStoreToCookieExpiration);  // cookie 默认8小时有效期
-    let exp = new Date(new Date() * 1 + seconds * 1000);
-    Cookies.set(config.dataStore.keyPre + config.dataStore.userTokenKey, token, {expires: exp})
+    localStorage.setItem(config.dataStore.keyPre + config.dataStore.userTokenKey, token)
 }
 
 /*
 获取 token
  */
 export const getToken = () => {
-    const token = Cookies.get(config.dataStore.keyPre + config.dataStore.userTokenKey)
+    const token = localStorage.getItem(config.dataStore.keyPre + config.dataStore.userTokenKey);
     if (token) return token
     else return false
 }
+
 
 /*
 删除 token
