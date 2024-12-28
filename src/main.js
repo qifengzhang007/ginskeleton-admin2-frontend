@@ -1,4 +1,4 @@
-import {createApp} from 'vue'
+import {createApp,h} from 'vue'
 import App from './App.vue'
 import router from './router/index'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
@@ -7,6 +7,8 @@ import store from "./store/system-setting/index";
 import ElementPlus from 'element-plus'
 import zhCn from 'element-plus/es/locale/lang/zh-cn'
 import 'default-passive-events'
+import { getElementLabelLine } from 'element-tree-line';
+import 'element-tree-line/dist/style.css';
 
 const app = createApp(App)
 
@@ -14,6 +16,9 @@ const app = createApp(App)
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
     app.component(key, component)
 }
+// 全局注册ElementLabelLine
+const ElementLabelLine = getElementLabelLine(h);
+app.component(ElementLabelLine.name, ElementLabelLine);
 
 app.use(store)
 app.use(router)

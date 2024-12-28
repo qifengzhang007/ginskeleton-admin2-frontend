@@ -1,4 +1,3 @@
-import Cookies from 'js-cookie'
 import config from '@/config/index'
 
 /*

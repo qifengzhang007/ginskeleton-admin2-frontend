@@ -12,21 +12,25 @@
         <template v-slot:left>
           <div class="auth-list-title">已分配权限列表</div>
           <el-scrollbar :style="leftTreeContainerFixHeight" :height="leftTreeContainerFixHeight.height">
-            <el-tree :expand-on-click-node="false" :highlight-current="true" node-key="system_menu_button_id" :current-node-key="1" show-checkbox empty-text="暂无数据"
+            <el-tree :expand-on-click-node="false" :highlight-current="true" node-key="auto_key" :current-node-key="1" show-checkbox empty-text="暂无数据"
                      ref="assignedAuthRef" :props="leftTree.props" :data="assignedAuth.data" :default-expanded-keys="assignedAuth.needExpandedKeys">
-              <template #default="{ node, data }">
-          <span class="tree-node">
-            <template v-if="data.node_type==='dept'">
-                 <OfficeBuilding style="width: 15px; height: 15px; color: #1178e2"/>
-            </template>
-             <template v-else-if="data.node_type==='menu'">
-                 <Menu style="width: 15px; height: 15px; color: #54a1f6"/>
-            </template>
-              <template v-else-if="data.node_type==='button'">
-                 <SetUp style="width: 15px; height: 15px; color:#045bb4"/>
-            </template>
-          <span class="tree-node-title">  {{ node.label }}</span>
-          </span>
+              <template v-slot:default="{ node, data }">
+                <element-tree-line  :node="node"    :showLabelLine="false" >
+                  <template v-slot:node-label>
+                          <span class="tree-node">
+                          <template v-if="data.node_type==='dept'">
+                             <OfficeBuilding style="width: 15px; height: 15px; color: #1178e2"/>
+                          </template>
+                           <template v-else-if="data.node_type==='menu'">
+                             <Menu style="width: 15px; height: 15px; color: #54a1f6"/>
+                          </template>
+                            <template v-else-if="data.node_type==='button'">
+                             <SetUp style="width: 15px; height: 15px; color:#045bb4"/>
+                          </template>
+                          <span class="tree-node-title">  {{ node.label }}</span>
+                          </span>
+                  </template>
+                </element-tree-line>
               </template>
             </el-tree>
           </el-scrollbar>
@@ -48,21 +52,25 @@
             <template v-slot:right>
               <div class="auth-list-title">待分配权限列表</div>
               <el-scrollbar :style="leftTreeContainerFixHeight" :height="leftTreeContainerFixHeight.height">
-                <el-tree :expand-on-click-node="false" :highlight-current="true" node-key="system_menu_button_id" :current-node-key="1" show-checkbox empty-text="暂无数据"
+                <el-tree :expand-on-click-node="false" :highlight-current="true" node-key="auto_key" :current-node-key="1" show-checkbox empty-text="暂无数据"
                          ref="allAuthRef" :props="leftTree.props" :data="allAuth.data" :default-expanded-keys="allAuth.needExpandedKeys">
-                  <template #default="{ node, data }">
-          <span class="tree-node">
-            <template v-if="data.node_type==='dept'">
-                 <OfficeBuilding style="width: 15px; height: 15px; color: #1178e2"/>
-            </template>
-             <template v-else-if="data.node_type==='menu'">
-                 <Menu style="width: 15px; height: 15px; color: #54a1f6"/>
-            </template>
-              <template v-else-if="data.node_type==='button'">
-                 <SetUp style="width: 15px; height: 15px; color:#045bb4"/>
-            </template>
-          <span class="tree-node-title">  {{ node.label }}</span>
-          </span>
+                  <template v-slot:default="{ node, data }">
+                    <element-tree-line  :node="node"    :showLabelLine="false" >
+                      <template v-slot:node-label>
+                          <span class="tree-node">
+                          <template v-if="data.node_type==='dept'">
+                             <OfficeBuilding style="width: 15px; height: 15px; color: #1178e2"/>
+                          </template>
+                           <template v-else-if="data.node_type==='menu'">
+                             <Menu style="width: 15px; height: 15px; color: #54a1f6"/>
+                          </template>
+                            <template v-else-if="data.node_type==='button'">
+                             <SetUp style="width: 15px; height: 15px; color:#045bb4"/>
+                          </template>
+                          <span class="tree-node-title">  {{ node.label }}</span>
+                          </span>
+                      </template>
+                    </element-tree-line>
                   </template>
                 </el-tree>
               </el-scrollbar>

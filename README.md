@@ -7,6 +7,10 @@
 
 
 ####  更新日志
-**v2.0.21  2024-10-13**
-- 1.界面组件样式更新细节.
+**v2.1.00  2024-12-28**
+- 1.界面中相关的树形组件样式改进，增加垂直节点之间的连接接线显示.
+- 2.前端缓存启用 cookie 存储，改为 localStorage 存储, 避免安全扫描软件容易获取 cookie 的问题.
+- 3.项目依赖包更细至最新版.
+- 4.本版本需要搭配 **[gin-skeleton-admin2-backend](https://gitee.com/daitougege/gin-skeleton-admin2-backend)** ≥ v2.1.00 .
+
 

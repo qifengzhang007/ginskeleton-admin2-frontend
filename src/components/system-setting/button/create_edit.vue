@@ -35,11 +35,15 @@
             <el-col :span="11">
               <el-form-item label="状态">
                 <el-select v-model="propCreateEdit.curdFormData.status" :fit-input-width="true">
-                  <el-option v-for="item in selectStatus" :key="item.value"
-                             :label="item.label" :value="item.value"
-                  />
+                  <el-option v-for="item in selectStatus" :key="item.value" :label="item.label" :value="item.value"/>
                 </el-select>
               </el-form-item>
+            </el-col>
+            <el-col :span="11">
+              <el-form-item label="多项选择">
+                <Tags2 :propTagList="propItems"/>
+              </el-form-item>
+
             </el-col>
           </el-row>
 
@@ -68,12 +72,14 @@
 import {reactive, toRefs} from "vue";
 import commonFunc from '@/libs/common_func'
 import SeekbarForDrawer from '@/components/common/seekbar_for_drawer.vue'
+import Tags2 from '@/components/common/tags2.vue'
 import {create, edit} from '@/api/system-setting/button'
 
 export default {
   name: "CreateEdit",
   components: {
-    SeekbarForDrawer
+    SeekbarForDrawer,
+    Tags2
   },
   props: {
     propCreateEdit: Object,
@@ -83,7 +89,8 @@ export default {
     const {propCreateEdit} = toRefs(props)
 
     const stateData = reactive({
-      drawerSize:'55%',
+      uuid: 123,
+      drawerSize: '55%',
       formRef: {},
       selectStatus: commonFunc.SelectStatus,
       rules: {
@@ -92,6 +99,14 @@ export default {
         color: [{type: 'string', required: true, message: '按钮颜色为必填项', trigger: 'blur'}],
         allow_method: [{type: 'string', required: true, message: '请求方式为必填项', trigger: 'blur'}],
       },
+      propItems: {
+        tagList: [
+          {key: "111", name: 'Tag 1', type: 'primary'},
+          {key: "222", name: 'Tag 2', type: 'success'},
+          {key: "333", name: 'Tag 3', type: 'info'},
+        ],
+        //  其他样式属性暂时忽略
+      }
     })
 
     // 抽屉界面相关的操作
