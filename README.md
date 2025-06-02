@@ -7,7 +7,7 @@
 
 
 ####  更新日志
-**v2.1.10  2025-06-02**
+**v2.1.02  2025-06-02**
 - 1.项目依赖包更细至最新版
 - 2.项目打包、构建使用 rolldown ,将项目构建速度提升2倍.
 - 3.本版本需要搭配 **[gin-skeleton-admin2-backend](https://gitee.com/daitougege/gin-skeleton-admin2-backend)** ≥ v2.1.00 .
